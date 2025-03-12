@@ -18,6 +18,131 @@
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="{{  asset('assets/font-awesome-6-pro-main/css/all.min.css') }}">
 
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.46.0/tabler-icons.min.css">
+
+    <style>
+        .btn {
+            border-width: 1px;
+            cursor: pointer;
+            font-weight: 600;
+            justify-content: center;
+            line-height: 1.5;
+            text-align: center;
+            -moz-user-select: none;
+            user-select: none;
+            vertical-align: middle;
+            transition-timing-function: cubic-bezier(.4, 0, .2, 1)
+        }
+
+        .btn-sm {
+            font-size: .75rem;
+            padding: .25rem .75rem
+        }
+
+        .btn-lg,
+        .btn-sm {
+            border-radius: .375rem
+        }
+
+        .btn-lg {
+            font-size: 1.125rem;
+            padding: .5rem 1.5rem
+        }
+
+
+        :root {
+            --swiper-theme-color: #0aad0a;
+            --swiper-pagination-color: #0aad0a;
+            --swiper-pagination-bullet-opacity: 1
+        }
+
+        .swiper-pagination-bullet {
+            background: transparent;
+            border: 2px solid #0aad0a;
+            border-radius: 50px;
+            display: inline-block;
+            height: 10px;
+            opacity: .3;
+            width: 10px
+        }
+
+        .swiper-pagination-bullet-active {
+            background: var(--swiper-pagination-color, var(--swiper-theme-color));
+            border-color: #0aad0a;
+            opacity: var(--swiper-pagination-bullet-opacity, 1)
+        }
+
+        [data-navigation=false] .swiper-navigation {
+            display: none;
+            opacity: 0;
+            visibility: hidden
+        }
+
+        .swiper-pagination-numbers {
+            background: #efefef;
+            border-radius: 50%;
+            color: #000;
+            display: inline-block;
+            height: 28px;
+            line-height: 28px;
+            margin: auto 2px;
+            width: 28px
+        }
+
+        .swiper-pagination-numbers-active {
+            background: #0aad0a;
+            color: #fff;
+            opacity: 1
+        }
+
+        .swiper-button-prev {
+            background-color: #f0f3f2;
+            border-radius: 50px;
+            box-shadow: 0 2px 4px -1px rgba(145, 158, 171, .2), 0 4px 5px 0 rgba(145, 158, 171, .14), 0 1px 10px 0 rgba(145, 158, 171, .12);
+            color: #21313c;
+            height: 28px;
+            left: 0;
+            right: auto;
+            width: 28px;
+
+            &:after {
+                content: "\ea60";
+                font-family: tabler-icons;
+                font-size: 14px
+            }
+
+            &:hover {
+                background-color: #0aad0a;
+                color: #fff
+            }
+        }
+
+        .swiper-button-next {
+            background-color: #f0f3f2;
+            border-radius: 50px;
+            box-shadow: 0 2px 4px -1px rgba(145, 158, 171, .2), 0 4px 5px 0 rgba(145, 158, 171, .14), 0 1px 10px 0 rgba(145, 158, 171, .12);
+            color: #21313c;
+            height: 28px;
+            left: auto;
+            right: 0;
+            width: 28px;
+
+            &:after {
+                content: "\ea61";
+                font-family: tabler-icons;
+                font-size: 14px
+            }
+
+            &:hover {
+                background-color: #0aad0a;
+                color: #fff
+            }
+        }
+    </style>
+
+
 </head>
 
 <body class="bg-gray-50 font-[Roboto]">
@@ -406,6 +531,207 @@
 
 
 
+
+
+
+
+   <!-- section -->
+   <section class="my-14">
+    <div class="container mx-auto px-6">
+        <!-- row -->
+        <div class="flex flex-wrap">
+            <div class="text-center mb-12">
+                <span class="inline-block px-3 py-1 bg-green-100 text-green-600 rounded-full text-sm font-medium mb-2">Top Selling Products</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800">
+                    Discover Your Ideal Product
+                </h2>
+                <p class="mt-3 text-gray-600 max-w-2xl mx-auto">
+                    Uncover the perfect items tailored to fit your lifestyle. Whether you're looking for a powerful work tool, a device for relaxation, or something for everyday use, we have a wide selection to suit all your needs.
+                </p>
+            </div>
+        </div>
+        
+
+        <div class="swiper-container swiper pt-20" id="swiper-1" data-pagination-type="" data-speed="1600"
+            data-space-between="20" data-pagination="false" data-navigation="true" data-autoplay="true"
+            data-autoplay-delay="6000" data-effect="slide"
+            data-breakpoints='{"480": {"slidesPerView": 2}, "768": {"slidesPerView": 3}, "1024": {"slidesPerView": 5}}'>
+            <div class="swiper-wrapper">
+
+
+
+
+                @foreach ($laptops as $laptop)
+
+
+
+                <div class="swiper-slide">
+                    <div class="relative rounded-lg break-words border bg-white border-gray-300 card-product">
+                        <div class="flex-auto p-4">
+                            <div class="text-center relative flex justify-center">
+                                <div class="absolute top-0 left-0">
+                                    <span
+                                        class="inline-block p-1 text-center font-semibold text-sm align-baseline leading-none rounded bg-red-600 text-white">Sale</span>
+                                </div>
+                                <a href="#!">
+                                    <img src="{{ $laptop['image_url'] }}" alt="{{ $laptop['name'] }}"
+                                        class="w-full h-auto" /></a>
+
+                                <div class="absolute w-full bottom-[15%] opacity-0 invisible card-product-action">
+                                    <a href="#!"
+                                        class="h-[34px] w-[34px] leading-[34px] bg-white shadow inline-flex items-center justify-center rounded-lg hover:bg-green-600 hover:text-white"
+                                        data-bs-toggle="tooltip" data-bs-html="true" title="Quick View">
+                                        <span data-bs-toggle="modal" data-bs-target="#quickViewModal">
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                class="icon icon-tabler icon-tabler-eye" width="16" height="16"
+                                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                                fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                                                <path
+                                                    d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
+                                            </svg>
+                                        </span>
+                                    </a>
+                                    <a href="#!"
+                                        class="h-[34px] w-[34px] leading-[34px] bg-white shadow inline-flex items-center justify-center rounded-lg hover:bg-green-600 hover:text-white"
+                                        data-bs-toggle="tooltip" data-bs-html="true" title="Wishlist">
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                            class="icon icon-tabler icon-tabler-heart" width="16" height="16"
+                                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path
+                                                d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
+                                        </svg>
+                                    </a>
+                                    <a href="#!"
+                                        class="h-[34px] w-[34px] leading-[34px] bg-white shadow inline-flex items-center justify-center rounded-lg hover:bg-green-600 hover:text-white"
+                                        data-bs-toggle="tooltip" data-bs-html="true" title="Compare">
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                            class="icon icon-tabler icon-tabler-arrows-exchange" width="16"
+                                            height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                            fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path d="M7 10h14l-4 -4" />
+                                            <path d="M17 14h-14l4 4" />
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="flex flex-col gap-3">
+                                <a href="#!" class="text-decoration-none text-gray-500"><small>Snack &
+                                        Munchies</small></a>
+                                <div class="flex flex-col gap-2">
+                                    <h3 class="text-base truncate"><a href="./shop-single.html">Haldiram's Sev
+                                            Bhujia</a></h3>
+                                    <div class="flex items-center">
+                                        <div class="flex flex-row gap-3">
+                                            <small class="text-yellow-500 flex items-center">
+                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                    class="icon icon-tabler icon-tabler-star-filled" width="14"
+                                                    height="14" viewBox="0 0 24 24" stroke-width="2"
+                                                    stroke="currentColor" fill="none" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                    <path
+                                                        d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"
+                                                        stroke-width="0" fill="currentColor" />
+                                                </svg>
+                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                    class="icon icon-tabler icon-tabler-star-filled" width="14"
+                                                    height="14" viewBox="0 0 24 24" stroke-width="2"
+                                                    stroke="currentColor" fill="none" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                    <path
+                                                        d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"
+                                                        stroke-width="0" fill="currentColor" />
+                                                </svg>
+                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                    class="icon icon-tabler icon-tabler-star-filled" width="14"
+                                                    height="14" viewBox="0 0 24 24" stroke-width="2"
+                                                    stroke="currentColor" fill="none" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                    <path
+                                                        d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"
+                                                        stroke-width="0" fill="currentColor" />
+                                                </svg>
+                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                    class="icon icon-tabler icon-tabler-star-filled" width="14"
+                                                    height="14" viewBox="0 0 24 24" stroke-width="2"
+                                                    stroke="currentColor" fill="none" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                    <path
+                                                        d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"
+                                                        stroke-width="0" fill="currentColor" />
+                                                </svg>
+                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                    class="icon icon-tabler icon-tabler-star-half-filled" width="14"
+                                                    height="14" viewBox="0 0 24 24" stroke-width="2"
+                                                    stroke="currentColor" fill="none" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                    <path
+                                                        d="M12 1a.993 .993 0 0 1 .823 .443l.067 .116l2.852 5.781l6.38 .925c.741 .108 1.08 .94 .703 1.526l-.07 .095l-.078 .086l-4.624 4.499l1.09 6.355a1.001 1.001 0 0 1 -1.249 1.135l-.101 -.035l-.101 -.046l-5.693 -3l-5.706 3c-.105 .055 -.212 .09 -.32 .106l-.106 .01a1.003 1.003 0 0 1 -1.038 -1.06l.013 -.11l1.09 -6.355l-4.623 -4.5a1.001 1.001 0 0 1 .328 -1.647l.113 -.036l.114 -.023l6.379 -.925l2.853 -5.78a.968 .968 0 0 1 .904 -.56zm0 3.274v12.476a1 1 0 0 1 .239 .029l.115 .036l.112 .05l4.363 2.299l-.836 -4.873a1 1 0 0 1 .136 -.696l.07 -.099l.082 -.09l3.546 -3.453l-4.891 -.708a1 1 0 0 1 -.62 -.344l-.073 -.097l-.06 -.106l-2.183 -4.424z"
+                                                        stroke-width="0" fill="currentColor" />
+                                                </svg>
+                                            </small>
+                                            <div class="flex flex-row gap-1">
+                                                <span class="text-gray-500 text-sm">4.5</span>
+                                                <span class="text-gray-500 text-sm">(149)</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <span class="text-gray-900 font-semibold">$18</span>
+                                        <span class="line-through text-gray-500">$24</span>
+                                    </div>
+                                    <div>
+                                        <button type="button"
+                                            class="btn inline-flex items-center gap-x-1 bg-green-600 text-white border-green-600 disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-green-700 hover:border-green-700 active:bg-green-700 active:border-green-700 focus:outline-none focus:ring-4 focus:ring-green-300 btn-sm">
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                class="icon icon-tabler icon-tabler-plus" width="14" height="14"
+                                                viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"
+                                                fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                <path d="M12 5l0 14" />
+                                                <path d="M5 12l14 0" />
+                                            </svg>
+                                            <span>Add</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                @endforeach
+
+
+                <!-- Add more slides as needed -->
+            </div>
+            <!-- Add Pagination -->
+            <div class="swiper-pagination"></div>
+            <!-- Add Navigation -->
+            <div class="swiper-navigation">
+                <div class="swiper-button-next top-[40px]"></div>
+                <div class="swiper-button-prev top-[40px] !right-0 !left-auto mx-10"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
     <!-- Laptops Category Section -->
     <section id="laptops" class="py-16 bg-gradient-to-b from-gray-50 to-gray-100">
         <div class="container mx-auto px-6">
@@ -559,6 +885,48 @@
 
 
 
+ 
+
+
+    @php
+    // Controller or View
+    $testimonials = [
+    [
+    'name' => 'David R.',
+    'role' => 'Freelance Developer',
+    'image' =>
+    'https://images.generated.photos/tGHubInlYQSUapLmz6IdvNuew4iOgEMbgEtV0u_WB2s/rs:fit:256:256/czM6Ly9pY29uczgu/Z3Bob3Rvcy1wcm9k/LnBob3Rvcy92M18w/NTkzNTE4LmpwZw.jpg',
+    'quote' => 'I found the perfect laptop for my work and gaming needs. The pricing was unbeatable and delivery was
+    super fast. Will definitely shop here again!'
+    ],
+    [
+    'name' => 'Lisa T.',
+    'role' => 'Marketing Specialist',
+    'image' =>
+    'https://images.generated.photos/sQO382vTFE2AeD_55KCemqzo9YoEzxcDB92Vd7QUgCk/rs:fit:256:256/czM6Ly9pY29uczgu/Z3Bob3Rvcy1wcm9k/LnBob3Rvcy92M18w/ODg1NTM3LmpwZw.jpg',
+    'quote' => 'I’ve never had such a smooth online shopping experience. The customer support team helped me pick the
+    right phone, and it arrived in perfect condition!'
+    ],
+    [
+    'name' => 'Maria F.',
+    'role' => 'Home Chef',
+    'image' =>
+    'https://images.generated.photos/6Prm4DWHZB98c-seirSy3wZQJMhhFYMfnhYxeekucrE/rs:fit:256:256/czM6Ly9pY29uczgu/Z3Bob3Rvcy1wcm9k/LnBob3Rvcy92M18w/ODI0MDU3LmpwZw.jpg',
+    'quote' => 'I was a bit hesitant at first, but I’m so glad I bought my new kitchen appliance from this site.
+    Excellent product quality, and the price was great!'
+    ],
+    [
+    'name' => 'Maria F.',
+    'role' => 'Home Chef',
+    'image' =>
+    'https://images.generated.photos/WSXXGpFeBy9JAeyrp81B1ecXfwIGmIJ5SyDYaTgxfMQ/rs:fit:256:256/czM6Ly9pY29uczgu/Z3Bob3Rvcy1wcm9k/LnBob3Rvcy92M18w/MTUyOTQxLmpwZw.jpg',
+    'quote' => 'I was a bit hesitant at first, but I’m so glad I bought my new kitchen appliance from this site.
+    Excellent product quality, and the price was great!'
+    ],
+    ];
+
+    @endphp
+
     <!-- Testimonials Section -->
     <div class="text-center my-16">
         <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-8">What Our Customers Are Saying</h2>
@@ -567,46 +935,17 @@
         </p>
 
         <div class="flex flex-wrap justify-center gap-8">
-            <!-- Testimonial 1 -->
+            @foreach ($testimonials as $testimonial)
             <div class="max-w-xs bg-white rounded-lg shadow-lg p-6">
-                <img src="https://images.generated.photos/tGHubInlYQSUapLmz6IdvNuew4iOgEMbgEtV0u_WB2s/rs:fit:256:256/czM6Ly9pY29uczgu/Z3Bob3Rvcy1wcm9k/LnBob3Rvcy92M18w/NTkzNTE4LmpwZw.jpg"
-                    alt="Customer 1" class="w-16 h-16 rounded-full mx-auto mb-4">
-                <p class="text-gray-600 italic mb-4">"I found the perfect laptop for my work and gaming needs. The
-                    pricing was unbeatable and delivery was super fast. Will definitely shop here again!"</p>
-                <p class="font-semibold text-gray-800">David R.</p>
-                <p class="text-gray-500">Freelance Developer</p>
+                <img src="{{ $testimonial['image'] }}" alt="Customer" class="w-16 h-16 rounded-full mx-auto mb-4">
+                <p class="text-gray-600 italic mb-4">{{ $testimonial['quote'] }}</p>
+                <p class="font-semibold text-gray-800">{{ $testimonial['name'] }}</p>
+                <p class="text-gray-500">{{ $testimonial['role'] }}</p>
             </div>
-
-            <!-- Testimonial 2 -->
-            <div class="max-w-xs bg-white rounded-lg shadow-lg p-6">
-                <img src="https://images.generated.photos/sQO382vTFE2AeD_55KCemqzo9YoEzxcDB92Vd7QUgCk/rs:fit:256:256/czM6Ly9pY29uczgu/Z3Bob3Rvcy1wcm9k/LnBob3Rvcy92M18w/ODg1NTM3LmpwZw.jpg"
-                    alt="Customer 2" class="w-16 h-16 rounded-full mx-auto mb-4">
-                <p class="text-gray-600 italic mb-4">"I’ve never had such a smooth online shopping experience. The
-                    customer support team helped me pick the right phone, and it arrived in perfect condition!"</p>
-                <p class="font-semibold text-gray-800">Lisa T.</p>
-                <p class="text-gray-500">Marketing Specialist</p>
-            </div>
-
-            <!-- Testimonial 3 -->
-            <div class="max-w-xs bg-white rounded-lg shadow-lg p-6">
-                <img src="https://images.generated.photos/6Prm4DWHZB98c-seirSy3wZQJMhhFYMfnhYxeekucrE/rs:fit:256:256/czM6Ly9pY29uczgu/Z3Bob3Rvcy1wcm9k/LnBob3Rvcy92M18w/ODI0MDU3LmpwZw.jpg"
-                    alt="Customer 3" class="w-16 h-16 rounded-full mx-auto mb-4">
-                <p class="text-gray-600 italic mb-4">"I was a bit hesitant at first, but I’m so glad I bought my new
-                    kitchen appliance from this site. Excellent product quality, and the price was great!"</p>
-                <p class="font-semibold text-gray-800">Maria F.</p>
-                <p class="text-gray-500">Home Chef</p>
-            </div>
-            <!-- Testimonial 3 -->
-            <div class="max-w-xs bg-white rounded-lg shadow-lg p-6">
-                <img src="https://images.generated.photos/WSXXGpFeBy9JAeyrp81B1ecXfwIGmIJ5SyDYaTgxfMQ/rs:fit:256:256/czM6Ly9pY29uczgu/Z3Bob3Rvcy1wcm9k/LnBob3Rvcy92M18w/MTUyOTQxLmpwZw.jpg"
-                    alt="Customer 3" class="w-16 h-16 rounded-full mx-auto mb-4">
-                <p class="text-gray-600 italic mb-4">"I was a bit hesitant at first, but I’m so glad I bought my new
-                    kitchen appliance from this site. Excellent product quality, and the price was great!"</p>
-                <p class="font-semibold text-gray-800">Maria F.</p>
-                <p class="text-gray-500">Home Chef</p>
-            </div>
+            @endforeach
         </div>
     </div>
+
 
 
 
@@ -618,7 +957,7 @@
                 inbox!</p>
 
             <!-- Subscribe Field and Buttons Row -->
-            <div class="flex flex-col sm:flex-row justify-center gap-6 items-center">
+            <div class="flex flex-col md:flex-row justify-center gap-6 items-center">
                 <!-- Subscribe Field -->
                 <div class="flex items-center bg-white rounded-lg p-2 mb-4 sm:mb-0 w-full sm:w-auto">
                     <input type="email" id="subscribeEmail" placeholder="Enter your email"
@@ -695,9 +1034,108 @@
     </footer>
 
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"></script>
+    <!-- Swiper JS Initialization -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
 
 
     <script>
+        function initializeSwiperCarousels() {
+  // Select all swiper containers and loop through each one
+  document.querySelectorAll(".swiper-container").forEach(carousel => {
+    // Get configuration values from the element's data attributes, with defaults
+    const speed = carousel.getAttribute("data-speed") || 400;
+    const spaceBetween = carousel.getAttribute("data-space-between") || 100;
+    const hasPagination = "true" === carousel.getAttribute("data-pagination");
+    const hasNavigation = "true" === carousel.getAttribute("data-navigation");
+    const hasAutoplay = "true" === carousel.getAttribute("data-autoplay");
+    const autoplayDelay = carousel.getAttribute("data-autoplay-delay") || 3000;
+    const paginationType = carousel.getAttribute("data-pagination-type") || "bullets";
+    const effect = carousel.getAttribute("data-effect") || "slide";
+    const breakpointsData = carousel.getAttribute("data-breakpoints");
+
+    let breakpoints = {};
+
+    // If breakpoints data exists, try to parse it as JSON
+    if (breakpointsData) {
+      try {
+        breakpoints = JSON.parse(breakpointsData);
+      } catch (error) {
+        console.error("Error parsing breakpoints data:", error);
+      }
+    }
+
+    // Default swiper configuration
+    const swiperConfig = {
+      speed: parseInt(speed),
+      spaceBetween: parseInt(spaceBetween),
+      breakpoints: breakpoints,
+      effect: effect,
+    };
+
+    // If effect is "fade", enable fadeEffect
+    if (effect === "fade") {
+      swiperConfig.fadeEffect = { crossFade: true };
+    }
+
+    // Configure pagination if enabled
+    if (hasPagination) {
+      const paginationElement = carousel.querySelector(".swiper-pagination");
+      swiperConfig.pagination = {
+        el: paginationElement,
+        type: paginationType,
+        dynamicBullets: true,
+        clickable: true,
+      };
+
+      // If pagination type is custom, define custom rendering
+      if (paginationType === "custom") {
+        swiperConfig.pagination.renderCustom = (swiper, current, total) => {
+          let paginationHtml = "";
+          for (let i = 1; i <= total; i++) {
+            if (current === i) {
+              paginationHtml += `<span class="swiper-pagination-numbers swiper-pagination-numbers-active">${i}</span>`;
+            } else {
+              paginationHtml += `<span class="swiper-pagination-numbers">${i}</span>`;
+            }
+          }
+          return paginationHtml;
+        };
+      }
+    }
+
+    // Configure navigation if enabled
+    if (hasNavigation) {
+      swiperConfig.navigation = {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      };
+    } else {
+      const navigationElement = carousel.querySelector(".swiper-navigation");
+      if (navigationElement) {
+        navigationElement.classList.add("swiper-navigation-hidden");
+      }
+    }
+
+    // Configure autoplay if enabled
+    if (hasAutoplay) {
+      swiperConfig.autoplay = {
+        delay: parseInt(autoplayDelay),
+      };
+    }
+
+    // Initialize the Swiper instance with the calculated config
+    new Swiper(carousel, swiperConfig);
+  });
+}
+
+// Initialize all Swiper carousels
+initializeSwiperCarousels();
+
+
+
+
         // Toggle the mobile menu
     document.getElementById('mobile-menu-button').addEventListener('click', function () {
       const menu = document.getElementById('mobile-menu');
