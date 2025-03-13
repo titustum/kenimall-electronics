@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.46.0/tabler-icons.min.css">
 
     <style>
+         
         .btn {
             border-width: 1px;
             cursor: pointer;
@@ -148,7 +149,7 @@
 <body class="bg-gray-50 font-[Roboto]">
 
     <!-- Navbar Section -->
-    <nav class="bg-white py-4 shadow-md">
+    <nav class="bg-white shadow-md">
         <!-- Top Div for Social Media and Contact Info -->
         <div class="w-full bg-blue-600 text-white">
             <div class="container mx-auto flex justify-between items-center px-6 py-2">
@@ -178,7 +179,7 @@
         <div class="container mx-auto flex items-center justify-between px-6 py-4">
 
             <!-- Logo Section -->
-            <div class="flex items-center space-x-4">
+            <div class="flex items-center space-x-4 font-[Righteous]">
                 <a href="#" class="text-gray-800 text-3xl flex items-center space-x-2">
                     <i class="far fa-plug text-amber-500"></i>
                     <span class="hidden md:inline">kamarona</span>
@@ -248,7 +249,7 @@
         </video>
 
         <!-- Dark Overlay to make text stand out -->
-        <div class="absolute inset-0 bg-black opacity-50"></div>
+        <div class="absolute inset-0 bg-black opacity-60"></div>
 
         <!-- Content inside the hero section -->
         <div class="container mx-auto h-full flex justify-center items-center relative text-center text-white px-6">
@@ -261,13 +262,24 @@
                 <p class="text-lg md:text-2xl">
                     Discover the best electronics at unbeatable prices.
                 </p>
-                <!-- CTA Button -->
-                <a href="#shop"
-                    class="inline-block bg-yellow-500 text-gray-800 py-2 px-6 rounded-full text-lg font-semibold hover:bg-yellow-600 transition duration-300">
-                    Shop Now
-                </a>
+                <!-- CTA Buttons: Shop Now & Search -->
+                <div class="flex justify-center space-x-4 mt-6"> 
+                    
+                    <!-- Search Bar and Button -->
+                    <div class="flex items-center space-x-2">
+                        <input type="text" id="search" placeholder="Search products..." autofocus="true"hhhaha
+                            class="px-4 py-2 rounded-full border-2 bg-white border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-500 w-60 md:w-80 text-gray-800 placeholder-gray-400">
+                        <button class="bg-yellow-500 text-gray-800 py-2 px-6 rounded-full text-lg font-semibold hover:bg-yellow-600 transition duration-300 flex items-center space-x-2">
+                            <!-- FontAwesome search icon -->
+                            <i class="far fa-search"></i>
+                            <span>Search</span>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
+
+
     </section>
 
 
@@ -627,7 +639,8 @@ $products = [
                     <!-- CTA Buttons -->
                     <div class="flex space-x-2 mt-auto">
                         <a href="#" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg font-medium text-sm text-center transition-colors duration-200 shadow-sm">
-                            Add to Cart <i class="far fa-shopping-cart ml-2"></i>
+                            Add <span class="hidden xl:inline">to Cart</span> 
+                            <i class="far fa-shopping-cart ml-2"></i>
                         </a>
                         <a href="#" class="bg-blue-50 hover:bg-blue-100 text-blue-800 py-2 px-4 rounded-lg font-medium text-sm transition-colors duration-200">
                             Details
@@ -1013,7 +1026,7 @@ $allProducts = [
   
 
 <section class="why-choose-us py-16 bg-gray-100">
-    <div class="container mx-auto text-center">
+    <div class="container mx-auto text-center px-4">
         <h2 class="text-3xl font-semibold mb-8">Why Choose Us</h2>
         <p class="text-lg text-gray-600 mb-12">We strive to provide the best products and services for our customers. Here's why you should choose us:</p>
         <div class="grid md:grid-cols-3 gap-8">
