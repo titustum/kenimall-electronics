@@ -179,9 +179,9 @@
 
             <!-- Logo Section -->
             <div class="flex items-center space-x-4">
-                <a href="#" class="text-gray-800 text-3xl font-[Righteous] flex items-center space-x-2">
-                    <i class="fas fa-plug"></i>
-                    <span class="hidden md:inline">Kamarona</span>
+                <a href="#" class="text-gray-800 text-3xl flex items-center space-x-2">
+                    <i class="far fa-plug text-amber-500"></i>
+                    <span class="hidden md:inline">kamarona</span>
                 </a>
             </div>
 
@@ -199,9 +199,9 @@
                 <!-- Search Bar with Icon -->
                 <div class="relative flex-grow">
                     <input type="text" placeholder="Search products..."
-                        class="px-4 py-2.5 rounded-lg bg-white border border-amber-100 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-200/40 placeholder:text-gray-400 text-gray-700 transition-all w-full md:w-72 pr-12">
+                        class="px-4 py-2.5 rounded-lg bg-white border border-gray-200 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-200/40 placeholder:text-gray-400 text-gray-700 transition-all w-full md:w-72 pr-12">
                     <!-- Search Icon -->
-                    <i class="fas fa-search absolute right-4 top-1/2 transform -translate-y-1/2 text-amber-500/80"></i>
+                    <i class="far fa-search absolute right-4 top-1/2 transform -translate-y-1/2 text-amber-500/80"></i>
                 </div>
 
                 <!-- Cart Icon with Badge -->
@@ -213,7 +213,7 @@
 
                 <!-- User Profile Icon -->
                 <a href="#profile" class="text-gray-600 hover:text-amber-600 transition-colors duration-200 ml-3">
-                    <i class="far fa-user-circle text-xl"></i>
+                    <i class="far fa-user text-xl"></i>
                 </a>
             </form>
 
@@ -384,172 +384,175 @@
 
 
 
-    @php
-    $laptops = [
+
+
+
+
+
+
+@php
+$products = [
     [
-    "id" => 1,
-    "image_url" => "https://multimedia.bbycastatic.ca/multimedia/products/250x250/189/18925/18925110.jpeg",
-    "name" => "Open Box - Apple MacBook Air 13.6\" with Touch ID (2022) - Midnight (Apple M2 / 16GB RAM / 256GB SSD) -
-    English",
-    "price" => 969.99,
-    "original_price" => 1299.99,
-    "discount" => 25,
-    "rating" => 0.0,
-    "reviews_count" => 0,
-    "brand" => "Apple",
-    "model" => "MacBook Air 13.6\" (2022)",
-    "processor" => "Apple M2",
-    "ram" => "16GB",
-    "storage" => "256GB SSD",
-    "description" => "Open Box Apple MacBook Air featuring Apple M2 chip, 16GB RAM, and 256GB SSD in Midnight color."
+        "id" => 1,
+        "image_url" => "https://multimedia.bbycastatic.ca/multimedia/products/250x250/184/18481/18481518.jpg",
+        "name" => "Samsung 50\" 4K UHD HDR LED Tizen OS Smart TV (UN50DU7200FXZC) - 2024",
+        "price" => 499.99,
+        "original_price" => 795.99,
+        "discount" => 16,
+        "rating" => 4.42,
+        "reviews_count" => 1652,
+        "brand" => "Samsung",
+        "category_name" => "Electronics",
+        "model" => "UN50DU7200FXZC",
+        "description" => "Samsung 50\" 4K UHD HDR LED Smart TV with Tizen OS, featuring high-quality display and a sleek design."
     ],
     [
-    "id" => 2,
-    "image_url" => "https://multimedia.bbycastatic.ca/multimedia/products/250x250/179/17952/17952861.jpeg",
-    "name" => "HP Premium Stream 14\" HD BrightView Laptop, Intel Celeron N4120, 64GB eMMC, 16GB RAM, UHD Graphics, HD
-    Webcam",
-    "price" => 399.00,
-    "original_price" => 549.00,
-    "discount" => 27,
-    "rating" => 4.36,
-    "reviews_count" => 634,
-    "brand" => "HP",
-    "model" => "Premium Stream 14\"",
-    "processor" => "Intel Celeron N4120",
-    "ram" => "16GB",
-    "storage" => "64GB eMMC",
-    "description" => "Affordable laptop with Intel Celeron processor, 16GB RAM, and 64GB eMMC storage. Includes Office
-    365 and 32GB Hotface USB card."
+        "id" => 2,
+        "image_url" => "https://multimedia.bbycastatic.ca/multimedia/products/250x250/179/17902/17902840.jpg",
+        "name" => "Sony ULT WEAR Over-Ear Noise Cancelling Bluetooth Headphones - Off White",
+        "price" => 199.99,
+        "original_price" => 259.99,
+        "discount" => 24,
+        "rating" => 4.5,
+        "reviews_count" => 22,
+        "brand" => "Sony",
+        "category_name" => "Headphones",
+        "model" => "ULT WEAR Over-Ear",
+        "description" => "Sony ULT WEAR Bluetooth headphones with noise cancelling, providing immersive sound and comfort."
     ],
     [
-    "id" => 3,
-    "image_url" => "https://multimedia.bbycastatic.ca/multimedia/products/250x250/169/16948/16948051.jpg",
-    "name" => "Lenovo IdeaPad Slim 3i 15.6\" Laptop - Arctic Grey (Intel Core i5-1335U/16GB RAM/512GB SSD/Windows 11)",
-    "price" => 699.99,
-    "original_price" => 1099.99,
-    "discount" => 36,
-    "rating" => 4.6,
-    "reviews_count" => 87,
-    "brand" => "Lenovo",
-    "model" => "IdeaPad Slim 3i 15.6\"",
-    "processor" => "Intel Core i5-1335U",
-    "ram" => "16GB",
-    "storage" => "512GB SSD",
-    "description" => "A slim and stylish laptop with Intel Core i5 processor, 16GB RAM, and 512GB SSD, running on
-    Windows 11."
+        "id" => 3,
+        "image_url" => "https://multimedia.bbycastatic.ca/multimedia/products/250x250/170/17087/17087947.jpg",
+        "name" => "Segway Ninebot KickScooter MAX G2 Electric Scooter (900 W Motor / 50km Range / 35.4km/h Top Speed) - Dark Grey",
+        "price" => 1210.99,
+        "original_price" => 1499.99,
+        "discount" => 13,
+        "rating" => 4.58,
+        "reviews_count" => 475,
+        "brand" => "Segway",
+        "category_name" => "Electric Scooters",
+        "model" => "Ninebot KickScooter MAX G2",
+        "description" => "Segway Ninebot MAX G2 Electric Scooter, offering 900W motor, 50km range, and a top speed of 35.4 km/h. Ideal for commuting and recreational use."
     ],
     [
-    "id" => 4,
-    "image_url" => "https://multimedia.bbycastatic.ca/multimedia/products/250x250/176/17628/17628818.jpeg",
-    "name" => "REFURBISHED (EXCELLENT) - DELL LATITUDE 7490 CI5-8350U 16GB DDR4 512GB SSD 14\" FHD W11P",
-    "price" => 289.00,
-    "original_price" => 650.00,
-    "discount" => 56,
-    "rating" => 5.0,
-    "reviews_count" => 2,
-    "brand" => "Dell",
-    "model" => "Latitude 7490",
-    "processor" => "Intel Core i5-8350U",
-    "ram" => "16GB DDR4",
-    "storage" => "512GB SSD",
-    "description" => "Refurbished Dell Latitude 7490 with Intel Core i5-8350U processor, 16GB RAM, and 512GB SSD in
-    excellent condition."
+        "id" => 4,
+        "image_url" => "https://multimedia.bbycastatic.ca/multimedia/products/250x250/123/12383/12383793.jpg",
+        "name" => "Sony Alpha a7 III Full-Frame Mirrorless Vlogger Camera with 28-70mm OSS Lens Kit",
+        "price" => 2978.99,
+        "original_price" => 3399.99,
+        "discount" => 19,
+        "rating" => 4.85,
+        "reviews_count" => 1737,
+        "brand" => "Sony",
+        "category_name" => "Cameras",
+        "model" => "Alpha a7 III",
+        "description" => "Sony Alpha a7 III Full-Frame Mirrorless Camera with 28-70mm OSS Lens Kit, designed for vloggers and photographers who demand superior quality and performance."
     ],
     [
-    "id" => 5,
-    "image_url" => "https://multimedia.bbycastatic.ca/multimedia/products/250x250/169/16982/16982680.jpg",
-    "name" => "HP 15\" Laptop with 1 Year of Microsoft 365 - Natural Silver (Intel N100/128GB SSD/4GB RAM)",
-    "price" => 279.99,
-    "original_price" => 429.99,
-    "discount" => 35,
-    "rating" => 4.04,
-    "reviews_count" => 197,
-    "brand" => "HP",
-    "model" => "HP 15\" Laptop",
-    "processor" => "Intel N100",
-    "ram" => "4GB",
-    "storage" => "128GB SSD",
-    "description" => "Affordable HP laptop featuring Intel N100, 4GB RAM, 128GB SSD, and comes with 1-year Microsoft 365
-    subscription."
+        "id" => 5,
+        "image_url" => "https://multimedia.bbycastatic.ca/multimedia/products/250x250/179/17981/17981254.jpg",
+        "name" => "HP 15.6\" Laptop - Natural Silver (Intel Core i7 1255U/16GB RAM/1TB SSD/Windows 11)",
+        "price" => 799.99,
+        "original_price" => 999.99,
+        "discount" => 18,
+        "rating" => 4.04,
+        "reviews_count" => 221,
+        "brand" => "HP",
+        "category_name" => "Laptops",
+        "model" => "HP 15.6\" Laptop",
+        "description" => "HP 15.6\" Laptop with Intel Core i7, 16GB RAM, and 1TB SSD, running Windows 11 for smooth performance and productivity."
     ],
     [
-    "id" => 6,
-    "image_url" => "https://multimedia.bbycastatic.ca/multimedia/products/250x250/188/18893/18893052.jpeg",
-    "name" => "HP - 15.6\" Touch-Screen Laptop for Students and Business - Intel Core i5-1235u - 16GB Memory - 512GB
-    SSD",
-    "price" => 649.99,
-    "original_price" => 1049.99,
-    "discount" => 38,
-    "rating" => 0.0,
-    "reviews_count" => 0,
-    "brand" => "HP",
-    "model" => "15.6\" Touch-Screen",
-    "processor" => "Intel Core i5-1235U",
-    "ram" => "16GB",
-    "storage" => "512GB SSD",
-    "description" => "Versatile 15.6\" HP laptop with touch-screen, Intel Core i5 processor, 16GB RAM, and 512GB SSD,
-    perfect for students and business use."
+        "id" => 6,
+        "image_url" => "https://multimedia.bbycastatic.ca/multimedia/products/250x250/189/18925/18925586.jpg",
+        "name" => "Samsung Galaxy S25 128GB - Icyblue - Unlocked",
+        "price" => 1199.99,
+        "original_price" => 998.99,
+        "discount" => 11,
+        "rating" => 3.0,
+        "reviews_count" => 2,
+        "brand" => "Samsung",
+        "category_name" => "Smartphones",
+        "model" => "Galaxy S25",
+        "description" => "Samsung Galaxy S25 128GB with Icyblue finish, unlocked for use with any carrier, featuring advanced mobile technology."
     ],
     [
-    "id" => 7,
-    "image_url" => "https://multimedia.bbycastatic.ca/multimedia/products/250x250/182/18245/18245883.jpg",
-    "name" => "ASUS ROG Strix G15 15.6\" Gaming Laptop - Eclipse Grey (AMD Ryzen 7 6800H/8GB RAM/512GB SSD/GeForce RTX
-    3050)",
-    "price" => 1499.99,
-    "original_price" => 1499.99,
-    "discount" => 0,
-    "rating" => 3.67,
-    "reviews_count" => 3,
-    "brand" => "ASUS",
-    "model" => "ROG Strix G15",
-    "processor" => "AMD Ryzen 7 6800H",
-    "ram" => "8GB",
-    "storage" => "512GB SSD",
-    "description" => "Gaming laptop featuring AMD Ryzen 7 6800H, 8GB RAM, 512GB SSD, and GeForce RTX 3050 for a smooth
-    gaming experience."
+        "id" => 7,
+        "image_url" => "https://multimedia.bbycastatic.ca/multimedia/products/250x250/165/16567/16567284.jpg",
+        "name" => "Apple iPad Pro 12.9\" 2TB with Wi-Fi (6th Generation) - Space Grey",
+        "price" => 1929.99,
+        "original_price" => 2129.99,
+        "discount" => 8,
+        "rating" => 0.0,
+        "reviews_count" => 0,
+        "brand" => "Apple",
+        "category_name" => "Tablets",
+        "model" => "iPad Pro 12.9\"",
+        "description" => "Apple iPad Pro 12.9\" 2TB, with Wi-Fi and 6th Generation performance, featuring a stunning display and powerful hardware."
+    ],
+    // New Products
+    [
+        "id" => 8,
+        "image_url" => "https://multimedia.bbycastatic.ca/multimedia/products/250x250/163/16374/16374006.jpg",
+        "name" => "Breville Barista Express Impress Espresso Machine (BES876BSS1BNA1) - Brushed Stainless Steel",
+        "price" => 899.99,
+        "original_price" => 1149.99,
+        "discount" => 250,
+        "rating" => 4.7,
+        "reviews_count" => 592,
+        "brand" => "Breville",
+        "category_name" => "Kitchen Appliances",
+        "model" => "BES876BSS1BNA1",
+        "description" => "The Breville Barista Express Impress Espresso Machine offers expert-quality espresso at home with a brushed stainless steel finish."
     ],
     [
-    "id" => 8,
-    "image_url" => "https://multimedia.bbycastatic.ca/multimedia/products/250x250/181/18142/18142773.png",
-    "name" => "Dell Inspiron 15.6\" FHD Touchscreen Laptop, Intel Core i7-1255U, 1TB SSD, 16GB RAM, Intel Iris Xe
-    Graphics",
-    "price" => 949.00,
-    "original_price" => 1409.00,
-    "discount" => 33,
-    "rating" => 5.0,
-    "reviews_count" => 1,
-    "brand" => "Dell",
-    "model" => "Inspiron 15.6\" Touchscreen",
-    "processor" => "Intel Core i7-1255U",
-    "ram" => "16GB",
-    "storage" => "1TB SSD",
-    "description" => "Dell Inspiron 15.6\" laptop with a full HD touchscreen, Intel Core i7 processor, 16GB RAM, and 1TB
-    SSD."
+        "id" => 9,
+        "image_url" => "https://multimedia.bbycastatic.ca/multimedia/products/250x250/179/17900/17900147.jpg",
+        "name" => "Ninja CREAMi Deluxe 11-in-1 Ice Cream Maker - Silver",
+        "price" => 229.99,
+        "original_price" => 299.99,
+        "discount" => 70,
+        "rating" => 4.26,
+        "reviews_count" => 216,
+        "brand" => "Ninja",
+        "category_name" => "Kitchen Appliances",
+        "model" => "CREAMi Deluxe",
+        "description" => "The Ninja CREAMi Deluxe 11-in-1 Ice Cream Maker helps you create a variety of frozen desserts, from ice cream to sorbets, with ease."
+    ],
+    [
+        "id" => 10,
+        "image_url" => "https://multimedia.bbycastatic.ca/multimedia/products/250x250/137/13797/13797305.jpg",
+        "name" => "JBL Flip 5 Waterproof Bluetooth Wireless Speaker - Black",
+        "price" => 109.99,
+        "original_price" => 159.99,
+        "discount" => 50,
+        "rating" => 4.7,
+        "reviews_count" => 6713,
+        "brand" => "JBL",
+        "category_name" => "Audio",
+        "model" => "Flip 5",
+        "description" => "JBL Flip 5 Waterproof Bluetooth Wireless Speaker delivers high-quality sound in a compact, durable design that’s perfect for outdoor adventures."
     ]
-    ];
-    @endphp
-
-
+];
+@endphp
 
 
 
 
 
    <!-- section -->
-   <section class="my-14">
+   <section class="bg-blue-50 bg-opacity-50 to-white py-14">
     <div class="container mx-auto px-6">
-        <!-- row -->
-        <div class="flex flex-wrap">
-            <div class="text-center mb-12">
-                <span class="inline-block px-3 py-1 bg-green-100 text-green-600 rounded-full text-sm font-medium mb-2">Top Selling Products</span>
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-800">
-                    Discover Your Ideal Product
-                </h2>
-                <p class="mt-3 text-gray-600 max-w-2xl mx-auto">
-                    Uncover the perfect items tailored to fit your lifestyle. Whether you're looking for a powerful work tool, a device for relaxation, or something for everyday use, we have a wide selection to suit all your needs.
-                </p>
-            </div>
-        </div>
+        <!-- row --> 
+        <div class="text-center mb-12">
+            <span class="inline-block px-3 py-1 bg-green-100 text-green-600 rounded-full text-sm font-medium mb-2">Top Selling Products</span>
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-800">
+                Discover Your Ideal Product
+            </h2>
+            <p class="mt-3 text-gray-600 max-w-2xl mx-auto">
+                Uncover the perfect items tailored to fit your lifestyle. Whether you're looking for a powerful work tool, a device for relaxation, or something for everyday use, we have a wide selection to suit all your needs.
+            </p>
+        </div> 
         
 
         <div class="swiper-container swiper pt-20" id="swiper-1" data-pagination-type="" data-speed="1600"
@@ -561,159 +564,83 @@
 
 
 
-                @foreach ($laptops as $laptop)
+                @foreach ($products as $product)
+    <div class="swiper-slide">
+        <div class="relative rounded-lg break-words border bg-white border-gray-300 card-product">
+            <div class="flex-auto p-4">
+                <div class="text-center relative flex justify-center">
+                    <div class="absolute top-0 left-0 z-10">
 
-
-
-                <div class="swiper-slide">
-                    <div class="relative rounded-lg break-words border bg-white border-gray-300 card-product">
-                        <div class="flex-auto p-4">
-                            <div class="text-center relative flex justify-center">
-                                <div class="absolute top-0 left-0">
-                                    <span
-                                        class="inline-block p-1 text-center font-semibold text-sm align-baseline leading-none rounded bg-red-600 text-white">Sale</span>
-                                </div>
-                                <a href="#!">
-                                    <img src="{{ $laptop['image_url'] }}" alt="{{ $laptop['name'] }}"
-                                        class="w-full h-auto" /></a>
-
-                                <div class="absolute w-full bottom-[15%] opacity-0 invisible card-product-action">
-                                    <a href="#!"
-                                        class="h-[34px] w-[34px] leading-[34px] bg-white shadow inline-flex items-center justify-center rounded-lg hover:bg-green-600 hover:text-white"
-                                        data-bs-toggle="tooltip" data-bs-html="true" title="Quick View">
-                                        <span data-bs-toggle="modal" data-bs-target="#quickViewModal">
-                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                class="icon icon-tabler icon-tabler-eye" width="16" height="16"
-                                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                                                fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-                                                <path
-                                                    d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
-                                            </svg>
-                                        </span>
-                                    </a>
-                                    <a href="#!"
-                                        class="h-[34px] w-[34px] leading-[34px] bg-white shadow inline-flex items-center justify-center rounded-lg hover:bg-green-600 hover:text-white"
-                                        data-bs-toggle="tooltip" data-bs-html="true" title="Wishlist">
-                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                            class="icon icon-tabler icon-tabler-heart" width="16" height="16"
-                                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                            stroke-linecap="round" stroke-linejoin="round">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                            <path
-                                                d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
-                                        </svg>
-                                    </a>
-                                    <a href="#!"
-                                        class="h-[34px] w-[34px] leading-[34px] bg-white shadow inline-flex items-center justify-center rounded-lg hover:bg-green-600 hover:text-white"
-                                        data-bs-toggle="tooltip" data-bs-html="true" title="Compare">
-                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                            class="icon icon-tabler icon-tabler-arrows-exchange" width="16"
-                                            height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                                            fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                            <path d="M7 10h14l-4 -4" />
-                                            <path d="M17 14h-14l4 4" />
-                                        </svg>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="flex flex-col gap-3">
-                                <a href="#!" class="text-decoration-none text-gray-500"><small>Snack &
-                                        Munchies</small></a>
-                                <div class="flex flex-col gap-2">
-                                    <h3 class="text-base truncate"><a href="./shop-single.html">Haldiram's Sev
-                                            Bhujia</a></h3>
-                                    <div class="flex items-center">
-                                        <div class="flex flex-row gap-3">
-                                            <small class="text-yellow-500 flex items-center">
-                                                <svg xmlns="http://www.w3.org/2000/svg"
-                                                    class="icon icon-tabler icon-tabler-star-filled" width="14"
-                                                    height="14" viewBox="0 0 24 24" stroke-width="2"
-                                                    stroke="currentColor" fill="none" stroke-linecap="round"
-                                                    stroke-linejoin="round">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                    <path
-                                                        d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"
-                                                        stroke-width="0" fill="currentColor" />
-                                                </svg>
-                                                <svg xmlns="http://www.w3.org/2000/svg"
-                                                    class="icon icon-tabler icon-tabler-star-filled" width="14"
-                                                    height="14" viewBox="0 0 24 24" stroke-width="2"
-                                                    stroke="currentColor" fill="none" stroke-linecap="round"
-                                                    stroke-linejoin="round">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                    <path
-                                                        d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"
-                                                        stroke-width="0" fill="currentColor" />
-                                                </svg>
-                                                <svg xmlns="http://www.w3.org/2000/svg"
-                                                    class="icon icon-tabler icon-tabler-star-filled" width="14"
-                                                    height="14" viewBox="0 0 24 24" stroke-width="2"
-                                                    stroke="currentColor" fill="none" stroke-linecap="round"
-                                                    stroke-linejoin="round">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                    <path
-                                                        d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"
-                                                        stroke-width="0" fill="currentColor" />
-                                                </svg>
-                                                <svg xmlns="http://www.w3.org/2000/svg"
-                                                    class="icon icon-tabler icon-tabler-star-filled" width="14"
-                                                    height="14" viewBox="0 0 24 24" stroke-width="2"
-                                                    stroke="currentColor" fill="none" stroke-linecap="round"
-                                                    stroke-linejoin="round">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                    <path
-                                                        d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"
-                                                        stroke-width="0" fill="currentColor" />
-                                                </svg>
-                                                <svg xmlns="http://www.w3.org/2000/svg"
-                                                    class="icon icon-tabler icon-tabler-star-half-filled" width="14"
-                                                    height="14" viewBox="0 0 24 24" stroke-width="2"
-                                                    stroke="currentColor" fill="none" stroke-linecap="round"
-                                                    stroke-linejoin="round">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                    <path
-                                                        d="M12 1a.993 .993 0 0 1 .823 .443l.067 .116l2.852 5.781l6.38 .925c.741 .108 1.08 .94 .703 1.526l-.07 .095l-.078 .086l-4.624 4.499l1.09 6.355a1.001 1.001 0 0 1 -1.249 1.135l-.101 -.035l-.101 -.046l-5.693 -3l-5.706 3c-.105 .055 -.212 .09 -.32 .106l-.106 .01a1.003 1.003 0 0 1 -1.038 -1.06l.013 -.11l1.09 -6.355l-4.623 -4.5a1.001 1.001 0 0 1 .328 -1.647l.113 -.036l.114 -.023l6.379 -.925l2.853 -5.78a.968 .968 0 0 1 .904 -.56zm0 3.274v12.476a1 1 0 0 1 .239 .029l.115 .036l.112 .05l4.363 2.299l-.836 -4.873a1 1 0 0 1 .136 -.696l.07 -.099l.082 -.09l3.546 -3.453l-4.891 -.708a1 1 0 0 1 -.62 -.344l-.073 -.097l-.06 -.106l-2.183 -4.424z"
-                                                        stroke-width="0" fill="currentColor" />
-                                                </svg>
-                                            </small>
-                                            <div class="flex flex-row gap-1">
-                                                <span class="text-gray-500 text-sm">4.5</span>
-                                                <span class="text-gray-500 text-sm">(149)</span>
-                                            </div>
-                                        </div>
+                        @if ($product['discount'] > 0)
+                            <span class="inline-block px-2 py-1 rounded-md text-center font-semibold text-sm align-baseline 
+                            leading-none bg-red-500 text-white">{{ $product['discount'] }}% off
+                            </span>
+                        @endif
+                    </div>
+                    <a href="#!">
+                        <!-- Image with Zoom Effect on Hover -->
+                        <div class="relative group">
+                            <img src="{{ $product['image_url'] }}" alt="{{ $product['name'] }}"
+                                class="w-full p-4 h-auto transition-transform duration-300 transform group-hover:scale-110" />
+                        </div>
+                    </a>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <a href="#!" class="text-decoration-none text-gray-500"><small> {{ $product['category_name'] }}</small></a>
+                    <div class="flex flex-col gap-2">
+                        <h3 class="text-base truncate"><a href="./shop-single.html">{{ $product['name'] }}</a></h3>
+                        <div class="flex items-center">
+                            <div class="flex flex-row gap-3">
+                                <!-- Rating Stars -->
+                                <div class="flex items-center mb-3">
+                                    <div class="flex text-yellow-400 small">
+                                        @for ($i = 1; $i <= 5; $i++) 
+                                            @if ($i <=floor($product['rating'])) 
+                                                <i class="fa-solid fa-star"></i>
+                                            @elseif ($i - 0.5 <= $product['rating']) 
+                                                <i class="fa-solid fa-star-half-alt"></i>
+                                            @else
+                                                <i class="far fa-star"></i>
+                                            @endif
+                                        @endfor
                                     </div>
-                                </div>
-                                <div class="flex justify-between items-center">
-                                    <div>
-                                        <span class="text-gray-900 font-semibold">$18</span>
-                                        <span class="line-through text-gray-500">$24</span>
-                                    </div>
-                                    <div>
-                                        <button type="button"
-                                            class="btn inline-flex items-center gap-x-1 bg-green-600 text-white border-green-600 disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-green-700 hover:border-green-700 active:bg-green-700 active:border-green-700 focus:outline-none focus:ring-4 focus:ring-green-300 btn-sm">
-                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                class="icon icon-tabler icon-tabler-plus" width="14" height="14"
-                                                viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"
-                                                fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                <path d="M12 5l0 14" />
-                                                <path d="M5 12l14 0" />
-                                            </svg>
-                                            <span>Add</span>
-                                        </button>
-                                    </div>
+                                    <span class="text-xs text-gray-500 ml-2">({{ $product['reviews_count'] }} reviews)</span>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <span class="text-gray-900 font-semibold">${{ $product['price'] }}</span>
+                            <span class="line-through text-gray-500">${{ $product['original_price'] }}</span>
+                        </div>
+                        <div>
+                            <!-- Wishlist Button -->
+                            <button class="relative py-2 px-3 rounded-full shadow-md bg-gray-200 hover:bg-red-100 transition-colors duration-200 focus:outline-none group">
+                                <i class="fal fa-heart text-gray-400 group-hover:text-red-500 transition-colors duration-300"></i>
+                                <!-- Heart Icon Fill Animation -->
+                                <div class="absolute top-0 left-0 right-0 bottom-0 bg-red-500 opacity-0 group-hover:opacity-30 rounded-full transition-opacity duration-300"></div>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- CTA Buttons -->
+                    <div class="flex space-x-2 mt-auto">
+                        <a href="#" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg font-medium text-sm text-center transition-colors duration-200 shadow-sm">
+                            Add to Cart <i class="far fa-shopping-cart ml-2"></i>
+                        </a>
+                        <a href="#" class="bg-blue-50 hover:bg-blue-100 text-blue-800 py-2 px-4 rounded-lg font-medium text-sm transition-colors duration-200">
+                            Details
+                        </a>
+                    </div>
                 </div>
+            </div>
+        </div>
+    </div>
+@endforeach
 
+     
 
-
-                @endforeach
 
 
                 <!-- Add more slides as needed -->
@@ -730,6 +657,203 @@
 </section>
 
 
+@php
+$allProducts = [
+    [
+        "id" => 1,
+        "image_url" => "https://multimedia.bbycastatic.ca/multimedia/products/250x250/189/18925/18925110.jpeg",
+        "name" => "Open Box - Apple MacBook Air 13.6\" with Touch ID (2022) - Midnight (Apple M2 / 16GB RAM / 256GB SSD) - English",
+        "price" => 969.99,
+        "original_price" => 1299.99,
+        "discount" => 25,
+        "rating" => 0.0,
+        "reviews_count" => 0,
+        "brand" => "Apple",
+        "model" => "MacBook Air 13.6\" (2022)",
+        "processor" => "Apple M2",
+        "ram" => "16GB",
+        "storage" => "256GB SSD",
+        "description" => "Open Box Apple MacBook Air featuring Apple M2 chip, 16GB RAM, and 256GB SSD in Midnight color."
+    ],
+    [
+        "id" => 2,
+        "image_url" => "https://multimedia.bbycastatic.ca/multimedia/products/250x250/165/16566/16566905.jpg",
+        "name" => "Apple iPad 10.9\" 64GB with Wi-Fi 6 (10th Generation) - Silver",
+        "price" => 439.99,
+        "original_price" => 499.99,
+        "discount" => 12,
+        "rating" => 4.42,
+        "reviews_count" => 12,
+        "brand" => "Apple",
+        "model" => "iPad 10.9\" (10th Generation)",
+        "processor" => "Apple A14 Bionic",
+        "ram" => "4GB",
+        "storage" => "64GB",
+        "description" => "Apple iPad 10.9\" with Wi-Fi 6, featuring a 10th generation Apple A14 Bionic chip, 4GB RAM, and 64GB storage."
+    ],
+    [
+        "id" => 3,
+        "image_url" => "https://multimedia.bbycastatic.ca/multimedia/products/250x250/155/15557/15557657.jpg",
+        "name" => "Soundcore by Anker Life Tune Pro Over-Ear Noise Cancelling Bluetooth Headphones - Blue",
+        "price" => 59.99,
+        "original_price" => 159.99,
+        "discount" => 62,
+        "rating" => 4.24,
+        "reviews_count" => 49,
+        "brand" => "Anker",
+        "model" => "Life Tune Pro",
+        "processor" => "Bluetooth 5.0",
+        "ram" => "N/A",
+        "storage" => "N/A",
+        "description" => "Anker Life Tune Pro Over-Ear Noise Cancelling Bluetooth Headphones in Blue. Provides superior sound quality and noise cancellation."
+    ],
+    [
+        "id" => 4,
+        "image_url" => "https://multimedia.bbycastatic.ca/multimedia/products/250x250/153/15386/15386732.jpg",
+        "name" => "HP DeskJet 2755e Wireless All-In-One Inkjet Printer - HP Instant Ink 3-Month Free Trial Included*",
+        "price" => 59.99,
+        "original_price" => 104.99,
+        "discount" => 43,
+        "rating" => 4.14,
+        "reviews_count" => 5460,
+        "brand" => "HP",
+        "model" => "DeskJet 2755e",
+        "processor" => "N/A",
+        "ram" => "N/A",
+        "storage" => "N/A",
+        "description" => "HP DeskJet 2755e wireless all-in-one inkjet printer, featuring a 3-month free trial of HP Instant Ink."
+    ],
+    [
+        "id" => 5,
+        "image_url" => "https://multimedia.bbycastatic.ca/multimedia/products/250x250/184/18470/18470962.jpg",
+        "name" => "Apple AirPods 4 In-Ear True Wireless Earbuds with USB-C Charging Case",
+        "price" => 159.99,
+        "original_price" => 179.99,
+        "discount" => 11,
+        "rating" => 3.69,
+        "reviews_count" => 13,
+        "brand" => "Apple",
+        "model" => "AirPods 4",
+        "processor" => "Apple H1 Chip",
+        "ram" => "N/A",
+        "storage" => "N/A",
+        "description" => "Apple AirPods 4 In-Ear true wireless earbuds with USB-C charging case. Features Apple H1 chip for seamless connectivity."
+    ],
+    [
+        "id" => 6,
+        "image_url" => "https://multimedia.bbycastatic.ca/multimedia/products/250x250/149/14933/14933348.jpg",
+        "name" => "Samsung 27\" FHD 75Hz 5ms GTG IPS LED FreeSync Monitor (LF27T350FHNXZA) - Dark Blue Grey",
+        "price" => 129.99,
+        "original_price" => 149.99,
+        "discount" => 13,
+        "rating" => 4.65,
+        "reviews_count" => 6683,
+        "brand" => "Samsung",
+        "model" => "LF27T350FHNXZA",
+        "processor" => "N/A",
+        "ram" => "N/A",
+        "storage" => "N/A",
+        "description" => "Samsung 27\" FHD IPS LED FreeSync monitor with 75Hz refresh rate, 5ms GTG response time, and a sleek dark blue-grey design."
+    ],
+    [
+        "id" => 7,
+        "image_url" => "https://multimedia.bbycastatic.ca/multimedia/products/250x250/181/18150/18150113.jpg",
+        "name" => "Toshiba 43\" 1080p HD LED Fire Smart TV (43V35KU) - 2024",
+        "price" => 249.99,
+        "original_price" => 299.99,
+        "discount" => 17,
+        "rating" => 4.63,
+        "reviews_count" => 1103,
+        "brand" => "Toshiba",
+        "model" => "43V35KU",
+        "processor" => "N/A",
+        "ram" => "N/A",
+        "storage" => "N/A",
+        "description" => "Toshiba 43\" 1080p HD LED Fire Smart TV with Fire TV built-in for seamless streaming experience."
+    ],
+    [
+        "id" => 8,
+        "image_url" => "https://multimedia.bbycastatic.ca/multimedia/products/250x250/172/17278/17278649.jpg",
+        "name" => "Apple AirPods Pro 2 Noise Cancelling True Wireless Earbuds with USB-C MagSafe Charging Case",
+        "price" => 279.99,
+        "original_price" => 329.99,
+        "discount" => 15,
+        "rating" => 4.37,
+        "reviews_count" => 49,
+        "brand" => "Apple",
+        "model" => "AirPods Pro 2",
+        "processor" => "Apple H2 Chip",
+        "ram" => "N/A",
+        "storage" => "N/A",
+        "description" => "Apple AirPods Pro 2 with Noise Cancellation and MagSafe charging case featuring Apple H2 chip for high-quality sound."
+    ],
+    [
+        "id" => 9,
+        "image_url" => "https://multimedia.bbycastatic.ca/multimedia/products/250x250/184/18481/18481518.jpg",
+        "name" => "Samsung 50\" 4K UHD HDR LED Tizen OS Smart TV (UN50DU7200FXZC) - 2024",
+        "price" => 469.99,
+        "original_price" => 599.99,
+        "discount" => 22,
+        "rating" => 4.42,
+        "reviews_count" => 1652,
+        "brand" => "Samsung",
+        "model" => "UN50DU7200FXZC",
+        "processor" => "N/A",
+        "ram" => "N/A",
+        "storage" => "N/A",
+        "description" => "Samsung 50\" 4K UHD HDR LED Smart TV featuring Tizen OS with stunning 4K resolution and HDR support."
+    ],
+    [
+        "id" => 10,
+        "image_url" => "https://multimedia.bbycastatic.ca/multimedia/products/250x250/188/18896/18896891.jpg",
+        "name" => "Samsung Galaxy A16 5G 128GB - Blue Black - Unlocked",
+        "price" => 239.99,
+        "original_price" => 269.99,
+        "discount" => 11,
+        "rating" => 5.0,
+        "reviews_count" => 1,
+        "brand" => "Samsung",
+        "model" => "Galaxy A16 5G",
+        "processor" => "Exynos 850",
+        "ram" => "4GB",
+        "storage" => "128GB",
+        "description" => "Samsung Galaxy A16 5G with 128GB storage, 4GB RAM, and Exynos 850 processor. Unlocked for all carriers."
+    ],
+    [
+        "id" => 11,
+        "image_url" => "https://multimedia.bbycastatic.ca/multimedia/products/250x250/184/18486/18486669.jpg",
+        "name" => "Acer Aspire Go 15.6\" Laptop - Silver (Intel N100/8GB RAM/512GB SSD/Windows 11)",
+        "price" => 399.99,
+        "original_price" => 549.99,
+        "discount" => 27,
+        "rating" => 5.0,
+        "reviews_count" => 3,
+        "brand" => "Acer",
+        "model" => "Aspire Go",
+        "processor" => "Intel N100",
+        "ram" => "8GB",
+        "storage" => "512GB SSD",
+        "description" => "Acer Aspire Go 15.6\" Laptop with Intel N100 processor, 8GB RAM, and 512GB SSD."
+    ],
+    [
+        "id" => 12,
+        "image_url" => "https://multimedia.bbycastatic.ca/multimedia/products/250x250/179/17981/17981254.jpg",
+        "name" => "HP 15.6\" Laptop - Natural Silver (Intel Core i7 1255U/16GB RAM/1TB SSD/Windows 11)",
+        "price" => 799.99,
+        "original_price" => 999.99,
+        "discount" => 20,
+        "rating" => 4.04,
+        "reviews_count" => 221,
+        "brand" => "HP",
+        "model" => "HP 15.6\" Laptop",
+        "processor" => "Intel Core i7 1255U",
+        "ram" => "16GB",
+        "storage" => "1TB SSD",
+        "description" => "HP 15.6\" Laptop with Intel Core i7, 16GB RAM, and 1TB SSD storage."
+    ]
+];
+
+@endphp
 
 
     <!-- Laptops Category Section -->
@@ -792,14 +916,14 @@
 
             <!-- Products Grid with Enhanced Cards -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
-                @foreach ($laptops as $laptop)
+                @foreach ($allProducts as $product)
                 <div
                     class="group relative rounded-xl flex flex-col justify-items-start shadow-md bg-white overflow-hidden transition-all duration-300 hover:shadow-xl border border-gray-100">
                     <!-- Sale Badge (if applicable) -->
-                    @if(isset($laptop['discount']) && $laptop['discount'] > 0)
+                    @if(isset($product['discount']) && $product['discount'] > 0)
                     <div
                         class="absolute top-3 left-3 z-10 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
-                        {{ $laptop['discount'] }}% off
+                        {{ $product['discount'] }}% off
                     </div>
                     @endif
 
@@ -811,48 +935,49 @@
 
                     <!-- Product Image with Hover Effect -->
                     <a href="#" class="block h-56 md:h-64 overflow-hidden bg-white p-4">
-                        <img src="{{ $laptop['image_url'] }}" alt="{{ $laptop['name'] }}"
+                        <img src="{{ $product['image_url'] }}" alt="{{ $product['name'] }}"
                             class="w-full h-full object-contain transform transition-transform duration-500 group-hover:scale-110">
                     </a>
 
                     <!-- Product Info with Better Layout -->
                     <div class="p-5 flex flex-grow flex-col">
                         <!-- Brand Name -->
-                        <p class="text-xs font-medium text-blue-600 mb-1">{{ $laptop['brand'] }}</p>
+                        <p class="text-xs font-medium text-blue-600 mb-1">{{ $product['brand'] }}</p>
 
                         <!-- Product Name -->
                         <a href="#"
                             class="block text-base md:text-lg font-bold text-gray-800 hover:text-blue-600 transition-colors mb-2 line-clamp-2"
-                            title="{{ $laptop['name'] }}">
-                            {{ $laptop['name'] }}
+                            title="{{ $product['name'] }}">
+                            {{ $product['name'] }}
                         </a>
 
                         <!-- Brief Specs -->
                         <p class="text-sm text-gray-600 mb-3 line-clamp-2">
-                            {{ $laptop['processor'] }} • {{ $laptop['ram'] }} RAM • {{ $laptop['storage'] }}
+                            {{ $product['processor'] }} • {{ $product['ram'] }} RAM • {{ $product['storage'] }}
                         </p>
 
                         <!-- Rating Stars -->
                         <div class="flex items-center mb-3">
                             <div class="flex text-yellow-400">
-                                @for ($i = 1; $i <= 5; $i++) @if ($i <=floor($laptop['rating'])) <i class="fas fa-star">
+                                @for ($i = 1; $i <= 5; $i++) @if ($i <=floor($product['rating'])) <i class="fas fa-star">
                                     </i>
-                                    @elseif ($i - 0.5 <= $laptop['rating']) <i class="fas fa-star-half-alt"></i>
-                                        @else
+                                    @elseif ($i - 0.5 <= $product['rating']) 
+                                        <i class="fas fa-star-half-alt"></i>
+                                    @else
                                         <i class="far fa-star"></i>
-                                        @endif
-                                        @endfor
+                                    @endif
+                                @endfor
                             </div>
-                            <span class="text-xs text-gray-500 ml-2">({{ $laptop['reviews_count'] }} reviews)</span>
+                            <span class="text-xs text-gray-500 ml-2">({{ $product['reviews_count'] }} reviews)</span>
                         </div>
 
                         <!-- Price Section with Old Price -->
                         <div class="flex items-center space-x-2 mb-4">
-                            @if(isset($laptop['original_price']))
-                            <p class="text-sm text-gray-500 line-through">${{ number_format($laptop['original_price'],
+                            @if(isset($product['original_price']))
+                            <p class="text-sm text-gray-500 line-through">${{ number_format($product['original_price'],
                                 2) }}</p>
                             @endif
-                            <p class="text-xl font-bold text-gray-800">${{ number_format($laptop['price'], 2) }}</p>
+                            <p class="text-xl font-bold text-gray-800">${{ number_format($product['price'], 2) }}</p>
                         </div>
 
                         <!-- CTA Buttons -->
@@ -876,7 +1001,7 @@
             <div class="text-center mt-12">
                 <a href="#"
                     class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-blue-700 bg-blue-100 hover:bg-blue-200 transition-colors duration-200">
-                    View All Laptops
+                    View All Products
                     <i class="fas fa-arrow-right ml-2"></i>
                 </a>
             </div>
@@ -885,153 +1010,108 @@
 
 
 
+  
+
+<section class="why-choose-us py-16 bg-gray-100">
+    <div class="container mx-auto text-center">
+        <h2 class="text-3xl font-semibold mb-8">Why Choose Us</h2>
+        <p class="text-lg text-gray-600 mb-12">We strive to provide the best products and services for our customers. Here's why you should choose us:</p>
+        <div class="grid md:grid-cols-3 gap-8">
+            <!-- Reason 1 -->
+            <div class="flex flex-col items-center bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <div class="text-4xl text-blue-500 mb-4">
+                    <i class="fal fa-cogs"></i> <!-- Font Awesome Pro Light icon -->
+                </div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-3">Top-Quality Products</h3>
+                <p class="text-gray-600">We offer only the best products that are durable, reliable, and backed by customer satisfaction guarantees.</p>
+            </div>
+            <!-- Reason 2 -->
+            <div class="flex flex-col items-center bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <div class="text-4xl text-green-500 mb-4">
+                    <i class="far fa-headset"></i> <!-- Font Awesome Pro Regular icon -->
+                </div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-3">Exceptional Customer Service</h3>
+                <p class="text-gray-600">Our dedicated support team is available 24/7 to assist you with any questions or concerns you may have.</p>
+            </div>
+            <!-- Reason 3 -->
+            <div class="flex flex-col items-center bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <div class="text-4xl text-yellow-500 mb-4">
+                    <i class="fal fa-truck"></i> <!-- Font Awesome Pro Light icon -->
+                </div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-3">Fast & Reliable Shipping</h3>
+                <p class="text-gray-600">We offer fast and reliable shipping options to ensure your orders reach you on time, every time.</p>
+            </div>
+        </div>
+    </div>
+</section>
  
 
 
-    @php
-    // Controller or View
-    $testimonials = [
-    [
-    'name' => 'David R.',
-    'role' => 'Freelance Developer',
-    'image' =>
-    'https://images.generated.photos/tGHubInlYQSUapLmz6IdvNuew4iOgEMbgEtV0u_WB2s/rs:fit:256:256/czM6Ly9pY29uczgu/Z3Bob3Rvcy1wcm9k/LnBob3Rvcy92M18w/NTkzNTE4LmpwZw.jpg',
-    'quote' => 'I found the perfect laptop for my work and gaming needs. The pricing was unbeatable and delivery was
-    super fast. Will definitely shop here again!'
-    ],
-    [
-    'name' => 'Lisa T.',
-    'role' => 'Marketing Specialist',
-    'image' =>
-    'https://images.generated.photos/sQO382vTFE2AeD_55KCemqzo9YoEzxcDB92Vd7QUgCk/rs:fit:256:256/czM6Ly9pY29uczgu/Z3Bob3Rvcy1wcm9k/LnBob3Rvcy92M18w/ODg1NTM3LmpwZw.jpg',
-    'quote' => 'I’ve never had such a smooth online shopping experience. The customer support team helped me pick the
-    right phone, and it arrived in perfect condition!'
-    ],
-    [
-    'name' => 'Maria F.',
-    'role' => 'Home Chef',
-    'image' =>
-    'https://images.generated.photos/6Prm4DWHZB98c-seirSy3wZQJMhhFYMfnhYxeekucrE/rs:fit:256:256/czM6Ly9pY29uczgu/Z3Bob3Rvcy1wcm9k/LnBob3Rvcy92M18w/ODI0MDU3LmpwZw.jpg',
-    'quote' => 'I was a bit hesitant at first, but I’m so glad I bought my new kitchen appliance from this site.
-    Excellent product quality, and the price was great!'
-    ],
-    [
-    'name' => 'Maria F.',
-    'role' => 'Home Chef',
-    'image' =>
-    'https://images.generated.photos/WSXXGpFeBy9JAeyrp81B1ecXfwIGmIJ5SyDYaTgxfMQ/rs:fit:256:256/czM6Ly9pY29uczgu/Z3Bob3Rvcy1wcm9k/LnBob3Rvcy92M18w/MTUyOTQxLmpwZw.jpg',
-    'quote' => 'I was a bit hesitant at first, but I’m so glad I bought my new kitchen appliance from this site.
-    Excellent product quality, and the price was great!'
-    ],
-    ];
 
-    @endphp
 
-    <!-- Testimonials Section -->
-    <div class="text-center my-16">
-        <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-8">What Our Customers Are Saying</h2>
-        <p class="text-gray-600 mb-12 max-w-2xl mx-auto">
-            Hear from our happy customers who found the perfect gadgets and deals for their needs.
-        </p>
-
-        <div class="flex flex-wrap justify-center gap-8">
-            @foreach ($testimonials as $testimonial)
-            <div class="max-w-xs bg-white rounded-lg shadow-lg p-6">
-                <img src="{{ $testimonial['image'] }}" alt="Customer" class="w-16 h-16 rounded-full mx-auto mb-4">
-                <p class="text-gray-600 italic mb-4">{{ $testimonial['quote'] }}</p>
-                <p class="font-semibold text-gray-800">{{ $testimonial['name'] }}</p>
-                <p class="text-gray-500">{{ $testimonial['role'] }}</p>
+     <!-- Footer Section -->
+<footer class="bg-gray-800 text-white py-12">
+    <div class="container mx-auto px-6">
+        <!-- Footer Top Section -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mb-8">
+            <!-- About Us Section -->
+            <div>
+                <h4 class="text-lg font-semibold mb-4">About Us</h4>
+                <p class="text-gray-400 text-sm">We are an online electronics mall providing the best deals on top
+                    brands of laptops, smartphones, home appliances, and more.</p>
             </div>
-            @endforeach
+            <!-- Customer Service Section -->
+            <div>
+                <h4 class="text-lg font-semibold mb-4">Customer Service</h4>
+                <ul class="text-gray-400 text-sm">
+                    <li><a href="#" class="hover:text-yellow-400">Contact Us</a></li>
+                    <li><a href="#" class="hover:text-yellow-400">Returns & Exchanges</a></li>
+                    <li><a href="#" class="hover:text-yellow-400">Shipping Information</a></li>
+                    <li><a href="#" class="hover:text-yellow-400">FAQ</a></li>
+                </ul>
+            </div>
+            <!-- Quick Links Section -->
+            <div>
+                <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                <ul class="text-gray-400 text-sm">
+                    <li><a href="#" class="hover:text-yellow-400">Shop</a></li>
+                    <li><a href="#" class="hover:text-yellow-400">Deals</a></li>
+                    <li><a href="#" class="hover:text-yellow-400">Privacy Policy</a></li>
+                    <li><a href="#" class="hover:text-yellow-400">Terms & Conditions</a></li>
+                </ul>
+            </div>
+            <!-- Social Media Section -->
+            <div>
+                <h4 class="text-lg font-semibold mb-4">Follow Us</h4>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-400 hover:text-yellow-400"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-yellow-400"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-yellow-400"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-yellow-400"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Subscribe Section -->
+        <div class="bg-gray-700 py-8 px-6 rounded-lg mb-8">
+            <h4 class="text-lg font-semibold text-center text-white mb-4">Subscribe to Our Newsletter</h4>
+            <p class="text-center text-gray-400 mb-6">Get the latest updates on new products and exclusive deals directly in your inbox!</p>
+            <div class="flex justify-center">
+                <input type="email" class="w-1/2 md:w-1/3 lg:w-1/4 p-3 text-sm rounded-l-lg bg-gray-900 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                    placeholder="Enter your email" />
+                <button class="bg-yellow-500 text-white px-6 py-3 rounded-r-lg text-sm font-medium hover:bg-yellow-600 transition-colors duration-200 focus:outline-none">
+                    Subscribe
+                </button>
+            </div>
+        </div>
+
+        <!-- Footer Bottom Section -->
+        <div class="border-t border-gray-700 pt-8">
+            <p class="text-center text-sm text-gray-400">&copy; 2025 Kamarona Electronics Mall. All rights reserved.</p>
         </div>
     </div>
+</footer>
 
-
-
-
-    <!-- Call to Action Section -->
-    <section id="cta" class="bg-blue-300 py-12 text-center text-white">
-        <div class="container mx-auto px-6">
-            <h2 class="text-3xl font-semibold mb-4">Get Started Today!</h2>
-            <p class="text-lg mb-6">Join us now and take advantage of exclusive deals, offers, and updates right to your
-                inbox!</p>
-
-            <!-- Subscribe Field and Buttons Row -->
-            <div class="flex flex-col md:flex-row justify-center gap-6 items-center">
-                <!-- Subscribe Field -->
-                <div class="flex items-center bg-white rounded-lg p-2 mb-4 sm:mb-0 w-full sm:w-auto">
-                    <input type="email" id="subscribeEmail" placeholder="Enter your email"
-                        class="py-3 px-4 text-gray-700 rounded-l-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-amber-500 w-full sm:w-80" />
-                    <button type="submit"
-                        class="bg-amber-600 hover:bg-amber-500 text-white py-3 px-6 rounded-r-lg text-lg transition duration-300">
-                        Subscribe
-                    </button>
-                </div>
-
-                <!-- Sign Up Button -->
-                <a href="#signup"
-                    class="bg-green-600 hover:bg-green-500 text-white py-3 px-6 rounded-lg text-lg transition duration-300">
-                    Sign Up Now
-                </a>
-            </div>
-        </div>
-    </section>
-
-
-
-
-
-
-    <!-- Footer Section -->
-    <footer class="bg-gray-800 text-white py-12">
-        <div class="container mx-auto px-6">
-            <!-- Footer Top Section -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mb-8">
-                <!-- About Us Section -->
-                <div>
-                    <h4 class="text-lg font-semibold mb-4">About Us</h4>
-                    <p class="text-gray-400 text-sm">We are an online electronics mall providing the best deals on top
-                        brands of laptops, smartphones, home appliances, and more.</p>
-                </div>
-                <!-- Customer Service Section -->
-                <div>
-                    <h4 class="text-lg font-semibold mb-4">Customer Service</h4>
-                    <ul class="text-gray-400 text-sm">
-                        <li><a href="#" class="hover:text-yellow-400">Contact Us</a></li>
-                        <li><a href="#" class="hover:text-yellow-400">Returns & Exchanges</a></li>
-                        <li><a href="#" class="hover:text-yellow-400">Shipping Information</a></li>
-                        <li><a href="#" class="hover:text-yellow-400">FAQ</a></li>
-                    </ul>
-                </div>
-                <!-- Quick Links Section -->
-                <div>
-                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
-                    <ul class="text-gray-400 text-sm">
-                        <li><a href="#" class="hover:text-yellow-400">Shop</a></li>
-                        <li><a href="#" class="hover:text-yellow-400">Deals</a></li>
-                        <li><a href="#" class="hover:text-yellow-400">Privacy Policy</a></li>
-                        <li><a href="#" class="hover:text-yellow-400">Terms & Conditions</a></li>
-                    </ul>
-                </div>
-                <!-- Social Media Section -->
-                <div>
-                    <h4 class="text-lg font-semibold mb-4">Follow Us</h4>
-                    <div class="flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-yellow-400"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-yellow-400"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-yellow-400"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-yellow-400"><i class="fab fa-youtube"></i></a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Footer Bottom Section -->
-            <div class="border-t border-gray-700 pt-8">
-                <p class="text-center text-sm text-gray-400">&copy; 2025 Kamarona Electronics Mall. All rights reserved.
-                </p>
-            </div>
-        </div>
-    </footer>
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"></script>
