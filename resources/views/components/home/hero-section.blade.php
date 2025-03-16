@@ -29,9 +29,9 @@
             <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6 mt-8">
                 <!-- Primary CTA Button - Explore Products -->
                 <a href="/products" 
-                class="inline-block bg-yellow-500 text-gray-800 font-bold py-3 px-8 rounded-full text-lg hover:bg-yellow-400 transition duration-300 focus:outline-none focus:ring-2 focus:ring-yellow-300 focus:ring-offset-2 focus:ring-offset-gray-900 shadow-lg transform hover:scale-105"
+                class="inline-block bg-amber-500 text-gray-800 font-bold py-3 px-8 rounded-full text-lg hover:bg-amber-400 transition duration-300 focus:outline-none focus:ring-2 focus:ring-amber-300 focus:ring-offset-2 focus:ring-offset-gray-900 shadow-lg transform hover:scale-105"
                 aria-label="Browse all products">
-                    Explore Products
+                    <i class="far fa-list-alt"></i> Explore electronics
                 </a>
 
                 <!-- Search Button (triggers modal) -->

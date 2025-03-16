@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kamarona Electronics Mall</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
 
     <!-- Google Font: Righteous -->
     <link
@@ -23,13 +24,139 @@
     <!-- Swiper CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"> 
 
+    <style>
+        :root {
+            --swiper-theme-color: #0aad0a;
+            --swiper-pagination-color: #0aad0a;
+            --swiper-pagination-bullet-opacity: 1
+        } 
+        .btn {
+            border-width: 1px;
+            cursor: pointer;
+            font-weight: 600;
+            justify-content: center;
+            line-height: 1.5;
+            text-align: center;
+            -moz-user-select: none;
+            user-select: none;
+            vertical-align: middle;
+            transition-timing-function: cubic-bezier(.4, 0, .2, 1)
+        }
+
+        .btn-sm {
+            font-size: .75rem;
+            padding: .25rem .75rem
+        }
+
+        .btn-lg,
+        .btn-sm {
+            border-radius: .375rem
+        }
+
+        .btn-lg {
+            font-size: 1.125rem;
+            padding: .5rem 1.5rem
+        }
+
+
+        .swiper-pagination-bullet {
+            background: transparent;
+            border: 2px solid #0aad0a;
+            border-radius: 50px;
+            display: inline-block;
+            height: 10px;
+            opacity: .3;
+            width: 10px
+        }
+
+        .swiper-pagination-bullet-active {
+            background: var(--swiper-pagination-color, var(--swiper-theme-color));
+            border-color: #0aad0a;
+            opacity: var(--swiper-pagination-bullet-opacity, 1)
+        }
+
+        [data-navigation=false] .swiper-navigation {
+            display: none;
+            opacity: 0;
+            visibility: hidden
+        }
+
+        .swiper-pagination-numbers {
+            background: #efefef;
+            border-radius: 50%;
+            color: #000;
+            display: inline-block;
+            height: 28px;
+            line-height: 28px;
+            margin: auto 2px;
+            width: 28px
+        }
+
+        .swiper-pagination-numbers-active {
+            background: #0aad0a;
+            color: #fff;
+            opacity: 1
+        }
+
+        .swiper-button-prev {
+            background-color: #f0f3f2;
+            border-radius: 50px;
+            box-shadow: 0 2px 4px -1px rgba(145, 158, 171, .2), 0 4px 5px 0 rgba(145, 158, 171, .14), 0 1px 10px 0 rgba(145, 158, 171, .12);
+            color: #21313c;
+            height: 28px;
+            left: 0;
+            right: auto;
+            width: 28px;
+
+            &:after {
+                content: "\ea60";
+                font-family: tabler-icons;
+                font-size: 14px
+            }
+
+            &:hover {
+                background-color: #0aad0a;
+                color: #fff
+            }
+        }
+
+        .swiper-button-next {
+            background-color: #f0f3f2;
+            border-radius: 50px;
+            box-shadow: 0 2px 4px -1px rgba(145, 158, 171, .2), 0 4px 5px 0 rgba(145, 158, 171, .14), 0 1px 10px 0 rgba(145, 158, 171, .12);
+            color: #21313c;
+            height: 28px;
+            left: auto;
+            right: 0;
+            width: 28px;
+
+            &:after {
+                content: "\ea61";
+                font-family: tabler-icons;
+                font-size: 14px
+            }
+
+            &:hover {
+                background-color: #0aad0a;
+                color: #fff
+            }
+        }
+    </style>
+
 </head>
 
-<body class="bg-gray-50 font-[Roboto]" x-data="{ mobileMenuOpen: false, searchModalOpen: false }">
+<body class="bg-gray-50 font-[Roboto]" 
+x-data="
+{ 
+mobileMenuOpen: false, 
+searchModalOpen: false, 
+openRegisterModal: false 
+}">
 
     <x-home.navbar-section/>
     <x-home.hero-section/> 
     <x-home.search-modal/> 
+    <x-home.register-login-modal/>
 
 
     @php
@@ -119,7 +246,7 @@
             </h2>
 
             <!-- Categories Grid -->
-            <div class="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-8">
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-8">
                 @foreach ($categories as $category)
                 <div
                     class="group relative rounded-lg overflow-hidden transform transition-all duration-300 hover:scale-105">
@@ -127,7 +254,7 @@
                     <div class="p-2 md:p-6">
                         <a href="{{ $category['link'] }}" aria-label="{{ $category['name'] }} Category" class="block">
                             <img src="{{ $category['image_url'] }}" alt="{{ $category['name'] }}"
-                                class="w-full h-48 object-contain transition-transform duration-500 group-hover:scale-110">
+                                class="w-full h-32 lg:h-48 object-contain transition-transform duration-500 group-hover:scale-110">
                         </a>
                     </div>
                     <!-- Category Name -->
@@ -318,7 +445,7 @@ $products = [
         <div class="swiper-container swiper pt-20" id="swiper-1" data-pagination-type="" data-speed="1600"
             data-space-between="20" data-pagination="false" data-navigation="true" data-autoplay="true"
             data-autoplay-delay="6000" data-effect="slide"
-            data-breakpoints='{"480": {"slidesPerView": 2}, "768": {"slidesPerView": 3}, "1024": {"slidesPerView": 5}}'>
+            data-breakpoints='{"480": {"slidesPerView": 2}, "768": {"slidesPerView": 3}, "1024": {"slidesPerView": 4}, "1424": {"slidesPerView": 5}}'>
             <div class="swiper-wrapper">
 
 
@@ -341,7 +468,7 @@ $products = [
                         <!-- Image with Zoom Effect on Hover -->
                         <div class="relative group">
                             <img src="{{ $product['image_url'] }}" alt="{{ $product['name'] }}"
-                                class="w-full p-4 h-auto transition-transform duration-300 transform group-hover:scale-110" />
+                                class="w-full p-4 h-32 lg:h-48 transition-transform duration-300 transform group-hover:scale-110" />
                         </div>
                     </a>
                 </div>
@@ -695,9 +822,9 @@ $allProducts = [
                     </button>
 
                     <!-- Product Image with Hover Effect -->
-                    <a href="#" class="block h-56 md:h-64 overflow-hidden bg-white p-4">
+                    <a href="#" class="block h-48 md:h-56 overflow-hidden bg-white p-4">
                         <img src="{{ $product['image_url'] }}" alt="{{ $product['name'] }}"
-                            class="w-full h-full object-contain transform transition-transform duration-500 group-hover:scale-110">
+                            class="w-full h-32 lg:h-48 object-contain transform transition-transform duration-500 group-hover:scale-110">
                     </a>
 
                     <!-- Product Info with Better Layout -->
@@ -976,12 +1103,7 @@ initializeSwiperCarousels();
 
 
 
-
-        // Toggle the mobile menu
-    document.getElementById('mobile-menu-button').addEventListener('click', function () {
-      const menu = document.getElementById('mobile-menu');
-      menu.classList.toggle('hidden');
-    });
+ 
     </script>
 
 </body>
