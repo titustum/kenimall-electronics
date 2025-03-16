@@ -64,3 +64,124 @@ select:focus[data-flux-control] {
 /* \[:where(&)\]:size-4 {
     @apply size-4;
 } */
+
+
+
+         
+.btn {
+    border-width: 1px;
+    cursor: pointer;
+    font-weight: 600;
+    justify-content: center;
+    line-height: 1.5;
+    text-align: center;
+    -moz-user-select: none;
+    user-select: none;
+    vertical-align: middle;
+    transition-timing-function: cubic-bezier(.4, 0, .2, 1)
+}
+
+.btn-sm {
+    font-size: .75rem;
+    padding: .25rem .75rem
+}
+
+.btn-lg,
+.btn-sm {
+    border-radius: .375rem
+}
+
+.btn-lg {
+    font-size: 1.125rem;
+    padding: .5rem 1.5rem
+}
+
+
+:root {
+    --swiper-theme-color: #0aad0a;
+    --swiper-pagination-color: #0aad0a;
+    --swiper-pagination-bullet-opacity: 1
+}
+
+.swiper-pagination-bullet {
+    background: transparent;
+    border: 2px solid #0aad0a;
+    border-radius: 50px;
+    display: inline-block;
+    height: 10px;
+    opacity: .3;
+    width: 10px
+}
+
+.swiper-pagination-bullet-active {
+    background: var(--swiper-pagination-color, var(--swiper-theme-color));
+    border-color: #0aad0a;
+    opacity: var(--swiper-pagination-bullet-opacity, 1)
+}
+
+[data-navigation=false] .swiper-navigation {
+    display: none;
+    opacity: 0;
+    visibility: hidden
+}
+
+.swiper-pagination-numbers {
+    background: #efefef;
+    border-radius: 50%;
+    color: #000;
+    display: inline-block;
+    height: 28px;
+    line-height: 28px;
+    margin: auto 2px;
+    width: 28px
+}
+
+.swiper-pagination-numbers-active {
+    background: #0aad0a;
+    color: #fff;
+    opacity: 1
+}
+
+.swiper-button-prev {
+    background-color: #f0f3f2;
+    border-radius: 50px;
+    box-shadow: 0 2px 4px -1px rgba(145, 158, 171, .2), 0 4px 5px 0 rgba(145, 158, 171, .14), 0 1px 10px 0 rgba(145, 158, 171, .12);
+    color: #21313c;
+    height: 28px;
+    left: 0;
+    right: auto;
+    width: 28px;
+
+    &:after {
+        content: "\ea60";
+        font-family: tabler-icons;
+        font-size: 14px
+    }
+
+    &:hover {
+        background-color: #0aad0a;
+        color: #fff
+    }
+}
+
+.swiper-button-next {
+    background-color: #f0f3f2;
+    border-radius: 50px;
+    box-shadow: 0 2px 4px -1px rgba(145, 158, 171, .2), 0 4px 5px 0 rgba(145, 158, 171, .14), 0 1px 10px 0 rgba(145, 158, 171, .12);
+    color: #21313c;
+    height: 28px;
+    left: auto;
+    right: 0;
+    width: 28px;
+
+    &:after {
+        content: "\ea61";
+        font-family: tabler-icons;
+        font-size: 14px
+    }
+
+    &:hover {
+        background-color: #0aad0a;
+        color: #fff
+    }
+}
