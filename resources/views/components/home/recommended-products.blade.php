@@ -24,14 +24,14 @@
         </div>
 
         <!-- Products Grid with Enhanced Cards -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             @foreach ($products as $product)
             <div class="group relative rounded-xl flex flex-col justify-items-start shadow-md bg-white overflow-hidden transition-all duration-300 hover:shadow-xl border border-gray-100">
                 
                 <!-- Sale Badge (if applicable) -->
                 @if ($product->discount > 0)
                 <div class="absolute top-3 left-3 z-10 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
-                    {{ $product->discount }}% off
+                    {{ round($product->discount) }}% off
                 </div>
                 @endif
 
@@ -96,9 +96,13 @@
                         <!-- Quick View Button - Fixed implementation -->
                         <button 
                             @click="openModal({{ json_encode($product) }})"
-                            class="bg-blue-50 hover:bg-blue-100 text-blue-800 py-2 px-4 rounded-lg font-medium text-sm transition-colors duration-200">
+                            class="bg-blue-50 hidden md:block hover:bg-blue-100 text-blue-800 py-2 px-4 rounded-lg font-medium text-sm transition-colors duration-200">
                             Quick View
                         </button>
+                        <a  href="{{ route('products.show', $product->id) }}"
+                            class="bg-blue-50 block md:hidden hover:bg-blue-100 text-blue-800 py-2 px-4 rounded-lg font-medium text-sm transition-colors duration-200">
+                            View
+                        </a>
                     </div>
                 </div>
             </div>
@@ -106,11 +110,13 @@
         </div>
 
         <!-- Quick View Modal -->
-        <div x-show="quickViewModal"  
+        <div 
+        x-clock
+        x-show="quickViewModal"  
         @click.self="quickViewModal = false"
         x-cloak class="fixed inset-0 bg-[rgba(0,0,0,0.8)] z-50 flex justify-center items-center p-6"
         >
-            <div class="bg-white rounded-lg shadow-lg w-full max-w-2xl p-6 relative">
+            <div class="bg-white rounded-lg shadow-lg w-full max-w-2xl p-6 relative overflow-auto">
                 <button @click="quickViewModal = false" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800">
                     <i class="fas fa-times"></i>
                 </button>
@@ -162,7 +168,7 @@
                                class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg font-medium text-sm transition-colors duration-200 shadow-sm">
                                 Add to Cart
                             </a>
-                            <a href="#"
+                            <a href="{{ route('products.show', $product->id) }}"
                                class="bg-blue-50 hover:bg-blue-100 text-blue-800 py-2 px-4 rounded-lg font-medium text-sm transition-colors duration-200">
                                 View Details
                             </a>
