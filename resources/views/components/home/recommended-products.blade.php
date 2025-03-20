@@ -2,14 +2,7 @@
 
 <!-- Recommended Products Category Section -->
 <section id="recommended-products" class="py-16 bg-gradient-to-b from-gray-50 to-gray-100">
-    <div class="container mx-auto px-6" x-data="{ 
-        quickViewModal: false, 
-        product: null,
-        openModal(productData) {
-            this.product = productData;
-            this.quickViewModal = true;
-        }
-    }">
+    <div class="container mx-auto px-6">
         <!-- Section Header with Enhanced Styling -->
         <div class="text-center mb-12">
             <span class="inline-block px-3 py-1 bg-green-100 text-green-600 rounded-full text-sm font-medium mb-2">
@@ -111,12 +104,12 @@
 
         <!-- Quick View Modal -->
         <div 
-        x-clock
+        x-cloak 
         x-show="quickViewModal"  
         @click.self="quickViewModal = false"
-        x-cloak class="fixed inset-0 bg-[rgba(0,0,0,0.8)] z-50 flex justify-center items-center p-6"
+        class="fixed inset-0 bg-[rgba(0,0,0,0.8)] z-50 flex justify-center items-center p-6"
         >
-            <div class="bg-white rounded-lg shadow-lg w-full max-w-2xl p-6 relative overflow-auto">
+            <div class="bg-white rounded-lg shadow-lg h-full lg:h-auto w-full max-w-2xl p-6 relative overflow-auto">
                 <button @click="quickViewModal = false" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800">
                     <i class="fas fa-times"></i>
                 </button>
@@ -168,8 +161,9 @@
                                class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg font-medium text-sm transition-colors duration-200 shadow-sm">
                                 Add to Cart
                             </a>
-                            <a href="{{ route('products.show', $product->id) }}"
-                               class="bg-blue-50 hover:bg-blue-100 text-blue-800 py-2 px-4 rounded-lg font-medium text-sm transition-colors duration-200">
+                            <!-- View Details Button -->
+                            <a :href="'{{ route('products.show', '') }}/' + product.id"
+                                    class="bg-blue-50 hover:bg-blue-100 text-blue-800 py-2 px-4 rounded-lg font-medium text-sm transition-colors duration-200">
                                 View Details
                             </a>
                         </div>

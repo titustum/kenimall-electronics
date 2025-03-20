@@ -1,3 +1,44 @@
+document.addEventListener("DOMContentLoaded", function () {
+  const swiper = new Swiper('.hero-swiper-container', {
+      loop: true, // Enable loop mode
+      autoplay: {
+          delay: 5000, // Delay between slides
+          disableOnInteraction: false,
+      },
+      navigation: {
+          nextEl: '.hero-swiper-button-next',
+          prevEl: '.hero-swiper-button-prev',
+      },
+      pagination: {
+          el: '.hero-swiper-pagination',
+          clickable: true,
+      },
+      effect: 'fade', // Optional: Use fade effect for smooth transitions
+      on: {
+          slideChange: function () {
+              // Remove any previously applied animations from the content
+              const slides = document.querySelectorAll('.swiper-slide');
+              slides.forEach(slide => {
+                  const content = slide.querySelector('.slide-content');
+                  if (content) {
+                      content.classList.remove('animate__animated', 'animate__fadeIn', 'animate__fadeOut');
+                  }
+              });
+
+              // Apply fadeIn animation to the new slide content
+              const activeSlide = swiper.slides[swiper.activeIndex];
+              const activeContent = activeSlide.querySelector('.slide-content');
+              if (activeContent) {
+                  activeContent.classList.add('animate__animated', 'animate__fadeIn');
+              }
+          },
+      },
+  });
+});
+
+
+
+
 function initializeSwiperCarousels() {
     // Select all swiper containers and loop through each one
     document.querySelectorAll(".swiper-container").forEach(carousel => {
@@ -87,5 +128,10 @@ function initializeSwiperCarousels() {
     });
   }
   
+
+
+  
+document.addEventListener("DOMContentLoaded", function () {
   // Initialize all Swiper carousels
   initializeSwiperCarousels();
+});
