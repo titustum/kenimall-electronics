@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class WelcomeController extends Controller
@@ -11,6 +12,7 @@ class WelcomeController extends Controller
 
         $categories = \App\Models\Category::all();
         $products = \App\Models\Product::all();
-        return view('welcome', compact('categories', 'products'));
+        $topSellingProducts = Product::orderBy('price', 'desc')->take(8)->get();
+        return view('welcome', compact('categories', 'products', 'topSellingProducts'));
     }
 }

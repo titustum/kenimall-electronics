@@ -23,7 +23,7 @@
                 </div>
                 <!-- Category Name -->
                 <a href="#" aria-label="Go to {{ $category->name  }} category"
-                    class="block py-4 text-sm md:text-base font-medium text-gray-800 px-3 hover:text-blue-500 transition duration-200 rounded-b-lg">
+                    class="block py-4 truncate w-full text-sm md:text-wrap font-medium text-gray-800 px-3 hover:text-blue-500 transition duration-200 rounded-b-lg">
                     {{$category->name  }}
                 </a>
             </div>

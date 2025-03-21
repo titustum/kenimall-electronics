@@ -10,7 +10,13 @@ export default defineConfig({
             input: ['resources/css/app.css', 'resources/js/app.js'],
             refresh: [`resources/views/**/*`],
         }),
-        tailwindcss(),
+        tailwindcss({
+            extends: {
+                screens: {
+                    xs: '320px', // Adding xs breakpoint
+                },
+            }
+        }),
     ],
     server: {
         cors: true,

@@ -52,11 +52,13 @@ openModal(productData) {
     this.quickViewModal = true;
 },
 quickViewModal: false, 
-product: null,
+product: {
+        id: 1
+    },
 }">
 
-    <x-home.navbar-section/>
-    <x-home.ofcanvas-modal/>
+    <x-home.navbar-section/> 
+    <x-off-canvas-menu/>
     <x-home.hero-section/> 
     <x-home.search-modal/> 
     <x-home.register-login-modal/>
@@ -65,82 +67,165 @@ product: null,
 
 
 
-    <section class="container mx-auto max-w-[1920px] px-4 md:px-8 2xl:px-16 bg-white">
-        <div class="mb-12 md:mb-14 xl:mb-16 border border-gray-300 rounded-md pt-5 md:pt-6 lg:pt-7 pb-5 lg:pb-7 px-4 md:px-5 lg:px-7">
-            <div class="flex justify-between items-center flex-wrap mb-5 md:mb-6">
-                <div class="flex items-center justify-between -mt-2 mb-0">
-                    <h3 class="text-lg md:text-xl lg:text-2xl 2xl:text-3xl xl:leading-10 font-bold text-heading">New Arrivals</h3>
-                </div>
-                <span>
-                    All
-                    <i class="fas fa-chevron-right text-gray-400 cursor-pointer transition duration-150 ease-in-out"></i>
-                </span>
+    <section class="py-12 bg-blue-50">
+        <div class="container mx-auto px-4 md:px-6">
+            <!-- Header with improved spacing and responsive design -->
+            <div class="flex justify-between items-center mb-8">
+                <h3 class="text-xl md:text-2xl lg:text-3xl font-bold text-gray-800">Top Selling Items</h3>
+                <a href="#" class="flex items-center text-sm font-medium text-gray-600 hover:text-gray-900 transition">
+                    View All
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                </a>
             </div>
-            <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-x-3 md:gap-x-5 xl:gap-x-7 gap-y-4 lg:gap-y-5 xl:gap-y-6 2xl:gap-y-8">
-
-
+            
+            <!-- Responsive grid with better spacing -->
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-2 md:gap-4">
+                
                 @foreach ($products as $product)
+                <div @click="openModal({{ json_encode($product) }})" 
+                    class="group bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden cursor-pointer flex flex-col h-full border border-gray-100">
                     
-                <div @click="openModal({{ json_encode($product) }})" class="group box-border overflow-hidden flex rounded-md cursor-pointer bg-white ltr:pr-0 rtl:pl-0 md:pb-1 flex-col items-start" role="button" title="{{ $product->name }}">
-                    <div class="flex mb-3 md:mb-3.5 pb-0">
-                        <span style="box-sizing: border-box; display: inline-block; overflow: hidden; width: initial; height: initial; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: relative; max-width: 100%;">
-                            <span style="box-sizing: border-box; display: block; width: initial; height: initial; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; max-width: 100%;">
-                                <img
-                                    alt=""
-                                    aria-hidden="true"
-                                    src="data:image/svg+xml,%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20version=%271.1%27%20width=%27324%27%20height=%27324%27/%3e"
-                                    style="display: block; max-width: 100%; width: initial; height: initial; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px;"
-                                />
+                    
+                    <!-- Product image with white background that matches product images -->
+                    <div class="relative h-48 sm:h-56 w-full overflow-hidden bg-white border-b border-gray-100">
+                        <img 
+                            src="{{ $product->image_url }}" 
+                            alt="{{ $product->name }}" 
+                            class="w-full h-full object-contain p-4 transition-transform duration-300 group-hover:scale-105"
+                            loading="lazy"
+                        />
+                        
+                        <!-- Popular badge -->
+                        <div class="absolute top-2 left-2">
+                            <span class="bg-amber-500 text-white text-xs font-medium px-2 py-1 rounded">
+                                Popular
                             </span>
-                            <img
-                                alt="{{ $product->name }}"
-                                src="{{ $product->image_url }}"
-                                loading="lazy"
-                                decoding="async"
-                                data-nimg="intrinsic"
-                                class="bg-white object-cover rounded-s-md rounded-md transition duration-150 ease-linear transform group-hover:scale-105"
-                                style="
-                                    position: absolute;
-                                    inset: 0px;
-                                    box-sizing: border-box;
-                                    padding: 15px;
-                                    border: none;
-                                    margin: auto;
-                                    display: block;
-                                    width: 0px;
-                                    height: 0px;
-                                    min-width: 100%;
-                                    max-width: 100%;
-                                    min-height: 100%;
-                                    max-height: 100%;
-                                "
-                            />
-                        </span>
-                        <div class="absolute top-3.5 md:top-5 3xl:top-7 ltr:left-3.5 rtl:right-3.5 ltr:md:left-5 rtl:md:right-5 ltr:3xl:left-7 rtl:3xl:right-7 flex flex-col gap-y-1 items-start"></div>
+                        </div>
                     </div>
-                    <div class="w-full overflow-hidden p-2 ltr:pl-0 rtl:pr-0">
-                        <h2 class="truncate mb-1 font-semibold md:mb-1.5 text-sm sm:text-base md:text-sm lg:text-base xl:text-lg text-heading">{{ $product->name }}</h2>
-                        <p class="text-body text-xs lg:text-sm leading-normal xl:leading-relaxed max-w-[250px] truncate">{{ $product->category->name  }}</p>
-                        <div class="font-semibold text-sm sm:text-base mt-1.5 flex flex-wrap gap-x-2 md:text-base lg:text-xl md:mt-2.5 2xl:mt-3 text-heading">
-                            <span class="inline-block false">${{ number_format($product->price, 2) }}</span><del class="sm:text-base font-normal text-gray-800">${{ number_format($product->original_price, 2) }}</del>
+                    
+                    <!-- Product info with better typography and spacing -->
+                    <div class="flex flex-col flex-grow p-4">
+                        <h2 class="font-semibold text-gray-800 mb-1 truncate">{{ $product->name }}</h2>
+                        <p class="text-gray-500 text-sm mb-1 truncate">{{ $product->category->name }}</p>
+                        
+                        <!-- Star Rating System -->
+                        <div class="flex text-amber-400 items-center mb-2">
+                            @for ($i = 1; $i <= 5; $i++)
+                                @if ($i <= $product->rating)
+                                    <i class="fas fa-star text-amber-400"></i>
+                                @elseif ($i - 0.5 <= $product->rating)
+                                    <i class="fas fa-star-half-alt text-amber-400"></i>
+                                @else
+                                    <i class="far fa-star text-amber-400"></i>
+                                @endif
+                            @endfor
+                            <span class="text-xs text-gray-500 ml-1">({{ $product->reviews_count }})</span>
+                        </div>
+                        
+                        <!-- Sales count -->
+                        <div class="flex items-center mb-2 text-xs text-gray-500">
+                            <i class="fas fa-fire-alt text-red-500 mr-1"></i>
+                            <span>{{ $product->sales_count }} sold this month</span>
+                        </div>
+                        
+                        <!-- Price with better alignment and color -->
+                        <div class="mt-auto flex items-baseline">
+                            <span class="text-lg font-bold text-gray-900">${{ number_format($product->price, 2) }}</span>
+                            @if($product->price < $product->original_price)
+                            <del class="ml-2 text-sm text-gray-500">${{ number_format($product->original_price, 2) }}</del>
+                            @endif
                         </div>
                     </div>
                 </div>
-
                 @endforeach
-
-           
+                
             </div>
         </div>
-    </section> 
+    </section>
 
 
 
-    <x-home.featured-products-section :products="$products"/>
 
 
-<!-- Recommended Products Category Section -->
-<x-home.recommended-products :products=$products/>
+    <section class="py-12 bg-white">
+        <div class="container mx-auto px-4 md:px-6">
+            <!-- Header with improved spacing and responsive design -->
+            <div class="flex justify-between items-center mb-8">
+                <h3 class="text-xl md:text-2xl lg:text-3xl font-bold text-gray-800">New Arrivals</h3>
+                <a href="#" class="flex items-center text-sm font-medium text-gray-600 hover:text-gray-900 transition">
+                    View All
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                </a>
+            </div>
+            
+            <!-- Responsive grid with better spacing -->
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 md:gap-6">
+                
+                @foreach ($products as $product)
+                <div @click="openModal({{ json_encode($product) }})" 
+                    class="group bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden cursor-pointer flex flex-col h-full">
+                    
+                    <!-- Product image with white background that matches product images -->
+                    <div class="relative h-48 sm:h-56 w-full overflow-hidden bg-white border-b border-gray-100">
+                        <img 
+                            src="{{ $product->image_url }}" 
+                            alt="{{ $product->name }}" 
+                            class="w-full h-full object-contain p-4 transition-transform duration-300 group-hover:scale-105"
+                            loading="lazy"
+                        />
+                        
+                        <!-- Optional badges or sale tags -->
+                        @if($product->price < $product->original_price)
+                        <div class="absolute top-2 left-2">
+                            <span class="bg-red-500 text-white text-xs font-medium px-2 py-1 rounded">
+                                SALE
+                            </span>
+                        </div>
+                        @endif
+                    </div>
+                    
+                    <!-- Product info with better typography and spacing -->
+                    <div class="flex flex-col flex-grow p-4">
+                        <h2 class="font-semibold text-gray-800 mb-1 truncate">{{ $product->name }}</h2>
+                        <p class="text-gray-500 text-sm mb-1 truncate">{{ $product->category->name }}</p>
+                        
+                        <!-- Star Rating System -->
+                        <div class="flex text-amber-400 items-center mb-2">
+                            @for ($i = 1; $i <= 5; $i++)
+                                @if ($i <= $product->rating)
+                                    <i class="fas fa-star text-amber-400"></i>
+                                @elseif ($i - 0.5 <= $product->rating)
+                                    <i class="fas fa-star-half-alt text-amber-400"></i>
+                                @else
+                                    <i class="far fa-star text-amber-400"></i>
+                                @endif
+                            @endfor
+                            <span class="text-xs text-gray-500 ml-1">({{ number_format($product->rating, 1) }})</span>
+                        </div>
+                        
+                        <!-- Price with better alignment and color -->
+                        <div class="mt-auto flex items-baseline">
+                            <span class="text-lg font-bold text-gray-900">${{ number_format($product->price, 2) }}</span>
+                            @if($product->price < $product->original_price)
+                            <del class="ml-2 text-sm text-gray-500">${{ number_format($product->original_price, 2) }}</del>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+                
+            </div>
+        </div>
+    </section>
+
+
+    <x-home.product-quick-view-modal/>
+
+
 
  <x-home.why-us-section/>
 
@@ -169,9 +254,7 @@ product: null,
             effect: 'fade', // Optional: Use fade effect for smooth transitions
         });
     });
-</script>
-
-    <script src="{{  asset('assets/js/custom.js')  }}"></script> 
+</script> 
 
 </body>
 

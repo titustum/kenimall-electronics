@@ -1,5 +1,5 @@
 <!-- Hero Section with Swiper -->
-<section class="relative h-[500px] md:h-[700px]" aria-label="Welcome banner">
+<section class="relative h-[300px] md:h-[600px]" aria-label="Welcome banner">
     <!-- Swiper Container -->
     <div class="hero-swiper-container relative w-full h-full">
         <!-- Swiper Wrapper (holds the slides) -->
