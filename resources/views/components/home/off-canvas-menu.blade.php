@@ -40,8 +40,8 @@ class="fixed inset-0 bg-[rgb(0,0,0,0.9)] z-50 flex justify-start">
             class="mt-2 space-y-2 list-inside pl-4">
             @foreach($categories as $category)
                 <li class="px-4 py-2 hover:bg-gray-200 text-gray-700 transition flex items-center">
-                    @if($category->image_url)
-                        <img src="{{ $category->image_url }}" 
+                    @if($category->image_path)
+                        <img src="{{ $category->image_path }}" 
                             alt="{{ $category->name }} icon" 
                             class="w-8 h-8 rounded-full p-1 object-contain mr-3">
                     @endif

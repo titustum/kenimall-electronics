@@ -21,6 +21,6 @@ class CustomLayout extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('layouts.custom');
+        return view('components.layouts.custom');
     }
 }

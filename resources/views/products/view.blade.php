@@ -6,7 +6,7 @@
             <div class="flex flex-col md:flex-row">
                 <!-- Product Image -->
                 <div class="w-full md:w-1/3">
-                    <img src="{{ $product ? $product->image_url : '' }}" alt="{{ $product ? $product->name : '' }}" class="w-full h-auto object-contain">
+                    <img src="{{ $product ? $product->image_path : '' }}" alt="{{ $product ? $product->name : '' }}" class="w-full h-auto object-contain">
                 </div>
                 <!-- Product Info -->
                 <div class="w-full md:w-2/3 md:pl-6 mt-4 md:mt-0">
@@ -61,20 +61,22 @@
                 </div>
             </div>
 
-            <!-- Full Product Description -->
-            <div class="mt-8">
-                <h4 class="text-2xl font-semibold text-gray-800">Full Description</h4>
-                <p class="mt-2 text-gray-700">{{ $product && $product->long_description ? $product->long_description : 'No detailed description available.' }}</p>
-            </div>
+           
 
             <!-- Product Features -->
             <div class="mt-8">
                 <h4 class="text-2xl font-semibold text-gray-800">Features</h4>
                 <ul class="list-disc pl-6 mt-2 text-gray-700">
                     @if ($product->features)
-                        @foreach($product->features as $feature)
-                            <li>{{ $feature }}</li>
-                        @endforeach
+                        @php
+                            $features = json_decode($product->features, true); // Decode to an array
+                        @endphp
+                        
+                        @if($features)
+                            @foreach($features as $featureKey => $featureValue)
+                                <li>{{ $featureKey }}: {{ $featureValue }}</li>
+                            @endforeach
+                        @endif
                     @endif
                     
                 </ul>
@@ -120,7 +122,7 @@
         </div>
     </div>
 
-    <x-home.featured-products-section :products="$relatedProducts"/>
-
     
+    <x-home.footer-section />
+
 </x-layouts.custom>

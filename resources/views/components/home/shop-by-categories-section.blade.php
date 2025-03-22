@@ -17,7 +17,7 @@
                 <!-- Category Image -->
                 <div class="p-2 md:p-6">
                     <a href="#" aria-label="{{ $category->name }} Category" class="block">
-                        <img src="{{ $category->image_url }}" alt="{{$category->name  }}"
+                        <img src="{{ $category->image_path }}" alt="{{$category->name  }}"
                             class="w-full h-32 lg:h-48 object-contain transition-transform duration-500 group-hover:scale-110">
                     </a>
                 </div>

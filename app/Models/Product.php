@@ -2,99 +2,72 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    // Table name (optional if your table name is the plural form of the model)
-    protected $table = 'products';
+    use HasFactory; 
 
-    // The primary key for the model (optional if you are using the default 'id')
-    protected $primaryKey = 'id';
-
-    // Indicates if the model should be timestamped.
-    public $timestamps = true;
-
-    // Define the fillable properties that can be mass-assigned
     protected $fillable = [
-        'added_by', 
-        'image_url', 
-        'name', 
-        'price', 
-        'original_price', 
-        'discount', 
-        'rating', 
-        'reviews_count', 
-        'brand', 
-        'model', 
-        'processor', 
-        'ram', 
-        'storage', 
-        'description', 
-        'screen_size', 
-        'resolution', 
-        'ports', 
+        'name',
+        'description',
+        'model',
+        'price',
+        'sale_price',
+        'stock',
+        'is_featured',
         'category_id',
-        'stock_quantity',
-        'sale_start_date',
-        'sale_end_date',
-        'additional_images',
-        'features'
+        'brand_id',
+        'condition',
+        'specifications',
+        'features',
+        'color',
+        'image_path',
+        'slug',
+        'added_by'
     ];
 
-    // Define the relationships
+    protected $casts = [
+        'specifications' => 'array',
+        'features' => 'array',
+    ];
 
-    // Each product belongs to a user (the one who added it)
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'added_by');
-    }
-
-    // Each product belongs to a category
+    // Relationship with Category
     public function category()
     {
         return $this->belongsTo(Category::class);
     }
 
-    // If you plan to have multiple images for each product, you could define a relationship for product images
-    // public function images()
+    // Relationship with Brand
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class);
+    }
+
+    // Relationship with User (who added the product)
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'added_by');
+    }
+
+    // Relationship with Product Images
+    public function images()
+    {
+        return $this->hasMany(ProductImage::class);
+    }
+
+    // // Mutator for the slug
+    // public function setSlugAttribute($value)
     // {
-    //     return $this->hasMany(ProductImage::class);
+    //     $this->attributes['slug'] = Str::slug($value);
     // }
 
-    // // If you plan to have reviews for each product, define a relationship with a Review model
-    // public function reviews()
-    // {
-    //     return $this->hasMany(Review::class);
-    // }
-
-    // Accessor for getting the sale price after discount (if needed)
-    public function getSalePriceAttribute()
+    // Method to calculate the average rating of the product
+    public function averageRating()
     {
-        return $this->price - ($this->price * $this->discount / 100);
-    }
-    
-    // Mutator to handle the 'additional_images' JSON column correctly
-    public function setAdditionalImagesAttribute($value)
-    {
-        $this->attributes['additional_images'] = json_encode($value);
-    }
-
-    // Mutator for 'features' (if it's a JSON field)
-    public function setFeaturesAttribute($value)
-    {
-        $this->attributes['features'] = json_encode($value);
-    }
-
-    // Accessor for 'additional_images' JSON column
-    public function getAdditionalImagesAttribute($value)
-    {
-        return json_decode($value, true);
-    }
-
-    // Accessor for 'features' JSON column
-    public function getFeaturesAttribute($value)
-    {
-        return json_decode($value, true);
+        return $this->reviews()->avg('rating');
     }
 }

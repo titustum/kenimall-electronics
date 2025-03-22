@@ -14,7 +14,7 @@
             <div class="flex flex-col md:flex-row" x-show="product !== null">
                 <!-- Product Image -->
                 <div class="w-full md:w-1/3">
-                    <img :src="product ? product.image_url : ''" :alt="product ? product.name : ''" class="w-full h-auto object-contain">
+                    <img :src="product ? product.image_path : ''" :alt="product ? product.name : ''" class="w-full h-auto object-contain">
                 </div>
                 <!-- Product Info -->
                 <div class="w-full md:w-2/3 md:pl-6 mt-4 md:mt-0">

@@ -15,7 +15,6 @@ rel="stylesheet">
 <!-- Tailwind CSS CDN -->
 @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.13.0/cdn.min.js" defer></script>
 
 <!-- Font Awesome CDN -->
 <link rel="stylesheet" href="{{  asset('assets/font-awesome-6-pro-main/css/all.min.css') }}">

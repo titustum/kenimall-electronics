@@ -12,11 +12,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('product_images', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class, 'added_by')->cascade('delete'); 
-            $table->string('name');
-            $table->string('image_path'); 
+            $table->foreignIdFor(User::class, 'added_by')->cascade('delete')->default(1);  // User ID who added the image 
+            $table->foreignId('product_id')->constrained()->onDelete('cascade');  // Product ID
+            $table->string('image_path');  // Path to the image file
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('product_images');
     }
 };

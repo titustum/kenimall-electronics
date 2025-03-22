@@ -84,9 +84,9 @@
             </a>
 
             <!-- User Profile Icon -->
-            <button @click="openRegisterModal = true" class="p-2 text-gray-600 hover:text-amber-500 hover:bg-gray-100 rounded-full transition duration-200" aria-label="User profile">
+            <a href="{{ route('login') }}" class="p-2 text-gray-600 hover:text-amber-500 hover:bg-gray-100 rounded-full transition duration-200" aria-label="User profile">
                 <i class="far fa-user w-5 h-5"></i>
-            </button>
+            </a>
         </div>
     </div>
 </nav>
