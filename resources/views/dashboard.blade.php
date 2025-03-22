@@ -136,6 +136,52 @@
                     </div>
                 </div>
             </div>
+
+
+            {{-- row 2 --}}
+
+            <!-- Total Products -->
+            <div
+                class="p-6 border rounded-xl bg-white shadow-md hover:shadow-lg transition-shadow dark:bg-neutral-800 dark:border-neutral-700">
+                <a href="#" class="flex justify-between items-start">
+                    <div>
+                        <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Total Products</p>
+                        <h4 class="text-2xl font-bold mt-1 text-gray-900 dark:text-white">9,788</h4>
+                    </div>
+                    <div class="px-4 py-2 bg-purple-100 rounded-lg dark:bg-purple-900/30">
+                        <i class="far text-lg text-green-500 fa-list"></i>
+                    </div>
+                </a>
+            </div>
+            <!-- Total Products -->
+            <div
+                class="p-6 border rounded-xl bg-white shadow-md hover:shadow-lg transition-shadow dark:bg-neutral-800 dark:border-neutral-700">
+                <a href="#" class="flex justify-between items-start">
+                    <div>
+                        <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Total Categories</p>
+                        <h4 class="text-2xl font-bold mt-1 text-gray-900 dark:text-white">9,788</h4>
+                    </div>
+                    <div class="px-4 py-2 bg-purple-100 rounded-lg dark:bg-purple-900/30">
+                        <i class="far text-lg text-green-500 fa-list"></i>
+                    </div>
+                </a>
+            </div>
+            <!-- Total Products -->
+            <div
+                class="p-6 border rounded-xl bg-white shadow-md hover:shadow-lg transition-shadow dark:bg-neutral-800 dark:border-neutral-700">
+                <a href="#" class="flex justify-between items-start">
+                    <div>
+                        <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Total Brands</p>
+                        <h4 class="text-2xl font-bold mt-1 text-gray-900 dark:text-white">9,788</h4>
+                    </div>
+                    <div class="px-4 py-2 bg-purple-100 rounded-lg dark:bg-purple-900/30">
+                        <i class="far text-lg text-green-500 fa-list"></i>
+                    </div>
+                </a>
+            </div>
+
+
+
         </div>
 
         <!-- Product Table with Enhanced Features -->
