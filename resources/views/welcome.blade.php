@@ -114,11 +114,12 @@
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 md:gap-6">
 
                 @foreach ($products as $product)
-                <div @click="openModal({{ json_encode($product) }})"
+                <div
                     class="group bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden cursor-pointer flex flex-col h-full">
 
                     <!-- Product image with white background that matches product images -->
-                    <div class="relative h-48 sm:h-56 w-full overflow-hidden bg-white border-b border-gray-100">
+                    <a href="{{ route('products.show', $product->id) }}"
+                        class="relative h-48 sm:h-56 w-full overflow-hidden bg-white border-b border-gray-100">
                         <img @if (str_starts_with($product->image_path, 'http'))
                         src="{{ $product->image_path }}"
                         @else
@@ -140,12 +141,15 @@
                                 </span>
                             </div>
                             @endif
-                    </div>
+                    </a>
 
                     <!-- Product info with better typography and spacing -->
                     <div class="flex flex-col flex-grow p-4">
-                        <h2 class="font-semibold text-gray-800 mb-1 truncate">{{ $product->name }}</h2>
-                        <p class="text-gray-500 text-sm mb-1 truncate">{{ $product->category->name }}</p>
+                        <a href="{{ route('products.show', $product->id) }}"
+                            class="font-semibold text-gray-800 mb-1 truncate hover:underline">{{ $product->name
+                            }}</a>
+                        <a href="#" class="text-gray-500 text-sm mb-1 truncate hover:underline">{{
+                            $product->category->name }}</a>
 
                         <!-- Star Rating System -->
                         <div class="flex text-amber-400 items-center mb-2">
