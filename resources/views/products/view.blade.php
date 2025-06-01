@@ -30,7 +30,7 @@
             "offers": {
                 "@type": "Offer",
                 "url": "{{ request()->url() }}",
-                "priceCurrency": "USD",
+                "priceCurrency": "AUD",
                 "price": "{{ $product->sale_price ?? $product->price }}",
                 "availability": "{{ $product->stock > 0 ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock' }}",
                 "seller": {
@@ -46,13 +46,13 @@
         {{-- Breadcrumb Navigation --}}
         <nav class="mb-8" aria-label="Breadcrumb">
             <ol class="flex items-center space-x-2 text-sm text-gray-500">
-                <li><a href="{{ route('home') }}" class="hover:text-purple-600 transition">Home</a></li>
+                <li><a href="{{ route('home') }}" class="hover:text-orange-600 transition">Home</a></li>
                 <li><span class="mx-2">/</span></li>
                 @if($product->category)
-                <li><a href="#" class="hover:text-purple-600 transition">{{ $product->category->name }}</a></li>
+                <li><a href="#" class="hover:text-orange-600 transition">{{ $product->category->name }}</a></li>
                 <li><span class="mx-2">/</span></li>
                 @endif
-                <li class="text-gray-900 font-medium" aria-current="page">{{ $product->name }}</li>
+                <li class="text-gray-900 font-medium hidden lg:inline" aria-current="page">{{ $product->name }}</li>
             </ol>
         </nav>
 
@@ -72,9 +72,10 @@
                         id="main-product-image" />
 
                     {{-- Image Zoom Indicator --}}
-                    <div class="absolute top-4 right-4 bg-black bg-opacity-50 text-white px-2 py-1 rounded text-sm">
+                    {{-- <div
+                        class="absolute top-4 right-4 bg-black bg-opacity-50 text-white px-2 py-1 rounded text-sm">
                         <i class="fas fa-search-plus mr-1"></i>Click to zoom
-                    </div>
+                    </div> --}}
 
                     {{-- Stock Badge --}}
                     <div class="absolute top-4 left-4">
@@ -88,13 +89,13 @@
                 {{-- Additional Images Thumbnail Gallery --}}
                 @if(count($additionalImages) > 0)
                 <div class="flex space-x-2 overflow-x-auto pb-2">
-                    <button class="flex-shrink-0 w-16 h-16 rounded-lg border-2 border-purple-600 overflow-hidden"
+                    <button class="flex-shrink-0 w-16 h-16 rounded-lg border-2 border-orange-600 overflow-hidden"
                         onclick="changeMainImage('{{ $imageUrl }}')">
                         <img src="{{ $imageUrl }}" alt="Main view" class="w-full h-full object-contain">
                     </button>
                     @foreach($additionalImages as $index => $image)
                     <button
-                        class="flex-shrink-0 w-16 h-16 rounded-lg border-2 border-gray-200 hover:border-purple-600 overflow-hidden transition"
+                        class="flex-shrink-0 w-16 h-16 rounded-lg border-2 border-gray-200 hover:border-orange-600 overflow-hidden transition"
                         onclick="changeMainImage('{{ Storage::url($image) }}')">
                         <img src="{{ Storage::url($image) }}" alt="View {{ $index + 2 }}"
                             class="w-full h-full object-contain">
@@ -107,7 +108,7 @@
             {{-- Product Details --}}
             <div class="space-y-6">
                 <div>
-                    <h1 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-2">{{ $product->name }}</h1>
+                    <h1 class="text-2xl lg:text-3xl font-bold text-gray-900 mb-2">{{ $product->name }}</h1>
 
                     @if ($product->model)
                     <p class="text-gray-600 mb-2">Model: <span class="font-medium">{{ $product->model }}</span></p>
@@ -121,7 +122,7 @@
                 {{-- Pricing --}}
                 <div class="border-t border-b border-gray-200 py-4">
                     <div class="flex items-center space-x-4">
-                        <span class="text-3xl font-bold text-purple-600">
+                        <span class="text-3xl font-bold text-green-600">
                             ${{ number_format($product->sale_price ?? $product->price, 2) }}
                         </span>
 
@@ -183,7 +184,7 @@
                         </div>
 
                         <button onclick="addToCart({{ $product->id }})"
-                            class="flex-1 bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition font-medium">
+                            class="flex-1 bg-orange-600 text-white px-6 py-3 rounded-lg hover:bg-orange-700 transition font-medium">
                             <i class="fas fa-shopping-cart mr-2"></i>Add to Cart
                         </button>
                     </div>
@@ -195,14 +196,14 @@
                         </button>
 
                         <button onclick="toggleWishlist({{ $product->id }})"
-                            class="px-6 py-3 border border-purple-600 text-purple-600 rounded-lg hover:bg-purple-50 transition font-medium">
+                            class="px-6 py-3 border border-orange-600 text-orange-600 rounded-lg hover:bg-orange-50 transition font-medium">
                             <i class="fas fa-heart mr-2"></i>Wishlist
                         </button>
                     </div>
                     @else
                     <div class="bg-gray-100 border border-gray-300 rounded-lg p-4 text-center">
                         <p class="text-gray-600 font-medium">This product is currently out of stock</p>
-                        <button class="mt-2 text-purple-600 hover:text-purple-700 transition font-medium">
+                        <button class="mt-2 text-orange-600 hover:text-orange-700 transition font-medium">
                             Notify when available
                         </button>
                     </div>
@@ -220,7 +221,7 @@
                         <span>30-day return policy</span>
                     </div>
                     <div class="flex items-center space-x-2">
-                        <i class="fas fa-shield-alt text-purple-600"></i>
+                        <i class="fas fa-shield-alt text-orange-600"></i>
                         <span>1-year warranty included</span>
                     </div>
                 </div>
@@ -253,7 +254,7 @@
         <div data-aos="fade-up" data-aos-delay="200">
             <div class="flex items-center justify-between mb-8">
                 <h2 class="text-2xl font-bold text-gray-900">You might also like</h2>
-                <a href="{{ route('products.index') }}" class="text-purple-600 hover:text-purple-700 font-medium">
+                <a href="{{ route('products.index') }}" class="text-orange-600 hover:text-orange-700 font-medium">
                     View all products <i class="fas fa-arrow-right ml-1"></i>
                 </a>
             </div>
@@ -286,13 +287,13 @@
 
                         <div class="p-4">
                             <h3
-                                class="font-semibold text-gray-800 mb-2 line-clamp-2 group-hover:text-purple-600 transition">
+                                class="font-semibold text-gray-800 mb-2 line-clamp-2 group-hover:text-orange-600 transition">
                                 {{ $related->name }}
                             </h3>
 
                             <div class="flex items-center justify-between">
                                 <div>
-                                    <span class="text-lg font-bold text-purple-600">${{ number_format($relPrice, 2)
+                                    <span class="text-lg font-bold text-orange-600">${{ number_format($relPrice, 2)
                                         }}</span>
                                     @if($related->sale_price)
                                     <span class="text-sm text-gray-400 line-through ml-2">${{
@@ -302,7 +303,7 @@
 
                                 @if($related->stock > 0)
                                 <button onclick="quickAddToCart({{ $related->id }}, event)"
-                                    class="opacity-0 group-hover:opacity-100 transition-opacity bg-purple-600 text-white p-2 rounded-lg hover:bg-purple-700">
+                                    class="opacity-0 group-hover:opacity-100 transition-opacity bg-orange-600 text-white p-2 rounded-lg hover:bg-orange-700">
                                     <i class="fas fa-plus text-sm"></i>
                                 </button>
                                 @endif

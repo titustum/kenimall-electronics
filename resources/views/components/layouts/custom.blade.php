@@ -415,7 +415,8 @@
             <div class="flex justify-between items-center h-16">
 
                 <!-- Enhanced Logo -->
-                <a href="#" class="logo-link inline-block group" aria-label="KAMARONA - Quality Electronics Home">
+                <a href="{{ route('home') }}" class="logo-link inline-block group"
+                    aria-label="KAMARONA - Quality Electronics Home">
                     <div class="logo-container grid gap-1">
                         <div class="flex items-center">
                             <div class="relative mr-2">
@@ -699,7 +700,7 @@
                             </a>
                             <a href="#"
                                 class="flex items-center py-2 text-gray-600 hover:text-orange-500 hover:bg-orange-50 px-3 rounded-lg transition-all">
-                                <i class="fas fa-watch text-xs mr-3 w-4"></i>
+                                <i class="fas fa-clock text-xs mr-3 w-4"></i>
                                 Wearables
                             </a>
                         </div>
@@ -895,7 +896,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center md:text-left">
                         <div class="flex items-center justify-center md:justify-start" data-aos="fade-up"
                             data-aos-delay="400">
-                            <div class="bg-purple-600 p-3 rounded-full mr-4">
+                            <div class="bg-purple-600 px-5 p-3 rounded-full mr-4">
                                 <i class="fas fa-map-marker-alt text-lg"></i>
                             </div>
                             <div>
@@ -906,7 +907,7 @@
 
                         <div class="flex items-center justify-center md:justify-start" data-aos="fade-up"
                             data-aos-delay="500">
-                            <div class="bg-green-600 p-3 rounded-full mr-4">
+                            <div class="bg-green-600 px-5 p-3 rounded-full mr-4">
                                 <i class="fas fa-phone text-lg"></i>
                             </div>
                             <div>
@@ -917,7 +918,7 @@
 
                         <div class="flex items-center justify-center md:justify-start" data-aos="fade-up"
                             data-aos-delay="600">
-                            <div class="bg-blue-600 p-3 rounded-full mr-4">
+                            <div class="bg-blue-600 px-5 p-3 rounded-full mr-4">
                                 <i class="fas fa-envelope text-lg"></i>
                             </div>
                             <div>
@@ -936,7 +937,7 @@
                 <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
                     <div class="text-gray-300 text-sm">
                         © 2025 Kamarona Electronics. All rights reserved. Made with <i
-                            class="fas fa-heart text-red-500 mx-1"></i> in Kenya
+                            class="fas fa-heart text-red-500 mx-1"></i> in Australia
                     </div>
 
                     <div class="flex items-center space-x-6">
