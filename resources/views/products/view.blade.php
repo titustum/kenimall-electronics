@@ -183,14 +183,14 @@
                             </button>
                         </div>
 
-                        <button onclick="addToCart({{ $product->id }})"
+                        <button onclick="quickAddToCart({{ $product->id }})"
                             class="flex-1 bg-orange-600 text-white px-6 py-3 rounded-lg hover:bg-orange-700 transition font-medium">
                             <i class="fas fa-shopping-cart mr-2"></i>Add to Cart
                         </button>
                     </div>
 
                     <div class="flex space-x-3">
-                        <button onclick="buyNow({{ $product->id }})"
+                        <button onclick="quickAddToCart({{ $product->id }})"
                             class="flex-1 bg-gray-900 text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition font-medium">
                             <i class="fas fa-bolt mr-2"></i>Buy Now
                         </button>
@@ -339,30 +339,6 @@
                 if (current > 1) {
                     input.value = current - 1;
                 }
-            }
-
-            function addToCart(productId) {
-                const quantity = document.getElementById('quantity').value;
-                // Add your cart functionality here
-                console.log(`Adding ${quantity} of product ${productId} to cart`);
-            }
-
-            function buyNow(productId) {
-                const quantity = document.getElementById('quantity').value;
-                // Add your buy now functionality here
-                console.log(`Buy now: ${quantity} of product ${productId}`);
-            }
-
-            function toggleWishlist(productId) {
-                // Add your wishlist functionality here
-                console.log(`Toggle wishlist for product ${productId}`);
-            }
-
-            function quickAddToCart(productId, event) {
-                event.preventDefault();
-                event.stopPropagation();
-                // Add your quick add to cart functionality here
-                console.log(`Quick add product ${productId} to cart`);
             }
     </script>
     @endpush
