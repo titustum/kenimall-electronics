@@ -11,6 +11,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.4.7/swiper-bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
 
+    <link rel="shortcut icon" href="{{ asset('favicon.svg') }}" type="image/svg">
+
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
 
@@ -444,7 +446,7 @@
                         <div class="flex w-full">
                             <div class="relative flex-1">
                                 <input type="text" placeholder="Search for products, brands, categories..."
-                                    class="w-full px-4 py-3 pr-10 border border-gray-200 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300 bg-gray-50 focus:bg-white" />
+                                    class="w-full px-4 py-3 pr-10 border border-gray-200 rounded-l-lg focus:outline-none focus:ring-1 focus:ring-orange-500 focus:border-transparent transition-all duration-300 bg-gray-50 focus:bg-white" />
                                 <i
                                     class="fas fa-microphone absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-orange-500 cursor-pointer transition-colors"></i>
                             </div>
@@ -486,7 +488,7 @@
                                 class="nav-dropdown absolute left-0 bg-white shadow-xl mt-2 rounded-xl border border-gray-100 w-64 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0">
                                 <div class="p-4">
                                     <div class="space-y-1">
-                                        <a href="#"
+                                        <a href="{{ route('products.index').'?q=phones'}}"
                                             class="flex items-center px-4 py-3 hover:bg-orange-50 rounded-lg transition-colors group/item">
                                             <i class="fas fa-mobile-alt text-orange-500 w-5 mr-3"></i>
                                             <div>
@@ -495,7 +497,7 @@
                                                 <div class="text-xs text-gray-500">Latest models & accessories</div>
                                             </div>
                                         </a>
-                                        <a href="#"
+                                        <a href="{{ route('products.index').'?q=gaming'}}"
                                             class="flex items-center px-4 py-3 hover:bg-orange-50 rounded-lg transition-colors group/item">
                                             <i class="fas fa-laptop text-orange-500 w-5 mr-3"></i>
                                             <div>
@@ -504,7 +506,7 @@
                                                 <div class="text-xs text-gray-500">Gaming, business & ultrabooks</div>
                                             </div>
                                         </a>
-                                        <a href="#"
+                                        <a href="{{ route('products.index').'?q=audio'}}"
                                             class="flex items-center px-4 py-3 hover:bg-orange-50 rounded-lg transition-colors group/item">
                                             <i class="fas fa-headphones text-orange-500 w-5 mr-3"></i>
                                             <div>
@@ -513,9 +515,9 @@
                                                 <div class="text-xs text-gray-500">Headphones, speakers & more</div>
                                             </div>
                                         </a>
-                                        <a href="#"
+                                        <a href="{{ route('products.index').'?q=wearable'}}"
                                             class="flex items-center px-4 py-3 hover:bg-orange-50 rounded-lg transition-colors group/item">
-                                            <i class="fas fa-watch text-orange-500 w-5 mr-3"></i>
+                                            <i class="far fa-clock text-orange-500 w-5 mr-3"></i>
                                             <div>
                                                 <div class="font-medium text-gray-900 group-hover/item:text-orange-600">
                                                     Wearables</div>
@@ -539,7 +541,7 @@
                                 class="nav-dropdown absolute left-0 bg-white shadow-xl mt-2 rounded-xl border border-gray-100 w-64 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0">
                                 <div class="p-4">
                                     <div class="space-y-1">
-                                        <a href="#"
+                                        <a href="{{ route('products.index').'?q=gaming'}}"
                                             class="flex items-center px-4 py-3 hover:bg-orange-50 rounded-lg transition-colors group/item">
                                             <i class="fas fa-gamepad text-orange-500 w-5 mr-3"></i>
                                             <div>
@@ -549,7 +551,7 @@
                                                 </div>
                                             </div>
                                         </a>
-                                        <a href="#"
+                                        <a href="{{ route('products.index').'?q=smart-home'}}"
                                             class="flex items-center px-4 py-3 hover:bg-orange-50 rounded-lg transition-colors group/item">
                                             <i class="fas fa-home text-orange-500 w-5 mr-3"></i>
                                             <div>
@@ -558,7 +560,7 @@
                                                 <div class="text-xs text-gray-500">IoT devices & automation</div>
                                             </div>
                                         </a>
-                                        <a href="#"
+                                        <a href="{{ route('products.index').'?q=photography'}}"
                                             class="flex items-center px-4 py-3 hover:bg-orange-50 rounded-lg transition-colors group/item">
                                             <i class="fas fa-camera text-orange-500 w-5 mr-3"></i>
                                             <div>
@@ -567,7 +569,7 @@
                                                 <div class="text-xs text-gray-500">Cameras, lenses & studio gear</div>
                                             </div>
                                         </a>
-                                        <a href="#"
+                                        <a href="{{ route('products.index').'?q=entertainment'}}"
                                             class="flex items-center px-4 py-3 hover:bg-orange-50 rounded-lg transition-colors group/item">
                                             <i class="fas fa-tv text-orange-500 w-5 mr-3"></i>
                                             <div>
@@ -582,7 +584,7 @@
                         </div>
 
                         <!-- Deals Link -->
-                        <a href="#"
+                        <a href="{{ route('products.index').'?q=deals'}}"
                             class="flex items-center text-gray-700 hover:text-red-500 font-medium py-2 px-3 rounded-lg hover:bg-red-50 transition-all duration-300">
                             <i class="fas fa-fire text-red-500 mr-1"></i>
                             Deals
@@ -598,27 +600,28 @@
                         </button>
 
                         <!-- Wishlist -->
-                        <button
+                        <a href="#"
                             class="hidden sm:block text-gray-700 hover:text-red-500 p-2 rounded-lg hover:bg-red-50 transition-all duration-300 relative">
                             <i class="fas fa-heart text-lg"></i>
                             <span
                                 class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">2</span>
-                        </button>
+                        </a>
 
                         <!-- Enhanced Cart -->
-                        <button
+                        <a href="{{ route('cart.index') }}"
                             class="text-gray-700 hover:text-orange-500 p-2 rounded-lg hover:bg-orange-50 transition-all duration-300 relative group"
                             onclick="this.classList.add('cart-bounce'); setTimeout(() => this.classList.remove('cart-bounce'), 600)">
                             <i class="fas fa-shopping-cart text-lg group-hover:scale-110 transition-transform"></i>
-                            <span
-                                class="absolute -top-1 -right-1 bg-gradient-to-r from-red-500 to-red-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-medium shadow-lg">3</span>
-                        </button>
+                            <span id="cart-count"
+                                class="absolute -top-1 -right-1 bg-gradient-to-r from-red-500 to-red-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-medium shadow-lg">{{
+                                count(session('cart', [])) }}</span>
+                        </a>
 
                         <!-- User Account -->
-                        <button
+                        <a href="{{ route('login') }}"
                             class="text-gray-700 hover:text-blue-500 p-2 rounded-lg hover:bg-blue-50 transition-all duration-300">
                             <i class="fas fa-user text-lg"></i>
-                        </button>
+                        </a>
 
                         <!-- Enhanced Mobile Menu Button -->
                         <button id="mobile-menu-button"

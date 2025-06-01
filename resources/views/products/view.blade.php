@@ -10,7 +10,7 @@
         content="{{ Storage::exists($product->image_path) ? Storage::url($product->image_path) : $product->image_path }}">
     <meta property="og:type" content="product">
     <meta property="product:price:amount" content="{{ $product->sale_price ?? $product->price }}">
-    <meta property="product:price:currency" content="USD">
+    <meta property="product:price:currency" content="AUD">
     @endpush
 
     {{-- Structured Data for SEO --}}

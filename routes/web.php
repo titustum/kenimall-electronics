@@ -23,17 +23,17 @@ Route::middleware(['auth'])->group(function () {
 
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CheckoutController;
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-    Route::post('/cart', [CartController::class, 'store'])->name('cart.store');
-    Route::patch('/cart/{id}', [CartController::class, 'update'])->name('cart.update');
-    Route::delete('/cart/{id}', [CartController::class, 'destroy'])->name('cart.destroy');
-});
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store'); 
 
-
-
+Route::delete('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
+Route::resource('cart', CartController::class)->only(['index', 'store', 'update', 'destroy']);
 Route::resource('products' , ProductController::class);
 Route::resource('categories' , CategoryController::class); 
+
+
+
 
 require __DIR__.'/auth.php';

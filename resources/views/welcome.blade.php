@@ -1,5 +1,9 @@
 <x-custom-layout>
 
+    @push('meta')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    @endpush
+
 
     <!-- hero section -->
     <section id="hero-slider" class="relative h-screen pt-20  md:pt-auto overflow-hidden">
@@ -21,7 +25,7 @@
                                     and smart devices. Experience innovation at its finest.
                                 </p>
                                 <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                                    <a href="#popular-products"
+                                    <a href="{{ route('products.index') }}"
                                         class="inline-flex items-center justify-center bg-yellow-400 text-gray-900 px-8 py-4 rounded-full font-semibold text-lg hover:bg-yellow-300 transition-all duration-300 ease-in-out transform hover:scale-105 shadow-lg animate-pulse-once">
                                         <i class="fas fa-shopping-bag mr-2"></i>Shop Now
                                     </a>
@@ -62,7 +66,7 @@
                                     accessories. Built for serious gamers, by gamers.
                                 </p>
                                 <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                                    <a href="#gaming-products"
+                                    <a href="{{ route('products.index').'?q=gaming'}}"
                                         class="inline-flex items-center justify-center bg-cyan-400 text-gray-900 px-8 py-4 rounded-full font-semibold text-lg hover:bg-cyan-300 transition-all duration-300 ease-in-out transform hover:scale-105 shadow-lg animate-pulse-once">
                                         <i class="fas fa-gamepad mr-2"></i>Explore Gaming
                                     </a>
@@ -103,7 +107,7 @@
                                     and more connected than ever before.
                                 </p>
                                 <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                                    <a href="#smart-home-products"
+                                    <a href="{{ route('products.index').'?q=smart-home '}}"
                                         class="inline-flex items-center justify-center bg-green-400 text-gray-900 px-8 py-4 rounded-full font-semibold text-lg hover:bg-green-300 transition-all duration-300 ease-in-out transform hover:scale-105 shadow-lg animate-pulse-once">
                                         <i class="fas fa-home mr-2"></i>Smart Home Collection
                                     </a>
@@ -488,37 +492,45 @@
 
 
     @push('scripts')
+
+    <!-- JavaScript for Enhanced Functionality -->
+
     <script>
-        // Quick add to cart
         function quickAddToCart(productId) {
-            // Add your cart functionality here
-            showNotification('Product added to cart!', 'success');
-        }
+        fetch("{{ route('cart.store') }}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: JSON.stringify({
+                product_id: productId,
+                quantity: 1
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                // Optional: Update cart count or show toast
+                alert('Product added to cart!');
 
-        // Wishlist toggle
-        function toggleWishlist(productId) {
-            // Add your wishlist functionality here
-            showNotification('Added to wishlist!', 'success');
-        }
+ 
+                // Update cart count and total
+                console.log(data)
+                document.getElementById('cart-count').textContent = data.cart_count; 
 
-        // Notification system
-        function showNotification(message, type) {
-            const notification = document.createElement('div');
-            notification.className = `fixed top-4 right-4 px-6 py-4 rounded-lg shadow-lg z-50 ${
-                type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
-            } transform translate-x-full transition-transform duration-300`;
-            notification.textContent = message;
-            
-            document.body.appendChild(notification);
-            
-            setTimeout(() => notification.classList.remove('translate-x-full'), 100);
-            setTimeout(() => {
-                notification.classList.add('translate-x-full');
-                setTimeout(() => notification.remove(), 300);
-            }, 3000);
-        }
 
+            } else {
+                alert(data.message || 'Something went wrong');
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            alert('Error adding product to cart.');
+        });
+    }
     </script>
+
     @endpush
 
 

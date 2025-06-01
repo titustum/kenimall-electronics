@@ -1,57 +1,102 @@
 <x-custom-layout>
+
+    @push('meta')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    @endpush
+
     <section class="bg-gray-50 py-12 mt-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
             <!-- Sidebar Filters -->
-            <aside class="bg-white p-6 rounded-2xl shadow-md space-y-6">
+            <aside class="bg-white p-6 rounded-2xl shadow-md space-y-6 max-w-sm">
                 <h2 class="text-xl font-semibold text-gray-800">Filters</h2>
 
-                <!-- Categories -->
-                <div>
-                    <h3 class="font-medium text-gray-700 mb-2">Categories</h3>
-                    @foreach($categories as $category)
-                    <label class="flex items-center space-x-2">
-                        <input type="checkbox" value="{{ $category->id }}" class="text-purple-600">
-                        <span class="text-sm text-gray-600">{{ $category->name }}</span>
-                    </label>
-                    @endforeach
-                </div>
+                <form id="filterForm">
+                    <!-- Categories -->
+                    <div class="mb-6">
+                        <h3 class="font-medium text-gray-700 mb-3">Categories</h3>
+                        <div class="space-y-2">
+                            @foreach ($categories as $category)
+                            <label class="flex items-center space-x-2 cursor-pointer">
+                                <input type="checkbox" name="categories[]" value="{{ $category->id }}"
+                                    class="text-teal-600 rounded focus:ring-teal-500">
+                                <span class="text-sm text-gray-600">{{ $category->name }}</span>
+                            </label>
+                            @endforeach
 
-                <!-- Brands -->
-                <div>
-                    <h3 class="font-medium text-gray-700 mb-2">Brands</h3>
-                    @foreach($brands as $brand)
-                    <label class="flex items-center space-x-2">
-                        <input type="checkbox" value="{{ $brand->id }}" class="text-purple-600">
-                        <span class="text-sm text-gray-600">{{ $brand->name }}</span>
-                    </label>
-                    @endforeach
-                </div>
+                        </div>
+                    </div>
 
-                <!-- Price Range -->
-                <div>
-                    <h3 class="font-medium text-gray-700 mb-2">Max Price</h3>
-                    <input type="range" min="0" max="5000" value="0" class="w-full">
-                </div>
+                    <!-- Brands -->
+                    <div class="mb-6">
+                        <h3 class="font-medium text-gray-700 mb-3">Brands</h3>
+                        <div class="space-y-2">
 
-                <!-- Condition -->
-                <div>
-                    <h3 class="font-medium text-gray-700 mb-2">Condition</h3>
-                    <select class="w-full border-gray-200 rounded-md">
-                        <option value="">All</option>
-                        <option value="new">New</option>
-                        <option value="used">Used</option>
-                        <option value="refurbished">Refurbished</option>
-                    </select>
-                </div>
+                            @foreach ($brands as $brand)
+                            <label class="flex items-center space-x-2 cursor-pointer">
+                                <input type="checkbox" name="brands[]" value="{{ $brand->id }}"
+                                    class="text-teal-600 rounded focus:ring-teal-500">
+                                <span class="text-sm text-gray-600">{{ $brand->name }}</span>
+                            </label>
+                            @endforeach
 
-                <!-- Stock -->
-                <div>
-                    <label class="flex items-center space-x-2">
-                        <input type="checkbox" class="text-purple-600">
-                        <span class="text-sm text-gray-700">In Stock Only</span>
-                    </label>
+                        </div>
+                    </div>
+
+                    <!-- Price Range -->
+                    <div class="mb-6">
+                        <h3 class="font-medium text-gray-700 mb-3">Max Price</h3>
+                        <div class="space-y-2">
+                            <input type="range" name="max_price" min="0" max="5000" value="2500"
+                                class="w-full accent-teal-600" id="priceRange">
+                            <div class="flex justify-between text-xs text-gray-500">
+                                <span>$0</span>
+                                <span id="priceValue" class="font-medium text-teal-600">$2,500</span>
+                                <span>$5,000</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Condition -->
+                    <div class="mb-6">
+                        <h3 class="font-medium text-gray-700 mb-3">Condition</h3>
+                        <select name="condition"
+                            class="w-full border-gray-300 rounded-lg focus:ring-teal-500 focus:border-teal-500">
+                            <option value="">All Conditions</option>
+                            <option value="new">New</option>
+                            <option value="used">Used</option>
+                            <option value="refurbished">Refurbished</option>
+                        </select>
+                    </div>
+
+                    <!-- Stock -->
+                    <div class="mb-6">
+                        <label class="flex items-center space-x-2 cursor-pointer">
+                            <input type="checkbox" name="in_stock" value="1"
+                                class="text-teal-600 rounded focus:ring-teal-500">
+                            <span class="text-sm text-gray-700">In Stock Only</span>
+                        </label>
+                    </div>
+
+                    <!-- Filter Buttons -->
+                    <div class="space-y-3">
+                        <button type="submit"
+                            class="w-full bg-teal-600 hover:bg-teal-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2">
+                            Apply Filters
+                        </button>
+                        <button type="button" id="clearFilters"
+                            class="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-3 px-4 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2">
+                            Clear All
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Active Filters Display -->
+                <div id="activeFilters" class="mt-6 hidden">
+                    <h4 class="font-medium text-gray-700 mb-2">Active Filters:</h4>
+                    <div id="filterTags" class="flex flex-wrap gap-2"></div>
                 </div>
             </aside>
+
 
             <!-- Product Grid -->
             <div class="md:col-span-3">
@@ -141,7 +186,7 @@
                             <!-- Title -->
                             <a href="{{ route('products.show', $product->slug) }}" class="block">
                                 <h3
-                                    class="text-xl font-bold text-gray-900 mb-2 hover:text-blue-600 hover:underline transition-colors line-clamp-2">
+                                    class="text-xl font-bold text-gray-900 mb-2 hover:text-teal-600 transition-colors line-clamp-2">
                                     {{ $product->name }}
                                 </h3>
                             </a>
@@ -154,7 +199,7 @@
                             <!-- Price -->
                             <div class="flex items-center justify-between pt-2 border-t border-gray-100">
                                 <div class="flex items-baseline space-x-2">
-                                    <span class="text-2xl font-bold text-blue-600">${{ number_format($price, 2)
+                                    <span class="text-2xl font-bold text-teal-600">${{ number_format($price, 2)
                                         }}
                                     </span>
 
@@ -196,36 +241,172 @@
 
 
     @push('scripts')
+
     <script>
-        // Quick add to cart
-        function quickAddToCart(productId) {
-            // Add your cart functionality here
-            showNotification('Product added to cart!', 'success');
-        }
+        // Price range display
+        const priceRange = document.getElementById('priceRange');
+        const priceValue = document.getElementById('priceValue');
+        
+        priceRange.addEventListener('input', function() {
+            priceValue.textContent = '$' + parseInt(this.value).toLocaleString();
+        });
 
-        // Wishlist toggle
-        function toggleWishlist(productId) {
-            // Add your wishlist functionality here
-            showNotification('Added to wishlist!', 'success');
-        }
+        // Form submission
+        document.getElementById('filterForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            applyFilters();
+        });
 
-        // Notification system
-        function showNotification(message, type) {
-            const notification = document.createElement('div');
-            notification.className = `fixed top-4 right-4 px-6 py-4 rounded-lg shadow-lg z-50 ${
-                type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
-            } transform translate-x-full transition-transform duration-300`;
-            notification.textContent = message;
+        // Clear filters
+        document.getElementById('clearFilters').addEventListener('click', function() {
+            document.getElementById('filterForm').reset();
+            priceValue.textContent = '$2,500';
+            document.getElementById('activeFilters').classList.add('hidden');
+            console.log('Filters cleared');
+        });
+
+        function applyFilters() {
+            const formData = new FormData(document.getElementById('filterForm'));
+            const filters = {};
             
-            document.body.appendChild(notification);
+            // Collect selected categories
+            const categories = formData.getAll('categories[]');
+            if (categories.length > 0) filters.categories = categories;
             
-            setTimeout(() => notification.classList.remove('translate-x-full'), 100);
-            setTimeout(() => {
-                notification.classList.add('translate-x-full');
-                setTimeout(() => notification.remove(), 300);
-            }, 3000);
+            // Collect selected brands
+            const brands = formData.getAll('brands[]');
+            if (brands.length > 0) filters.brands = brands;
+            
+            // Get price range
+            const maxPrice = formData.get('max_price');
+            if (maxPrice && maxPrice > 0) filters.max_price = maxPrice;
+            
+            // Get condition
+            const condition = formData.get('condition');
+            if (condition) filters.condition = condition;
+            
+            // Get stock filter
+            const inStock = formData.get('in_stock');
+            if (inStock) filters.in_stock = true;
+            
+            // Display active filters
+            displayActiveFilters(filters);
+            
+            // Here you would typically send the filters to your backend
+            console.log('Applied filters:', filters);
+            
+            // Example: You could make an AJAX request here
+            // fetch('/products/filter', {
+            //     method: 'POST',
+            //     headers: { 'Content-Type': 'application/json' },
+            //     body: JSON.stringify(filters)
+            // });
         }
 
+        function displayActiveFilters(filters) {
+            const activeFiltersDiv = document.getElementById('activeFilters');
+            const filterTagsDiv = document.getElementById('filterTags');
+            
+            filterTagsDiv.innerHTML = '';
+            
+            if (Object.keys(filters).length === 0) {
+                activeFiltersDiv.classList.add('hidden');
+                return;
+            }
+            
+            activeFiltersDiv.classList.remove('hidden');
+            
+            // Create filter tags
+            Object.entries(filters).forEach(([key, value]) => {
+                if (Array.isArray(value)) {
+                    value.forEach(v => {
+                        const tag = createFilterTag(key, v);
+                        filterTagsDiv.appendChild(tag);
+                    });
+                } else {
+                    const tag = createFilterTag(key, value);
+                    filterTagsDiv.appendChild(tag);
+                }
+            });
+        }
+
+        function createFilterTag(key, value) {
+            const tag = document.createElement('span');
+            tag.className = 'inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-teal-100 text-teal-800';
+            
+            let displayText = '';
+            switch(key) {
+                case 'categories':
+                    const categoryNames = ['Electronics', 'Clothing', 'Home & Garden', 'Sports'];
+                    displayText = categoryNames[value - 1] || value;
+                    break;
+                case 'brands':
+                    const brandNames = ['Apple', 'Samsung', 'Nike', 'Adidas'];
+                    displayText = brandNames[value - 1] || value;
+                    break;
+                case 'max_price':
+                    displayText = `Max: $${parseInt(value).toLocaleString()}`;
+                    break;
+                case 'condition':
+                    displayText = value.charAt(0).toUpperCase() + value.slice(1);
+                    break;
+                case 'in_stock':
+                    displayText = 'In Stock';
+                    break;
+                default:
+                    displayText = value;
+            }
+            
+            tag.innerHTML = `
+                ${displayText}
+                <button type="button" class="ml-1 text-teal-600 hover:text-teal-800" onclick="removeFilter('${key}', '${value}')">
+                    ×
+                </button>
+            `;
+            
+            return tag;
+        }
+
+        function removeFilter(key, value) {
+            // Logic to remove specific filter
+            console.log(`Removing filter: ${key} = ${value}`);
+            // You would implement the actual removal logic here
+        }
     </script>
+
+
+    <script>
+        function quickAddToCart(productId) {
+        fetch("{{ route('cart.store') }}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: JSON.stringify({
+                product_id: productId,
+                quantity: 1
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                // Optional: Update cart count or show toast
+                alert('Product added to cart!');
+
+                document.getElementById('cart-count').textContent = data.cart_count; 
+
+            } else {
+                alert(data.message || 'Something went wrong');
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            alert('Error adding product to cart.');
+        });
+    }
+    </script>
+
+
     @endpush
 </x-custom-layout>
