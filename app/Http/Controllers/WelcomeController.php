@@ -10,9 +10,9 @@ class WelcomeController extends Controller
     public function index()
     {
 
-        $categories = \App\Models\Category::all();
+        $categories = \App\Models\Category::take(8)->get();
         $products = \App\Models\Product::all();
         $topSellingProducts = Product::orderBy('price', 'desc')->take(8)->get();
-        return view('welcome', compact('categories', 'products', 'topSellingProducts'));
+        return view('welcome1', compact('categories', 'products', 'topSellingProducts'));
     }
 }
