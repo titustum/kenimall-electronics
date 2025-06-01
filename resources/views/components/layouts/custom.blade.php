@@ -600,11 +600,13 @@
                         </button>
 
                         <!-- Wishlist -->
-                        <a href="#"
+                        <a href="{{ route('wishlist.index')  }}"
                             class="hidden sm:block text-gray-700 hover:text-red-500 p-2 rounded-lg hover:bg-red-50 transition-all duration-300 relative">
                             <i class="fas fa-heart text-lg"></i>
-                            <span
-                                class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">2</span>
+                            <span id="wishlist_count"
+                                class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+                                {{ count(session('wishlist', [])) }}
+                            </span>
                         </a>
 
                         <!-- Enhanced Cart -->
@@ -970,6 +972,73 @@
             <i class="fas fa-chevron-up text-lg"></i>
         </button>
     </section>
+
+
+
+
+    <!-- JavaScript for Enhanced Functionality -->
+
+    <script>
+        function quickAddToCart(productId) {
+        fetch("{{ route('cart.store') }}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: JSON.stringify({
+                product_id: productId,
+                quantity: 1
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                // Optional: Update cart count or show toast
+                alert('Product added to cart!');
+
+ 
+                // Update cart count and total
+                console.log(data)
+                document.getElementById('cart-count').textContent = data.cart_count; 
+
+
+            } else {
+                alert(data.message || 'Something went wrong');
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            alert('Error adding product to cart.');
+        });
+    }
+    </script>
+
+
+    <script>
+        function toggleWishlist(productId) {
+            fetch("{{ route('wishlist.toggle') }}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({ product_id: productId })
+            })
+            .then(res => res.json())
+            .then(data => {
+                alert(data.message || 'Updated wishlist');
+                // Optionally update icon, count, etc.
+
+                document.getElementById('wishlist_count').textContent = data.wishlist_count;
+            })
+            .catch(err => {
+                console.error(err);
+                alert('Failed to update wishlist');
+            });
+        }
+    </script>
+
 
     <script>
         // Initialize AOS (Animate On Scroll)

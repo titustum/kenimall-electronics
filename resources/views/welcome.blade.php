@@ -491,47 +491,4 @@
     </section>
 
 
-    @push('scripts')
-
-    <!-- JavaScript for Enhanced Functionality -->
-
-    <script>
-        function quickAddToCart(productId) {
-        fetch("{{ route('cart.store') }}", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            },
-            body: JSON.stringify({
-                product_id: productId,
-                quantity: 1
-            })
-        })
-        .then(res => res.json())
-        .then(data => {
-            if (data.success) {
-                // Optional: Update cart count or show toast
-                alert('Product added to cart!');
-
- 
-                // Update cart count and total
-                console.log(data)
-                document.getElementById('cart-count').textContent = data.cart_count; 
-
-
-            } else {
-                alert(data.message || 'Something went wrong');
-            }
-        })
-        .catch(err => {
-            console.error(err);
-            alert('Error adding product to cart.');
-        });
-    }
-    </script>
-
-    @endpush
-
-
 </x-custom-layout>

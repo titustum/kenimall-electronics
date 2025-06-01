@@ -24,6 +24,10 @@ Route::middleware(['auth'])->group(function () {
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\WishlistController;
+
+Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index'); 
+Route::post('/wishlist/toggle', [WishlistController::class, 'toggle'])->name('wishlist.toggle'); 
 
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
 Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store'); 
@@ -31,8 +35,7 @@ Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.s
 Route::delete('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
 Route::resource('cart', CartController::class)->only(['index', 'store', 'update', 'destroy']);
 Route::resource('products' , ProductController::class);
-Route::resource('categories' , CategoryController::class); 
-
+Route::resource('categories' , CategoryController::class);  
 
 
 

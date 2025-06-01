@@ -1,5 +1,5 @@
 <x-custom-layout>
-    <div class="max-w-3xl mx-auto p-6">
+    <div class="max-w-3xl mx-auto p-6 mt-20">
         <h2 class="text-3xl font-bold mb-6">Checkout</h2>
 
         <form method="POST" action="{{ route('checkout.store') }}" class="space-y-6">
