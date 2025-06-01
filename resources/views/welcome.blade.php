@@ -1,10 +1,5 @@
 <x-custom-layout>
 
-    @push('meta')
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    @endpush
-
-
     <!-- hero section -->
     <section id="hero-slider" class="relative h-screen pt-20  md:pt-auto overflow-hidden">
         <div class="swiper hero-swiper h-full">
