@@ -16,7 +16,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return "Products Index!";
+        $products = Product::all();
+        return view('products.index', compact('products'));
     }
 
     /**
@@ -117,14 +118,18 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Product $product)
     {
-        $product = Product::findOrFail($id);
- 
-        $relatedProducts = Product::where('category_id', $product->category->id)->limit(6)->get();
+        // Get related products in the same category, excluding current one
+        $relatedProducts = Product::where('category_id', $product->category_id)
+            ->where('id', '!=', $product->id)
+            ->inRandomOrder()
+            ->limit(6)
+            ->get();
 
         return view('products.view', compact('product', 'relatedProducts'));
     }
+
 
     /**
      * Show the form for editing the specified resource.

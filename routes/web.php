@@ -22,6 +22,7 @@ Route::middleware(['auth'])->group(function () {
 
 
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CategoryController;
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
@@ -32,6 +33,7 @@ Route::middleware(['auth'])->group(function () {
 
 
 
-Route::resource('products', ProductController::class);
+Route::resource('products' , ProductController::class);
+Route::resource('categories' , CategoryController::class); 
 
 require __DIR__.'/auth.php';

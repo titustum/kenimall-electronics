@@ -59,6 +59,12 @@ class Product extends Model
         return $this->hasMany(ProductImage::class);
     }
 
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
+
     // // Mutator for the slug
     // public function setSlugAttribute($value)
     // {

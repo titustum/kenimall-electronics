@@ -1,63 +1,1060 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="dark">
-    <head>
-        @include('partials.head')
-    </head>
-    <body class="bg-gray-50 font-[Roboto]" 
-x-data="
-{ 
-mobileMenuOpen: false, 
-searchModalOpen: false, 
-openOffcanvasMenu: false,
-activeDropdown: null,
-openModal(productData) {
-    this.product = productData;
-    this.quickViewModal = true;
-},
-quickViewModal: false, 
-product: {
-        id: 1
-    },
-}">
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kamarona - Premium Electronics Store</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.4.7/swiper-bundle.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.4.7/swiper-bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
+
+    <!-- Google Font: Righteous -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Righteous&family=Poppins:wght@100;200;300;400;500;600;700&family=Roboto:wght@100;300;400;500;700&display=swap"
+        rel="stylesheet">
+
+
+    {{-- In your layout head --}}
+    @stack('meta') {{-- For additional meta tags --}}
+    @stack('styles') {{-- For additional CSS --}}
+
+
+    <!-- Tailwind CSS CDN -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .hero-swiper .swiper-pagination-bullet {
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 1;
+        }
+
+        .hero-swiper .swiper-pagination-bullet-active {
+            background: #fff;
+            transform: scale(1.2);
+        }
+
+        .hero-swiper .swiper-button-next,
+        .hero-swiper .swiper-button-prev {
+            color: white;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            backdrop-filter: blur(10px);
+        }
+
+        .hero-swiper .swiper-button-next:after,
+        .hero-swiper .swiper-button-prev:after {
+            font-size: 20px;
+        }
+
+        .floating-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .pulse-glow {
+            animation: pulse-glow 2s infinite;
+        }
+
+        @keyframes pulse-glow {
+
+            0%,
+            100% {
+                box-shadow: 0 0 20px rgba(102, 126, 234, 0.4);
+            }
+
+            50% {
+                box-shadow: 0 0 40px rgba(102, 126, 234, 0.8);
+            }
+        }
+
+        .slide-bg-1 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .slide-bg-2 {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .slide-bg-3 {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .hover-scale {
+            transition: transform 0.3s ease;
+        }
+
+        .hover-scale:hover {
+            transform: scale(1.05);
+        }
+
+        /* Sidebar specific styles */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 280px;
+            /* Adjust width as needed */
+            height: 100%;
+            background-color: white;
+            /* Updated: Solid white background */
+            z-index: 1000;
+            /* Ensure sidebar is on top */
+            transform: translateX(-100%);
+            /* Start off-screen */
+            transition: transform 0.3s ease-in-out;
+            padding-top: 4rem;
+            /* Space for the top bar content */
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+            overflow-y: auto;
+            /* Enable scrolling for long sidebar content */
+        }
+
+        .sidebar.open {
+            transform: translateX(0%);
+            /* Slide in */
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            /* Below sidebar, above content */
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Hide scrollbar on body when sidebar is open to prevent content shifting */
+        body.no-scroll {
+            overflow: hidden;
+        }
+
+        /* Dropdown specific styles */
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            top: 100%;
+            /* Position below the parent link */
+            left: 50%;
+            /* Center dropdown under the parent */
+            transform: translateX(-50%);
+            padding: 0.5rem 0;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+
+        .dropdown-menu a {
+            color: #333;
+            padding: 0.75rem 1rem;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: #f1f1f1;
+            color: #00BCD4;
+            /* Cyan on hover */
+        }
+
+        /* Sidebar dropdown/accordion styles */
+        .sidebar-dropdown-toggle {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 0.5rem 0;
+            color: #333;
+            font-size: 1.25rem;
+            /* text-xl */
+            font-weight: 500;
+            /* font-medium */
+            transition: color 0.2s ease;
+            cursor: pointer;
+        }
+
+        .sidebar-dropdown-toggle:hover {
+            color: #00BCD4;
+            /* Cyan on hover */
+        }
+
+        .sidebar-submenu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            padding-left: 1rem;
+        }
+
+        .sidebar-submenu.open {
+            max-height: 500px;
+            /* Adjust based on content to show all items */
+            transition: max-height 0.5s ease-in;
+        }
+
+        .sidebar-submenu a {
+            display: block;
+            padding: 0.5rem 0;
+            color: #555;
+            font-size: 1rem;
+            /* text-base */
+            transition: color 0.2s ease;
+        }
+
+        .sidebar-submenu a:hover {
+            color: #00BCD4;
+            /* Cyan on hover */
+        }
+    </style>
+
+    <style>
+        .logo-container {
+            font-family: 'Righteous', cursive;
+        }
+
+        .tagline {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .lightning-glow {
+            filter: drop-shadow(0 0 8px rgba(249, 115, 22, 0.4));
+        }
+
+        .brand-glow {
+            text-shadow: 0 0 20px rgba(249, 115, 22, 0.1);
+        }
+
+        .logo-link {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .logo-link:hover {
+            transform: translateY(-1px);
+        }
+
+        .logo-link:hover .lightning-bolt {
+            animation: pulse-glow 1.5s infinite;
+        }
+
+        @keyframes pulse-glow {
+
+            0%,
+            100% {
+                filter: drop-shadow(0 0 8px rgba(249, 115, 22, 0.4));
+            }
+
+            50% {
+                filter: drop-shadow(0 0 16px rgba(249, 115, 22, 0.8));
+            }
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .search-container {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .search-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent, rgba(249, 115, 22, 0.1), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+        }
+
+        .search-container:focus-within::before {
+            transform: translateX(100%);
+        }
+
+        .nav-dropdown {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .nav-dropdown.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .cart-bounce {
+            animation: bounce 0.6s ease-in-out;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            20%,
+            60%,
+            100% {
+                transform: translateY(0);
+            }
+
+            40% {
+                transform: translateY(-10px);
+            }
+
+            80% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 80%;
+            max-width: 320px;
+            height: 100vh;
+            background: white;
+            transition: left 0.3s ease-in-out;
+            box-shadow: 2px 0 20px rgba(0, 0, 0, 0.1);
+            z-index: 60;
+            overflow-y: auto;
+        }
+
+        .mobile-menu.open {
+            left: 0;
+        }
+
+        .mobile-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease-in-out;
+            z-index: 55;
+        }
+
+        .mobile-overlay.open {
+            opacity: 1;
+            visibility: visible;
+            min-height: 100vh;
+        }
+
+        .backdrop-blur-sm {
+            backdrop-filter: blur(4px);
+        }
+
+        .navbar-shadow {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+    </style>
+</head>
+
+<body class="font-sans bg-gray-50">
+
+
+
+    <!-- Enhanced Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-sm navbar-shadow">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 md:py-3">
+            <div class="flex justify-between items-center h-16">
+
+                <!-- Enhanced Logo -->
+                <a href="#" class="logo-link inline-block group" aria-label="KAMARONA - Quality Electronics Home">
+                    <div class="logo-container grid gap-1">
+                        <div class="flex items-center">
+                            <div class="relative mr-2">
+                                <i
+                                    class="fas fa-bolt text-2xl md:text-3xl text-orange-500 lightning-bolt lightning-glow transition-all duration-300"></i>
+                                <div
+                                    class="absolute inset-0 bg-orange-500 rounded-full opacity-10 scale-150 group-hover:scale-200 transition-transform duration-500">
+                                </div>
+                            </div>
+                            <span
+                                class="text-xl md:text-2xl lg:text-3xl font-bold gradient-text brand-glow tracking-wide">
+                                KAMARONA
+                            </span>
+                        </div>
+                        <div
+                            class="tagline text-xs md:text-sm font-medium text-teal-600 ml-8 md:ml-12 opacity-90 group-hover:opacity-100 transition-opacity duration-300 hidden sm:block">
+                            Premium Quality Electronics
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Enhanced Search Bar -->
+                <div class="flex-1 mx-4 hidden md:flex max-w-2xl lg:max-w-4xl">
+                    <div class="search-container relative w-full">
+                        <div class="flex w-full">
+                            <div class="relative flex-1">
+                                <input type="text" placeholder="Search for products, brands, categories..."
+                                    class="w-full px-4 py-3 pr-10 border border-gray-200 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300 bg-gray-50 focus:bg-white" />
+                                <i
+                                    class="fas fa-microphone absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-orange-500 cursor-pointer transition-colors"></i>
+                            </div>
+                            <button
+                                class="px-6 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-r-lg hover:from-orange-600 hover:to-orange-700 transition-all duration-300 shadow-lg hover:shadow-xl">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                        <!-- Search suggestions (hidden by default) -->
+                        <div
+                            class="absolute top-full left-0 right-0 bg-white shadow-lg rounded-b-lg border border-t-0 border-gray-200 hidden">
+                            <div class="p-2">
+                                <div class="text-xs text-gray-500 mb-2">Popular searches</div>
+                                <div class="space-y-1">
+                                    <a href="#" class="block px-3 py-2 text-sm hover:bg-gray-50 rounded">iPhone 15</a>
+                                    <a href="#" class="block px-3 py-2 text-sm hover:bg-gray-50 rounded">MacBook Pro</a>
+                                    <a href="#" class="block px-3 py-2 text-sm hover:bg-gray-50 rounded">Gaming
+                                        Laptop</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation & Icons -->
+                <div class="flex items-center space-x-2 md:space-x-4">
+
+                    <!-- Enhanced Dropdown Menus -->
+                    <div class="hidden lg:flex space-x-6">
+                        <!-- Products Dropdown -->
+                        <div class="relative group">
+                            <button
+                                class="flex items-center text-gray-700 hover:text-orange-500 font-medium py-2 px-3 rounded-lg hover:bg-orange-50 transition-all duration-300">
+                                Products
+                                <i
+                                    class="fas fa-chevron-down ml-1 text-xs group-hover:rotate-180 transition-transform duration-300"></i>
+                            </button>
+                            <div
+                                class="nav-dropdown absolute left-0 bg-white shadow-xl mt-2 rounded-xl border border-gray-100 w-64 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0">
+                                <div class="p-4">
+                                    <div class="space-y-1">
+                                        <a href="#"
+                                            class="flex items-center px-4 py-3 hover:bg-orange-50 rounded-lg transition-colors group/item">
+                                            <i class="fas fa-mobile-alt text-orange-500 w-5 mr-3"></i>
+                                            <div>
+                                                <div class="font-medium text-gray-900 group-hover/item:text-orange-600">
+                                                    Smartphones</div>
+                                                <div class="text-xs text-gray-500">Latest models & accessories</div>
+                                            </div>
+                                        </a>
+                                        <a href="#"
+                                            class="flex items-center px-4 py-3 hover:bg-orange-50 rounded-lg transition-colors group/item">
+                                            <i class="fas fa-laptop text-orange-500 w-5 mr-3"></i>
+                                            <div>
+                                                <div class="font-medium text-gray-900 group-hover/item:text-orange-600">
+                                                    Laptops</div>
+                                                <div class="text-xs text-gray-500">Gaming, business & ultrabooks</div>
+                                            </div>
+                                        </a>
+                                        <a href="#"
+                                            class="flex items-center px-4 py-3 hover:bg-orange-50 rounded-lg transition-colors group/item">
+                                            <i class="fas fa-headphones text-orange-500 w-5 mr-3"></i>
+                                            <div>
+                                                <div class="font-medium text-gray-900 group-hover/item:text-orange-600">
+                                                    Audio</div>
+                                                <div class="text-xs text-gray-500">Headphones, speakers & more</div>
+                                            </div>
+                                        </a>
+                                        <a href="#"
+                                            class="flex items-center px-4 py-3 hover:bg-orange-50 rounded-lg transition-colors group/item">
+                                            <i class="fas fa-watch text-orange-500 w-5 mr-3"></i>
+                                            <div>
+                                                <div class="font-medium text-gray-900 group-hover/item:text-orange-600">
+                                                    Wearables</div>
+                                                <div class="text-xs text-gray-500">Smartwatches & fitness trackers</div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Categories Dropdown -->
+                        <div class="relative group">
+                            <button
+                                class="flex items-center text-gray-700 hover:text-orange-500 font-medium py-2 px-3 rounded-lg hover:bg-orange-50 transition-all duration-300">
+                                Categories
+                                <i
+                                    class="fas fa-chevron-down ml-1 text-xs group-hover:rotate-180 transition-transform duration-300"></i>
+                            </button>
+                            <div
+                                class="nav-dropdown absolute left-0 bg-white shadow-xl mt-2 rounded-xl border border-gray-100 w-64 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0">
+                                <div class="p-4">
+                                    <div class="space-y-1">
+                                        <a href="#"
+                                            class="flex items-center px-4 py-3 hover:bg-orange-50 rounded-lg transition-colors group/item">
+                                            <i class="fas fa-gamepad text-orange-500 w-5 mr-3"></i>
+                                            <div>
+                                                <div class="font-medium text-gray-900 group-hover/item:text-orange-600">
+                                                    Gaming</div>
+                                                <div class="text-xs text-gray-500">Consoles, PC gaming & accessories
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a href="#"
+                                            class="flex items-center px-4 py-3 hover:bg-orange-50 rounded-lg transition-colors group/item">
+                                            <i class="fas fa-home text-orange-500 w-5 mr-3"></i>
+                                            <div>
+                                                <div class="font-medium text-gray-900 group-hover/item:text-orange-600">
+                                                    Smart Home</div>
+                                                <div class="text-xs text-gray-500">IoT devices & automation</div>
+                                            </div>
+                                        </a>
+                                        <a href="#"
+                                            class="flex items-center px-4 py-3 hover:bg-orange-50 rounded-lg transition-colors group/item">
+                                            <i class="fas fa-camera text-orange-500 w-5 mr-3"></i>
+                                            <div>
+                                                <div class="font-medium text-gray-900 group-hover/item:text-orange-600">
+                                                    Photography</div>
+                                                <div class="text-xs text-gray-500">Cameras, lenses & studio gear</div>
+                                            </div>
+                                        </a>
+                                        <a href="#"
+                                            class="flex items-center px-4 py-3 hover:bg-orange-50 rounded-lg transition-colors group/item">
+                                            <i class="fas fa-tv text-orange-500 w-5 mr-3"></i>
+                                            <div>
+                                                <div class="font-medium text-gray-900 group-hover/item:text-orange-600">
+                                                    Entertainment</div>
+                                                <div class="text-xs text-gray-500">TVs, streaming & media</div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Deals Link -->
+                        <a href="#"
+                            class="flex items-center text-gray-700 hover:text-red-500 font-medium py-2 px-3 rounded-lg hover:bg-red-50 transition-all duration-300">
+                            <i class="fas fa-fire text-red-500 mr-1"></i>
+                            Deals
+                        </a>
+                    </div>
+
+                    <!-- Enhanced Action Icons -->
+                    <div class="flex items-center space-x-2">
+                        <!-- Search icon for mobile -->
+                        <button
+                            class="md:hidden text-gray-700 hover:text-orange-500 p-2 rounded-lg hover:bg-orange-50 transition-all duration-300">
+                            <i class="fas fa-search text-lg"></i>
+                        </button>
+
+                        <!-- Wishlist -->
+                        <button
+                            class="hidden sm:block text-gray-700 hover:text-red-500 p-2 rounded-lg hover:bg-red-50 transition-all duration-300 relative">
+                            <i class="fas fa-heart text-lg"></i>
+                            <span
+                                class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">2</span>
+                        </button>
+
+                        <!-- Enhanced Cart -->
+                        <button
+                            class="text-gray-700 hover:text-orange-500 p-2 rounded-lg hover:bg-orange-50 transition-all duration-300 relative group"
+                            onclick="this.classList.add('cart-bounce'); setTimeout(() => this.classList.remove('cart-bounce'), 600)">
+                            <i class="fas fa-shopping-cart text-lg group-hover:scale-110 transition-transform"></i>
+                            <span
+                                class="absolute -top-1 -right-1 bg-gradient-to-r from-red-500 to-red-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-medium shadow-lg">3</span>
+                        </button>
+
+                        <!-- User Account -->
+                        <button
+                            class="text-gray-700 hover:text-blue-500 p-2 rounded-lg hover:bg-blue-50 transition-all duration-300">
+                            <i class="fas fa-user text-lg"></i>
+                        </button>
+
+                        <!-- Enhanced Mobile Menu Button -->
+                        <button id="mobile-menu-button"
+                            class="lg:hidden text-gray-700 hover:text-orange-500 p-2 rounded-lg hover:bg-orange-50 transition-all duration-300"
+                            onclick="toggleMobileMenu()">
+                            <i class="fas fa-bars text-lg" id="menu-icon"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Overlay -->
+        <div id="mobile-overlay" class="mobile-overlay" onclick="toggleMobileMenu()"></div>
+
+        <!-- Enhanced Slide-in Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu lg:hidden">
+            <div class="p-6">
+                <!-- Mobile Menu Header -->
+                <div class="flex items-center justify-between mb-8 border-b border-gray-100 pb-4">
+                    <div class="flex items-center">
+                        <i class="fas fa-bolt text-orange-500 text-xl mr-2"></i>
+                        <span class="font-bold text-gray-900 text-lg">KAMARONA</span>
+                    </div>
+                    <button onclick="toggleMobileMenu()" class="text-gray-500 hover:text-gray-700 p-2">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+
+                <!-- Mobile Search -->
+                <div class="mb-6">
+                    <div class="flex">
+                        <input type="text" placeholder="Search products..."
+                            class="flex-1 px-4 py-3 border rounded-l-lg focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm">
+                        <button
+                            class="px-4 bg-orange-500 text-white rounded-r-lg hover:bg-orange-600 transition-colors">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="grid grid-cols-2 gap-3 mb-6">
+                    <button
+                        class="flex items-center justify-center py-3 px-4 bg-orange-50 text-orange-600 rounded-lg hover:bg-orange-100 transition-colors">
+                        <i class="fas fa-heart mr-2"></i>
+                        <span class="text-sm font-medium">Wishlist</span>
+                    </button>
+                    <button
+                        class="flex items-center justify-center py-3 px-4 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors">
+                        <i class="fas fa-user mr-2"></i>
+                        <span class="text-sm font-medium">Account</span>
+                    </button>
+                </div>
+
+                <!-- Mobile Navigation Links -->
+                <div class="space-y-1">
+                    <!-- Products Section -->
+                    <div class="border-b border-gray-100 pb-4 mb-4">
+                        <div class="font-semibold text-gray-900 mb-3 flex items-center">
+                            <i class="fas fa-mobile-alt text-orange-500 mr-2"></i>
+                            Products
+                        </div>
+                        <div class="space-y-1 ml-6">
+                            <a href="#"
+                                class="flex items-center py-2 text-gray-600 hover:text-orange-500 hover:bg-orange-50 px-3 rounded-lg transition-all">
+                                <i class="fas fa-mobile-alt text-xs mr-3 w-4"></i>
+                                Smartphones
+                            </a>
+                            <a href="#"
+                                class="flex items-center py-2 text-gray-600 hover:text-orange-500 hover:bg-orange-50 px-3 rounded-lg transition-all">
+                                <i class="fas fa-laptop text-xs mr-3 w-4"></i>
+                                Laptops
+                            </a>
+                            <a href="#"
+                                class="flex items-center py-2 text-gray-600 hover:text-orange-500 hover:bg-orange-50 px-3 rounded-lg transition-all">
+                                <i class="fas fa-headphones text-xs mr-3 w-4"></i>
+                                Audio
+                            </a>
+                            <a href="#"
+                                class="flex items-center py-2 text-gray-600 hover:text-orange-500 hover:bg-orange-50 px-3 rounded-lg transition-all">
+                                <i class="fas fa-watch text-xs mr-3 w-4"></i>
+                                Wearables
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Categories Section -->
+                    <div class="border-b border-gray-100 pb-4 mb-4">
+                        <div class="font-semibold text-gray-900 mb-3 flex items-center">
+                            <i class="fas fa-th-large text-orange-500 mr-2"></i>
+                            Categories
+                        </div>
+                        <div class="space-y-1 ml-6">
+                            <a href="#"
+                                class="flex items-center py-2 text-gray-600 hover:text-orange-500 hover:bg-orange-50 px-3 rounded-lg transition-all">
+                                <i class="fas fa-gamepad text-xs mr-3 w-4"></i>
+                                Gaming
+                            </a>
+                            <a href="#"
+                                class="flex items-center py-2 text-gray-600 hover:text-orange-500 hover:bg-orange-50 px-3 rounded-lg transition-all">
+                                <i class="fas fa-home text-xs mr-3 w-4"></i>
+                                Smart Home
+                            </a>
+                            <a href="#"
+                                class="flex items-center py-2 text-gray-600 hover:text-orange-500 hover:bg-orange-50 px-3 rounded-lg transition-all">
+                                <i class="fas fa-camera text-xs mr-3 w-4"></i>
+                                Photography
+                            </a>
+                            <a href="#"
+                                class="flex items-center py-2 text-gray-600 hover:text-orange-500 hover:bg-orange-50 px-3 rounded-lg transition-all">
+                                <i class="fas fa-tv text-xs mr-3 w-4"></i>
+                                Entertainment
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Special Links -->
+                    <a href="#"
+                        class="flex items-center py-3 px-3 text-red-600 font-medium hover:bg-red-50 rounded-lg transition-all">
+                        <i class="fas fa-fire mr-3"></i>
+                        Special Deals
+                    </a>
+
+                    <a href="#"
+                        class="flex items-center py-3 px-3 text-gray-700 font-medium hover:bg-gray-50 rounded-lg transition-all">
+                        <i class="fas fa-headset mr-3"></i>
+                        Customer Support
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Footer -->
+                <div class="mt-8 pt-6 border-t border-gray-100">
+                    <div class="text-center">
+                        <div class="text-sm text-gray-500 mb-2">Premium Quality Electronics</div>
+                        <div class="flex justify-center space-x-4 text-gray-400">
+                            <i class="fab fa-facebook hover:text-blue-500 cursor-pointer transition-colors"></i>
+                            <i class="fab fa-twitter hover:text-blue-400 cursor-pointer transition-colors"></i>
+                            <i class="fab fa-instagram hover:text-pink-500 cursor-pointer transition-colors"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+
+
+
+    {{ $slot }}
+
+
+    <!-- Footer Section -->
+    <section class="bg-gray-900 text-white">
+        <!-- Main Footer -->
+        <div class="py-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+                    <!-- Brand Column -->
+                    <div class="lg:col-span-2" data-aos="fade-up">
+                        <div class="mb-6">
+                            <div class="text-3xl font-bold text-white mb-4">
+                                <i class="fas fa-bolt text-yellow-400 mr-2"></i>Kamarona
+                            </div>
+                            <p class="text-gray-300 text-lg leading-relaxed mb-6">
+                                Your trusted partner for premium electronics. We bring you the latest technology with
+                                unmatched quality and service.
+                            </p>
+
+                            <!-- Social Links -->
+                            <div class="flex space-x-4">
+                                <a href="#"
+                                    class="bg-gray-800 hover:bg-purple-600 p-3 rounded-full transition-all hover-scale">
+                                    <i class="fab fa-facebook-f text-lg"></i>
+                                </a>
+                                <a href="#"
+                                    class="bg-gray-800 hover:bg-blue-500 p-3 rounded-full transition-all hover-scale">
+                                    <i class="fab fa-twitter text-lg"></i>
+                                </a>
+                                <a href="#"
+                                    class="bg-gray-800 hover:bg-pink-600 p-3 rounded-full transition-all hover-scale">
+                                    <i class="fab fa-instagram text-lg"></i>
+                                </a>
+                                <a href="#"
+                                    class="bg-gray-800 hover:bg-red-600 p-3 rounded-full transition-all hover-scale">
+                                    <i class="fab fa-youtube text-lg"></i>
+                                </a>
+                                <a href="#"
+                                    class="bg-gray-800 hover:bg-blue-700 p-3 rounded-full transition-all hover-scale">
+                                    <i class="fab fa-linkedin text-lg"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Links -->
+                    <div data-aos="fade-up" data-aos-delay="100">
+                        <h3 class="text-xl font-semibold mb-6 text-white">Quick Links</h3>
+                        <ul class="space-y-3">
+                            <li><a href="#"
+                                    class="text-gray-300 hover:text-yellow-400 transition-colors flex items-center"><i
+                                        class="fas fa-chevron-right text-xs mr-2"></i>Home</a></li>
+                            <li><a href="#"
+                                    class="text-gray-300 hover:text-yellow-400 transition-colors flex items-center"><i
+                                        class="fas fa-chevron-right text-xs mr-2"></i>Products</a></li>
+                            <li><a href="#"
+                                    class="text-gray-300 hover:text-yellow-400 transition-colors flex items-center"><i
+                                        class="fas fa-chevron-right text-xs mr-2"></i>Categories</a></li>
+                            <li><a href="#"
+                                    class="text-gray-300 hover:text-yellow-400 transition-colors flex items-center"><i
+                                        class="fas fa-chevron-right text-xs mr-2"></i>Deals</a></li>
+                            <li><a href="#"
+                                    class="text-gray-300 hover:text-yellow-400 transition-colors flex items-center"><i
+                                        class="fas fa-chevron-right text-xs mr-2"></i>About Us</a></li>
+                            <li><a href="#"
+                                    class="text-gray-300 hover:text-yellow-400 transition-colors flex items-center"><i
+                                        class="fas fa-chevron-right text-xs mr-2"></i>Contact</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Product Categories -->
+                    <div data-aos="fade-up" data-aos-delay="200">
+                        <h3 class="text-xl font-semibold mb-6 text-white">Categories</h3>
+                        <ul class="space-y-3">
+                            <li><a href="#"
+                                    class="text-gray-300 hover:text-yellow-400 transition-colors flex items-center"><i
+                                        class="fas fa-mobile-alt text-xs mr-2"></i>Smartphones</a></li>
+                            <li><a href="#"
+                                    class="text-gray-300 hover:text-yellow-400 transition-colors flex items-center"><i
+                                        class="fas fa-laptop text-xs mr-2"></i>Laptops</a></li>
+                            <li><a href="#"
+                                    class="text-gray-300 hover:text-yellow-400 transition-colors flex items-center"><i
+                                        class="fas fa-headphones text-xs mr-2"></i>Audio</a></li>
+                            <li><a href="#"
+                                    class="text-gray-300 hover:text-yellow-400 transition-colors flex items-center"><i
+                                        class="fas fa-gamepad text-xs mr-2"></i>Gaming</a></li>
+                            <li><a href="#"
+                                    class="text-gray-300 hover:text-yellow-400 transition-colors flex items-center"><i
+                                        class="fas fa-home text-xs mr-2"></i>Smart Home</a></li>
+                            <li><a href="#"
+                                    class="text-gray-300 hover:text-yellow-400 transition-colors flex items-center"><i
+                                        class="fas fa-camera text-xs mr-2"></i>Cameras</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Customer Service -->
+                    <div data-aos="fade-up" data-aos-delay="300">
+                        <h3 class="text-xl font-semibold mb-6 text-white">Support</h3>
+                        <ul class="space-y-3">
+                            <li><a href="#"
+                                    class="text-gray-300 hover:text-yellow-400 transition-colors flex items-center"><i
+                                        class="fas fa-question-circle text-xs mr-2"></i>Help Center</a></li>
+                            <li><a href="#"
+                                    class="text-gray-300 hover:text-yellow-400 transition-colors flex items-center"><i
+                                        class="fas fa-truck text-xs mr-2"></i>Shipping Info</a></li>
+                            <li><a href="#"
+                                    class="text-gray-300 hover:text-yellow-400 transition-colors flex items-center"><i
+                                        class="fas fa-undo text-xs mr-2"></i>Returns</a></li>
+                            <li><a href="#"
+                                    class="text-gray-300 hover:text-yellow-400 transition-colors flex items-center"><i
+                                        class="fas fa-shield-alt text-xs mr-2"></i>Warranty</a></li>
+                            <li><a href="#"
+                                    class="text-gray-300 hover:text-yellow-400 transition-colors flex items-center"><i
+                                        class="fas fa-file-alt text-xs mr-2"></i>Terms</a></li>
+                            <li><a href="#"
+                                    class="text-gray-300 hover:text-yellow-400 transition-colors flex items-center"><i
+                                        class="fas fa-lock text-xs mr-2"></i>Privacy</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Contact Info Bar -->
+                <div class="mt-12 pt-8 border-t border-gray-700">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center md:text-left">
+                        <div class="flex items-center justify-center md:justify-start" data-aos="fade-up"
+                            data-aos-delay="400">
+                            <div class="bg-purple-600 p-3 rounded-full mr-4">
+                                <i class="fas fa-map-marker-alt text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-white">Visit Our Store</h4>
+                                <p class="text-gray-300 text-sm">123 Tech Street, Nairobi, Kenya</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-center md:justify-start" data-aos="fade-up"
+                            data-aos-delay="500">
+                            <div class="bg-green-600 p-3 rounded-full mr-4">
+                                <i class="fas fa-phone text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-white">Call Us</h4>
+                                <p class="text-gray-300 text-sm">+254 700 123 456</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-center md:justify-start" data-aos="fade-up"
+                            data-aos-delay="600">
+                            <div class="bg-blue-600 p-3 rounded-full mr-4">
+                                <i class="fas fa-envelope text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-white">Email Us</h4>
+                                <p class="text-gray-300 text-sm">hello@kamarona.com</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Footer -->
+        <div class="border-t border-gray-700 py-6">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+                    <div class="text-gray-300 text-sm">
+                        © 2025 Kamarona Electronics. All rights reserved. Made with <i
+                            class="fas fa-heart text-red-500 mx-1"></i> in Kenya
+                    </div>
+
+                    <div class="flex items-center space-x-6">
+                        <div class="text-gray-300 text-sm">We Accept:</div>
+                        <div class="flex space-x-3">
+                            <div class="bg-white p-2 rounded">
+                                <i class="fab fa-cc-visa text-blue-600 text-lg"></i>
+                            </div>
+                            <div class="bg-white p-2 rounded">
+                                <i class="fab fa-cc-mastercard text-red-600 text-lg"></i>
+                            </div>
+                            <div class="bg-white p-2 rounded">
+                                <i class="fab fa-cc-paypal text-blue-500 text-lg"></i>
+                            </div>
+                            <div class="bg-white p-2 rounded">
+                                <i class="fab fa-cc-apple-pay text-gray-800 text-lg"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Back to Top Button -->
+        <button id="backToTop"
+            class="fixed bottom-6 right-6 bg-gradient-to-r from-purple-600 to-pink-600 text-white p-4 rounded-full shadow-lg hover:from-purple-700 hover:to-pink-700 transition-all hover-scale opacity-0 invisible z-50">
+            <i class="fas fa-chevron-up text-lg"></i>
+        </button>
+    </section>
+
+    <script>
+        // Initialize AOS (Animate On Scroll)
+        AOS.init({
+            duration: 1000,
+            once: true,
+        });
+
+        // Initialize Swiper
+        const swiper = new Swiper('.hero-swiper', {
+            loop: true,
+            autoplay: {
+                delay: 5000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            on: {
+                init: function () {
+                    // Animate elements in the first slide on init
+                    const activeSlide = this.slides[this.activeIndex];
+                    AOS.refreshHard(); // Re-calculate all AOS elements' positions
+                },
+                slideChangeTransitionEnd: function () {
+                    AOS.refreshHard(); // Trigger AOS animations when slide changes
+                },
+            },
+        });
  
-        <x-home.navbar-section/> 
-        <x-off-canvas-menu/>
-        <x-home.search-modal/>  
-        
-        {{ $slot }}
+    </script>
 
 
 
-        <x-home.footer-section />
+    <script>
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const overlay = document.getElementById('mobile-overlay');
+            const icon = document.getElementById('menu-icon');
+            const body = document.body;
+            
+            menu.classList.toggle('open');
+            overlay.classList.toggle('open');
+            
+            if (menu.classList.contains('open')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+                body.style.overflow = 'hidden'; // Prevent body scroll when menu is open
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+                body.style.overflow = ''; // Restore body scroll
+            }
+        }
 
-        <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script> 
-
-        <!-- Include Swiper.js CDN --> 
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                const swiper = new Swiper('.hero-swiper-container', {
-                    loop: true, // Enable loop mode
-                    autoplay: {
-                        delay: 5000, // Delay between slides
-                        disableOnInteraction: false,
-                    },
-                    navigation: {
-                        nextEl: '.swiper-button-next',
-                        prevEl: '.swiper-button-prev',
-                    },
-                    pagination: {
-                        el: '.swiper-pagination',
-                        clickable: true,
-                    },
-                    effect: 'fade', // Optional: Use fade effect for smooth transitions
-                });
+        // Enhanced dropdown functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropdowns = document.querySelectorAll('.group');
+            
+            dropdowns.forEach(dropdown => {
+                const button = dropdown.querySelector('button');
+                const menu = dropdown.querySelector('.nav-dropdown');
+                
+                if (button && menu) {
+                    let hoverTimeout;
+                    
+                    dropdown.addEventListener('mouseenter', () => {
+                        clearTimeout(hoverTimeout);
+                        menu.classList.add('show');
+                    });
+                    
+                    dropdown.addEventListener('mouseleave', () => {
+                        hoverTimeout = setTimeout(() => {
+                            menu.classList.remove('show');
+                        }, 100);
+                    });
+                }
             });
-        </script> 
+        });
+    </script>
 
-        @fluxScripts
+    {{-- Stack for additional scripts from child views --}}
+    @stack('scripts')
 
+</body>
 
-        
-    </body>
 </html>
