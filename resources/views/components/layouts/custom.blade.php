@@ -1041,7 +1041,7 @@
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                 },
                 body: JSON.strgify({ product_id: productId })
-            })in
+            })
             .then(res => res.json())
             .then(data => {
                 showToast(data.message || 'Wishlist updated', 'success');

@@ -11,8 +11,9 @@ class Order extends Model
         'user_id',      // nullable if guest orders allowed
         'status',       // pending, completed, canceled, etc.
         'total',
-        'shipping_address',
-        'billing_address',
+        'name',
+        'email',
+        'address', 
         'payment_method',
         // add fields as needed
     ];
