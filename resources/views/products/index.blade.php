@@ -3,10 +3,12 @@
     <section class="bg-gray-50 py-12 mt-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
             <!-- Sidebar Filters -->
+
+            <!-- Sidebar Filters -->
             <aside class="bg-white p-6 rounded-2xl shadow-md space-y-6 max-w-sm">
                 <h2 class="text-xl font-semibold text-gray-800">Filters</h2>
 
-                <form id="filterForm">
+                <form id="filterForm" method="GET" action="{{ route('products.index') }}">
                     <!-- Categories -->
                     <div class="mb-6">
                         <h3 class="font-medium text-gray-700 mb-3">Categories</h3>
@@ -14,11 +16,11 @@
                             @foreach ($categories as $category)
                             <label class="flex items-center space-x-2 cursor-pointer">
                                 <input type="checkbox" name="categories[]" value="{{ $category->id }}"
-                                    class="text-teal-600 rounded focus:ring-teal-500">
+                                    class="text-teal-600 rounded focus:ring-teal-500" {{ is_array(request('categories'))
+                                    && in_array($category->id, request('categories')) ? 'checked' : '' }}>
                                 <span class="text-sm text-gray-600">{{ $category->name }}</span>
                             </label>
                             @endforeach
-
                         </div>
                     </div>
 
@@ -26,27 +28,30 @@
                     <div class="mb-6">
                         <h3 class="font-medium text-gray-700 mb-3">Brands</h3>
                         <div class="space-y-2">
-
                             @foreach ($brands as $brand)
                             <label class="flex items-center space-x-2 cursor-pointer">
                                 <input type="checkbox" name="brands[]" value="{{ $brand->id }}"
-                                    class="text-teal-600 rounded focus:ring-teal-500">
+                                    class="text-teal-600 rounded focus:ring-teal-500" {{ is_array(request('brands')) &&
+                                    in_array($brand->id, request('brands')) ? 'checked' : '' }}>
                                 <span class="text-sm text-gray-600">{{ $brand->name }}</span>
                             </label>
                             @endforeach
-
                         </div>
                     </div>
 
-                    <!-- Price Range -->
+                    <!-- Max Price -->
                     <div class="mb-6">
                         <h3 class="font-medium text-gray-700 mb-3">Max Price</h3>
                         <div class="space-y-2">
-                            <input type="range" name="max_price" min="0" max="5000" value="2500"
+                            @php
+                            $maxPrice = request('max_price', 2500);
+                            @endphp
+                            <input type="range" name="max_price" min="0" max="5000" value="{{ $maxPrice }}"
                                 class="w-full accent-teal-600" id="priceRange">
                             <div class="flex justify-between text-xs text-gray-500">
                                 <span>$0</span>
-                                <span id="priceValue" class="font-medium text-teal-600">$2,500</span>
+                                <span id="priceValue" class="font-medium text-teal-600">${{ number_format($maxPrice)
+                                    }}</span>
                                 <span>$5,000</span>
                             </div>
                         </div>
@@ -57,23 +62,25 @@
                         <h3 class="font-medium text-gray-700 mb-3">Condition</h3>
                         <select name="condition"
                             class="w-full border-gray-300 rounded-lg focus:ring-teal-500 focus:border-teal-500">
-                            <option value="">All Conditions</option>
-                            <option value="new">New</option>
-                            <option value="used">Used</option>
-                            <option value="refurbished">Refurbished</option>
+                            <option value="" {{ request('condition')=='' ? 'selected' : '' }}>All Conditions</option>
+                            <option value="new" {{ request('condition')=='new' ? 'selected' : '' }}>New</option>
+                            <option value="used" {{ request('condition')=='used' ? 'selected' : '' }}>Used</option>
+                            <option value="refurbished" {{ request('condition')=='refurbished' ? 'selected' : '' }}>
+                                Refurbished</option>
                         </select>
                     </div>
 
-                    <!-- Stock -->
+                    <!-- In Stock -->
                     <div class="mb-6">
                         <label class="flex items-center space-x-2 cursor-pointer">
                             <input type="checkbox" name="in_stock" value="1"
-                                class="text-teal-600 rounded focus:ring-teal-500">
+                                class="text-teal-600 rounded focus:ring-teal-500" {{ request('in_stock')=='1'
+                                ? 'checked' : '' }}>
                             <span class="text-sm text-gray-700">In Stock Only</span>
                         </label>
                     </div>
 
-                    <!-- Filter Buttons -->
+                    <!-- Buttons -->
                     <div class="space-y-3">
                         <button type="submit"
                             class="w-full bg-teal-600 hover:bg-teal-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2">
@@ -85,18 +92,19 @@
                         </button>
                     </div>
                 </form>
-
-                <!-- Active Filters Display -->
-                <div id="activeFilters" class="mt-6 hidden">
-                    <h4 class="font-medium text-gray-700 mb-2">Active Filters:</h4>
-                    <div id="filterTags" class="flex flex-wrap gap-2"></div>
-                </div>
             </aside>
+
+
 
 
             <!-- Product Grid -->
             <div class="md:col-span-3">
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8" id="products-grid">
+
+                <div class="py-6 px-4 bg-gray-800 rounded-lg text-white text-center flex justify-center">
+                    <h1 class="text-2xl font-bold">{{ $filterName ?? 'All' }} products</h1>
+                </div>
+
+                <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8" id="products-grid">
                     @foreach ($products as $index => $product)
                     @php
                     $filterClass = strtolower(str_replace(' ', '-', $product->category->name ?? 'all'));
@@ -239,136 +247,22 @@
     @push('scripts')
 
     <script>
-        // Price range display
         const priceRange = document.getElementById('priceRange');
-        const priceValue = document.getElementById('priceValue');
-        
-        priceRange.addEventListener('input', function() {
-            priceValue.textContent = '$' + parseInt(this.value).toLocaleString();
-        });
+            const priceValue = document.getElementById('priceValue');
+            const clearBtn = document.getElementById('clearFilters');
 
-        // Form submission
-        document.getElementById('filterForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            applyFilters();
-        });
-
-        // Clear filters
-        document.getElementById('clearFilters').addEventListener('click', function() {
-            document.getElementById('filterForm').reset();
-            priceValue.textContent = '$2,500';
-            document.getElementById('activeFilters').classList.add('hidden');
-            console.log('Filters cleared');
-        });
-
-        function applyFilters() {
-            const formData = new FormData(document.getElementById('filterForm'));
-            const filters = {};
-            
-            // Collect selected categories
-            const categories = formData.getAll('categories[]');
-            if (categories.length > 0) filters.categories = categories;
-            
-            // Collect selected brands
-            const brands = formData.getAll('brands[]');
-            if (brands.length > 0) filters.brands = brands;
-            
-            // Get price range
-            const maxPrice = formData.get('max_price');
-            if (maxPrice && maxPrice > 0) filters.max_price = maxPrice;
-            
-            // Get condition
-            const condition = formData.get('condition');
-            if (condition) filters.condition = condition;
-            
-            // Get stock filter
-            const inStock = formData.get('in_stock');
-            if (inStock) filters.in_stock = true;
-            
-            // Display active filters
-            displayActiveFilters(filters);
-            
-            // Here you would typically send the filters to your backend
-            console.log('Applied filters:', filters);
-            
-            // Example: You could make an AJAX request here
-            // fetch('/products/filter', {
-            //     method: 'POST',
-            //     headers: { 'Content-Type': 'application/json' },
-            //     body: JSON.stringify(filters)
-            // });
-        }
-
-        function displayActiveFilters(filters) {
-            const activeFiltersDiv = document.getElementById('activeFilters');
-            const filterTagsDiv = document.getElementById('filterTags');
-            
-            filterTagsDiv.innerHTML = '';
-            
-            if (Object.keys(filters).length === 0) {
-                activeFiltersDiv.classList.add('hidden');
-                return;
-            }
-            
-            activeFiltersDiv.classList.remove('hidden');
-            
-            // Create filter tags
-            Object.entries(filters).forEach(([key, value]) => {
-                if (Array.isArray(value)) {
-                    value.forEach(v => {
-                        const tag = createFilterTag(key, v);
-                        filterTagsDiv.appendChild(tag);
-                    });
-                } else {
-                    const tag = createFilterTag(key, value);
-                    filterTagsDiv.appendChild(tag);
-                }
+            // Update price value display live
+            priceRange.addEventListener('input', () => {
+                priceValue.textContent = `$${parseInt(priceRange.value).toLocaleString()}`;
             });
-        }
 
-        function createFilterTag(key, value) {
-            const tag = document.createElement('span');
-            tag.className = 'inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-teal-100 text-teal-800';
-            
-            let displayText = '';
-            switch(key) {
-                case 'categories':
-                    const categoryNames = ['Electronics', 'Clothing', 'Home & Garden', 'Sports'];
-                    displayText = categoryNames[value - 1] || value;
-                    break;
-                case 'brands':
-                    const brandNames = ['Apple', 'Samsung', 'Nike', 'Adidas'];
-                    displayText = brandNames[value - 1] || value;
-                    break;
-                case 'max_price':
-                    displayText = `Max: $${parseInt(value).toLocaleString()}`;
-                    break;
-                case 'condition':
-                    displayText = value.charAt(0).toUpperCase() + value.slice(1);
-                    break;
-                case 'in_stock':
-                    displayText = 'In Stock';
-                    break;
-                default:
-                    displayText = value;
-            }
-            
-            tag.innerHTML = `
-                ${displayText}
-                <button type="button" class="ml-1 text-teal-600 hover:text-teal-800" onclick="removeFilter('${key}', '${value}')">
-                    ×
-                </button>
-            `;
-            
-            return tag;
-        }
-
-        function removeFilter(key, value) {
-            // Logic to remove specific filter
-            console.log(`Removing filter: ${key} = ${value}`);
-            // You would implement the actual removal logic here
-        }
+            // Clear filters button resets form and reloads page without query params
+            clearBtn.addEventListener('click', () => {
+                document.getElementById('filterForm').reset();
+                window.location.href = "{{ route('products.index') }}";
+            });
     </script>
+
 
     @endpush
 </x-custom-layout>

@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
+use Illuminate\Support\Str;
 
 class CategorySeeder extends Seeder
 {
@@ -82,6 +83,7 @@ class CategorySeeder extends Seeder
                 'name' => $category['name'],
                 'image_path' => $category['image_path'],
                 'added_by' => $category['added_by'],
+                'slug' => Str::slug($category['name']),
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

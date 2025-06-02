@@ -345,9 +345,6 @@
 
 
 
-
-
-
     <!-- Categories Section -->
     <section class="py-20 bg-white" data-aos="fade-up">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -368,7 +365,7 @@
                 $delay = $index * 100;
                 @endphp
 
-                <a href="{{ route('products.index', ['category' => $category->id]) }}"
+                <a href="{{ route('products.index', ['category' => $category]) }}"
                     class="category-card group flex flex-col items-center bg-gray-50 rounded-3xl p-4 hover:shadow-lg transition-shadow"
                     data-aos="fade-up" data-aos-delay="{{ $delay }}">
 

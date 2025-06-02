@@ -489,7 +489,7 @@
                                 class="nav-dropdown absolute left-0 bg-white shadow-xl mt-2 rounded-xl border border-gray-100 w-64 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0">
                                 <div class="p-4">
                                     <div class="space-y-1">
-                                        <a href="{{ route('products.index').'?q=phones'}}"
+                                        <a href="{{ route('products.index')}}?q=phones"
                                             class="flex items-center px-4 py-3 hover:bg-orange-50 rounded-lg transition-colors group/item">
                                             <i class="fas fa-mobile-alt text-orange-500 w-5 mr-3"></i>
                                             <div>
@@ -498,7 +498,7 @@
                                                 <div class="text-xs text-gray-500">Latest models & accessories</div>
                                             </div>
                                         </a>
-                                        <a href="{{ route('products.index').'?q=gaming'}}"
+                                        <a href="{{ route('products.index').'?q=laptop'}}"
                                             class="flex items-center px-4 py-3 hover:bg-orange-50 rounded-lg transition-colors group/item">
                                             <i class="fas fa-laptop text-orange-500 w-5 mr-3"></i>
                                             <div>
@@ -644,7 +644,8 @@
         <div id="mobile-menu" class="mobile-menu lg:hidden">
             <div class="p-6">
                 <!-- Mobile Menu Header -->
-                <div class="flex items-center justify-between mb-8 border-b border-gray-100 pb-4">
+                <a href="{{ route('home') }}"
+                    class="flex items-center justify-between mb-8 border-b border-gray-100 pb-4">
                     <div class="flex items-center">
                         <i class="fas fa-bolt text-orange-500 text-xl mr-2"></i>
                         <span class="font-bold text-gray-900 text-lg">KAMARONA</span>
@@ -652,7 +653,7 @@
                     <button onclick="toggleMobileMenu()" class="text-gray-500 hover:text-gray-700 p-2">
                         <i class="fas fa-times text-xl"></i>
                     </button>
-                </div>
+                </a>
 
                 <!-- Mobile Search -->
                 <div class="mb-6">
@@ -668,16 +669,16 @@
 
                 <!-- Quick Actions -->
                 <div class="grid grid-cols-2 gap-3 mb-6">
-                    <button
+                    <a href="{{ route('wishlist.index') }}"
                         class="flex items-center justify-center py-3 px-4 bg-orange-50 text-orange-600 rounded-lg hover:bg-orange-100 transition-colors">
                         <i class="fas fa-heart mr-2"></i>
                         <span class="text-sm font-medium">Wishlist</span>
-                    </button>
-                    <button
-                        class="flex items-center justify-center py-3 px-4 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors">
-                        <i class="fas fa-user mr-2"></i>
-                        <span class="text-sm font-medium">Account</span>
-                    </button>
+                        <a>
+                            <a href="{{ route('login') }}"
+                                class="flex items-center justify-center py-3 px-4 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors">
+                                <i class="fas fa-user mr-2"></i>
+                                <span class="text-sm font-medium">Account</span>
+                            </a>
                 </div>
 
                 <!-- Mobile Navigation Links -->
@@ -689,22 +690,22 @@
                             Products
                         </div>
                         <div class="space-y-1 ml-6">
-                            <a href="#"
+                            <a href="{{ route('products.index') }}?q=phones"
                                 class="flex items-center py-2 text-gray-600 hover:text-orange-500 hover:bg-orange-50 px-3 rounded-lg transition-all">
                                 <i class="fas fa-mobile-alt text-xs mr-3 w-4"></i>
                                 Smartphones
                             </a>
-                            <a href="#"
+                            <a href="{{ route('products.index') }}?q=laptops"
                                 class="flex items-center py-2 text-gray-600 hover:text-orange-500 hover:bg-orange-50 px-3 rounded-lg transition-all">
                                 <i class="fas fa-laptop text-xs mr-3 w-4"></i>
                                 Laptops
                             </a>
-                            <a href="#"
+                            <a href="{{ route('products.index') }}?q=audio"
                                 class="flex items-center py-2 text-gray-600 hover:text-orange-500 hover:bg-orange-50 px-3 rounded-lg transition-all">
                                 <i class="fas fa-headphones text-xs mr-3 w-4"></i>
                                 Audio
                             </a>
-                            <a href="#"
+                            <a href="{{ route('products.index') }}?q=wearable"
                                 class="flex items-center py-2 text-gray-600 hover:text-orange-500 hover:bg-orange-50 px-3 rounded-lg transition-all">
                                 <i class="fas fa-clock text-xs mr-3 w-4"></i>
                                 Wearables
@@ -719,22 +720,22 @@
                             Categories
                         </div>
                         <div class="space-y-1 ml-6">
-                            <a href="#"
+                            <a href="{{ route('products.index') }}?q=gaming"
                                 class="flex items-center py-2 text-gray-600 hover:text-orange-500 hover:bg-orange-50 px-3 rounded-lg transition-all">
                                 <i class="fas fa-gamepad text-xs mr-3 w-4"></i>
                                 Gaming
                             </a>
-                            <a href="#"
+                            <a href="{{ route('products.index') }}?q=home"
                                 class="flex items-center py-2 text-gray-600 hover:text-orange-500 hover:bg-orange-50 px-3 rounded-lg transition-all">
                                 <i class="fas fa-home text-xs mr-3 w-4"></i>
                                 Smart Home
                             </a>
-                            <a href="#"
+                            <a href="{{ route('products.index') }}?q=photography"
                                 class="flex items-center py-2 text-gray-600 hover:text-orange-500 hover:bg-orange-50 px-3 rounded-lg transition-all">
                                 <i class="fas fa-camera text-xs mr-3 w-4"></i>
                                 Photography
                             </a>
-                            <a href="#"
+                            <a href="{{ route('products.index') }}?q=entertainment"
                                 class="flex items-center py-2 text-gray-600 hover:text-orange-500 hover:bg-orange-50 px-3 rounded-lg transition-all">
                                 <i class="fas fa-tv text-xs mr-3 w-4"></i>
                                 Entertainment
@@ -743,7 +744,7 @@
                     </div>
 
                     <!-- Special Links -->
-                    <a href="#"
+                    <a href="{{ route('products.index') }}?q=deals"
                         class="flex items-center py-3 px-3 text-red-600 font-medium hover:bg-red-50 rounded-lg transition-all">
                         <i class="fas fa-fire mr-3"></i>
                         Special Deals
@@ -975,9 +976,30 @@
     </section>
 
 
+    <div id="toast-container" class="fixed bottom-4 right-4 space-y-2 z-50"></div>
 
 
-    <!-- JavaScript for Enhanced Functionality -->
+
+
+
+    <script>
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            const bgColor = type === 'success' ? 'bg-green-500' : 'bg-red-500';
+
+            toast.className = `${bgColor} text-white px-4 py-2 rounded shadow-lg animate-fade-in`;
+            toast.textContent = message;
+
+            const container = document.getElementById('toast-container');
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.add('opacity-0');
+                setTimeout(() => toast.remove(), 500); // Remove after fade-out
+            }, 3000);
+        }
+    </script>
+
 
     <script>
         function quickAddToCart(productId) {
@@ -994,23 +1016,17 @@
         })
         .then(res => res.json())
         .then(data => {
-            if (data.success) {
-                // Optional: Update cart count or show toast
-                alert('Product added to cart!');
-
- 
-                // Update cart count and total
-                console.log(data)
+            if (data.success) { 
+                showToast(data.message || 'Product added to cart', 'success'); 
                 document.getElementById('cart-count').textContent = data.cart_count; 
 
-
             } else {
-                alert(data.message || 'Something went wrong');
+                showToast(data.message || 'Something went wrong', 'error');  
             }
         })
         .catch(err => {
             console.error(err);
-            alert('Error adding product to cart.');
+            showToast(data.message || 'Error adding product to cart.', 'error'); 
         });
     }
     </script>
@@ -1024,19 +1040,18 @@
                     'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                 },
-                body: JSON.stringify({ product_id: productId })
-            })
+                body: JSON.strgify({ product_id: productId })
+            })in
             .then(res => res.json())
             .then(data => {
-                alert(data.message || 'Updated wishlist');
-                // Optionally update icon, count, etc.
-
+                showToast(data.message || 'Wishlist updated', 'success');
                 document.getElementById('wishlist_count').textContent = data.wishlist_count;
             })
             .catch(err => {
                 console.error(err);
-                alert('Failed to update wishlist');
+                showToast('Failed to update wishlist', 'error');
             });
+
         }
     </script>
 

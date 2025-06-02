@@ -14,12 +14,69 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+ 
+    public function index(Request $request)
     {
-        $products = Product::paginate(15);
+        $filterName = 'All';
+        $query = Product::query();
+
+        // Handle category filter by slug (?category=electronics)
+        if ($request->filled('category')) {
+            $categorySlug = $request->input('category');
+            $category = Category::where('slug', $categorySlug)->first();
+
+            if ($category) {
+                $query->where('category_id', $category->id);
+                $filterName = $category->name;
+            }
+        }
+
+        // Handle search filter (?q=earphones)
+        if ($request->filled('q')) {
+            $searchTerm = $request->input('q');
+            $query->where(function($q) use ($searchTerm) {
+                $q->where('name', 'like', '%' . $searchTerm . '%')
+                ->orWhere('description', 'like', '%' . $searchTerm . '%');
+            });
+            $filterName = 'Search results for: ' . $searchTerm;
+        }
+
+        // Handle checkbox filters (categories[], brands[])
+        if ($request->has('categories') && is_array($request->categories)) {
+            $query->whereIn('category_id', $request->categories);
+            $filterName = 'Filtered';
+        }
+
+        if ($request->has('brands') && is_array($request->brands)) {
+            $query->whereIn('brand_id', $request->brands);
+            $filterName = 'Filtered';
+        }
+
+        // Handle max price filter
+        if ($request->filled('max_price')) {
+            $query->where('price', '<=', $request->max_price);
+            $filterName = 'Filtered';
+        }
+
+        // Handle condition filter
+        if ($request->filled('condition')) {
+            $query->where('condition', $request->condition);
+            $filterName = 'Filtered ';
+        }
+
+        // Handle in stock filter
+        if ($request->boolean('in_stock')) {
+            $query->where('stock', '>', 0);
+            $filterName = 'Filtered';
+        }
+
+        // Paginate results with query string to keep filters in URL
+        $products = $query->paginate(15)->withQueryString();
+
         $categories = Category::all();
         $brands = Brand::all();
-        return view('products.index', compact('products', 'categories', 'brands'));
+
+        return view('products.index', compact('products', 'categories', 'brands', 'filterName'));
     }
 
     /**
