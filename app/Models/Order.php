@@ -8,17 +8,21 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Order extends Model
 {
     protected $fillable = [
-        'user_id',      // nullable if guest orders allowed
-        'status',       // pending, completed, canceled, etc.
-        'total',
-        'order_number', // unique order number for tracking
-        'payment_intent_id', // for payment processing
+        'user_id', // nullable for guest checkout
+        'order_number',
         'name',
         'email',
-        'address', 
-        'payment_method',
-        // add fields as needed
+        'phone',
+        'address',
+        'suburb',   // Add this
+        'state',    // Add this
+        'postcode', // Add this
+        'country',
+        'total',
+        'status',
+        'payment_intent_id',
     ];
+
 
     public function items(): HasMany
     {

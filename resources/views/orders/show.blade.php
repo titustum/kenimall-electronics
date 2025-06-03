@@ -86,7 +86,7 @@
                     <tfoot>
                         <tr class="text-gray-800 text-base font-bold bg-gray-100">
                             <td colspan="3" class="py-3 px-6 text-right">Total</td>
-                            <td class="py-3 px-6 text-right">${{ number_format($order->total, 2) }}</td>
+                            <td class="py-3 px-6 text-right">AUD ${{ number_format($order->total, 2) }}</td>
                         </tr>
                     </tfoot>
                 </table>

@@ -9,26 +9,22 @@ use App\Models\OrderItem;
 use Illuminate\Support\Str;
 use Stripe\Stripe;
 use Stripe\PaymentIntent;
-use Illuminate\Support\Facades\Mail; // Don't forget to import Mail
-use App\Mail\OrderConfirmationMail; // Don't forget to import your Mailable
+use Illuminate\Support\Facades\Mail;
+use App\Mail\OrderConfirmationMail;
 use Illuminate\Support\Facades\Log;
 
 class CheckoutController extends Controller
 {
-    /**
-     * Show the checkout page.
-     */
     public function index()
     {
+        // Ensure $cart is available, and set default if empty
         $cart = session('cart', []);
-
-        // Redirect if cart is empty
-        if (empty($cart)) {
-            return redirect()->route('cart.index')->with('error', 'Your cart is empty.');
-        }
-
-        // Calculate cart total
         $total = collect($cart)->sum(fn($item) => $item['price'] * $item['quantity']);
+
+        // Check if cart is empty, redirect if so
+        if (empty($cart)) {
+            return redirect()->route('cart.index')->with('info', 'Your cart is empty. Please add items before checking out.');
+        }
 
         return view('checkout.index', compact('cart', 'total'));
     }
@@ -39,9 +35,14 @@ class CheckoutController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string',
-            'email' => 'required|email',
-            'address' => 'required|string',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'phone' => ['required', 'string', 'regex:/^(\+?61|0)4\d{2}[ ]?\d{3}[ ]?\d{3}$|^(\+?61|0)[2-3,7-8]\d{7,8}$/', 'max:20'], // Australian phone regex
+            'address' => 'required|string|max:255',
+            'suburb' => 'required|string|max:255', // Renamed from city
+            'state' => 'required|string|max:10',    // New: State (e.g., NSW, VIC)
+            'postcode' => ['required', 'string', 'regex:/^\d{4}$/', 'max:4'], // New: Postcode (4 digits)
+            'country' => 'required|string|max:255', // This will be 'AU' from hidden input
             'payment_method_id' => 'required|string',
         ]);
 
@@ -54,16 +55,30 @@ class CheckoutController extends Controller
         $totalAmount = collect($cart)->sum(fn($item) => $item['price'] * $item['quantity']);
         $totalAmountInCents = $totalAmount * 100;
 
+        // Stripe API key for AUD
         Stripe::setApiKey(config('services.stripe.secret'));
 
         try {
             $paymentIntent = PaymentIntent::create([
                 'amount' => $totalAmountInCents,
-                'currency' => 'usd', // Ensure this matches your currency configuration
+                'currency' => 'aud', // Set currency to Australian Dollars
                 'payment_method' => $request->payment_method_id,
                 'confirmation_method' => 'manual',
                 'confirm' => true,
                 'return_url' => route('checkout.return'),
+                'setup_future_usage' => 'off_session',
+                'shipping' => [
+                    'name' => $request->name,
+                    'address' => [
+                        'line1' => $request->address,
+                        'city' => $request->suburb, // Map suburb to Stripe's city
+                        'state' => $request->state,   // New
+                        'postal_code' => $request->postcode, // New
+                        'country' => 'AU', // Explicitly set for Stripe
+                    ],
+                    'phone' => $request->phone,
+                ],
+                'receipt_email' => $request->email,
             ]);
 
             // Handle 3D Secure or additional action
@@ -71,9 +86,14 @@ class CheckoutController extends Controller
                 session([
                     'checkout_name' => $request->name,
                     'checkout_email' => $request->email,
+                    'checkout_phone' => $request->phone,
                     'checkout_address' => $request->address,
+                    'checkout_suburb' => $request->suburb, // Store suburb
+                    'checkout_state' => $request->state,     // Store state
+                    'checkout_postcode' => $request->postcode, // Store postcode
+                    'checkout_country' => $request->country, // Store AU
                     'payment_intent_id' => $paymentIntent->id,
-                    'cart_for_return' => $cart, // Store cart in session for the return path
+                    'cart_for_return' => $cart,
                 ]);
 
                 return response()->json([
@@ -83,7 +103,7 @@ class CheckoutController extends Controller
             }
 
             if ($paymentIntent->status === 'succeeded') {
-                // Create unique order number
+                // If payment succeeds, create the order
                 do {
                     $orderNumber = 'ORD-' . date('Ymd') . '-' . strtoupper(Str::random(6));
                 } while (Order::where('order_number', $orderNumber)->exists());
@@ -93,7 +113,12 @@ class CheckoutController extends Controller
                     'order_number' => $orderNumber,
                     'name' => $request->name,
                     'email' => $request->email,
+                    'phone' => $request->phone,
                     'address' => $request->address,
+                    'suburb' => $request->suburb, // Save suburb
+                    'state' => $request->state,     // Save state
+                    'postcode' => $request->postcode, // Save postcode
+                    'country' => $request->country, // Save AU
                     'total' => $totalAmount,
                     'status' => 'paid',
                     'payment_intent_id' => $paymentIntent->id,
@@ -108,24 +133,20 @@ class CheckoutController extends Controller
                 }
 
                 session()->forget('cart');
-
-                // --- Debugging line ---
-                Log::info('Attempting to send order confirmation email for order ID: ' . $order->id . ' to ' . $order->email);
-                // dd('Sending email now!'); // Uncomment this to halt execution and confirm this line is reached
-                // ----------------------
-
-
-                // --- Send the Order Confirmation Email Here ---
                 Mail::to($order->email)->send(new OrderConfirmationMail($order));
-                // ---------------------------------------------
+                Log::info('Order ' . $order->id . ' placed and email sent successfully.');
 
                 return redirect()->route('orders.show', $order)
                     ->with('success', 'Order placed successfully! You can track your order here.');
             }
 
             return redirect()->route('orders.payment-failed')->with('error', 'Payment was not completed.');
+        } catch (\Stripe\Exception\CardException $e) {
+            Log::error('Stripe Card Error during checkout: ' . $e->getMessage() . ' - Code: ' . $e->getStripeCode());
+            return back()->withInput()->with('error', $e->getMessage());
         } catch (\Exception $e) {
-            return redirect()->route('orders.payment-failed')->with('error', $e->getMessage());
+            Log::error('Checkout Error: ' . $e->getMessage() . ' - Trace: ' . $e->getTraceAsString());
+            return back()->withInput()->with('error', 'An error occurred during payment. Please try again or contact support.');
         }
     }
 
@@ -146,22 +167,24 @@ class CheckoutController extends Controller
             $order = Order::where('payment_intent_id', $paymentIntentId)->first();
 
             if ($order) {
-                // If order already exists, it means it was processed, just redirect.
-                // We don't want to re-send email or re-create order items.
                 return redirect()->route('orders.show', $order)->with('info', 'Order already processed.');
             }
 
             $paymentIntent = PaymentIntent::retrieve($paymentIntentId);
 
             if ($paymentIntent->status === 'succeeded') {
-                // Retrieve checkout details from session that were stored before 3D Secure redirect
                 $name = session('checkout_name');
                 $email = session('checkout_email');
+                $phone = session('checkout_phone');
                 $address = session('checkout_address');
-                $cart = session('cart_for_return'); // Use the cart stored for return
+                $suburb = session('checkout_suburb'); // Retrieve suburb
+                $state = session('checkout_state');     // Retrieve state
+                $postcode = session('checkout_postcode'); // Retrieve postcode
+                $country = session('checkout_country'); // Retrieve AU
+                $cart = session('cart_for_return');
 
-                // Basic validation for critical session data
-                if (!$name || !$email || !$address || !$cart || count($cart) === 0) {
+                if (!$name || !$email || !$phone || !$address || !$suburb || !$state || !$postcode || !$country || !$cart || count($cart) === 0) {
+                    Log::warning('Missing session data for order creation after 3D Secure for payment intent: ' . $paymentIntentId);
                     return redirect()->route('orders.payment-failed')->with('error', 'Missing session data for order creation after payment confirmation. Please contact support.');
                 }
 
@@ -170,11 +193,16 @@ class CheckoutController extends Controller
                 } while (Order::where('order_number', $orderNumber)->exists());
 
                 $order = Order::create([
-                    'user_id' => Auth::id(), // Adjust if users can checkout as guests
+                    'user_id' => Auth::id(),
                     'order_number' => $orderNumber,
                     'name' => $name,
                     'email' => $email,
+                    'phone' => $phone,
                     'address' => $address,
+                    'suburb' => $suburb, // Save suburb
+                    'state' => $state,     // Save state
+                    'postcode' => $postcode, // Save postcode
+                    'country' => $country, // Save AU
                     'total' => collect($cart)->sum(fn($item) => $item['price'] * $item['quantity']),
                     'status' => 'paid',
                     'payment_intent_id' => $paymentIntentId,
@@ -188,23 +216,24 @@ class CheckoutController extends Controller
                     ]);
                 }
 
-                session()->forget(['cart', 'checkout_name', 'checkout_email', 'checkout_address', 'payment_intent_id', 'cart_for_return']);
-
-                // --- Debugging line ---
-                Log::info('Attempting to send order confirmation email (return path) for order ID: ' . $order->id . ' to ' . $order->email);
-                // dd('Sending email from return path!'); // Uncomment this to halt execution
-                //
-
-                // --- Send the Order Confirmation Email Here as well for 3D Secure path ---
+                session()->forget([
+                    'cart', 'checkout_name', 'checkout_email', 'checkout_phone', 'checkout_address',
+                    'checkout_suburb', 'checkout_state', 'checkout_postcode', 'checkout_country',
+                    'payment_intent_id', 'cart_for_return'
+                ]);
                 Mail::to($order->email)->send(new OrderConfirmationMail($order));
-                // -----------------------------------------------------------------------
+                Log::info('Order ' . $order->id . ' processed via return path and email sent successfully.');
 
                 return redirect()->route('orders.show', $order)
                     ->with('success', 'Order placed and payment completed!');
             }
 
             return redirect()->route('orders.payment-failed')->with('error', 'Payment was not completed. Please try again.');
+        } catch (\Stripe\Exception\CardException $e) {
+            Log::error('Stripe Card Error during return path: ' . $e->getMessage() . ' - Code: ' . $e->getStripeCode());
+            return redirect()->route('orders.payment-failed')->with('error', $e->getMessage());
         } catch (\Exception $e) {
+            Log::error('Checkout Return Error: ' . $e->getMessage() . ' - Trace: ' . $e->getTraceAsString());
             return redirect()->route('orders.payment-failed')->with('error', 'Payment error: ' . $e->getMessage());
         }
     }
