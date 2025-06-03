@@ -1,49 +1,41 @@
 <x-layouts.app>
     <div class="flex h-full w-full flex-1 flex-col gap-6 rounded-xl p-4">
 
-        <!-- Dashboard Header with Search and Date Filter -->
-        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Dashboard Overview</h2>
-            <div class="flex flex-col sm:flex-row gap-3">
-                <div class="relative">
-                    <input type="text" placeholder="Search products..."
-                        class="pl-9 pr-4 py-2 w-full rounded-lg border border-gray-300 dark:border-neutral-600 dark:bg-neutral-700 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
-                    <svg class="absolute left-3 top-2.5 h-4 w-4 text-gray-500 dark:text-gray-400" fill="none"
-                        stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                    </svg>
-                </div>
-                <select
-                    class="px-4 py-2 rounded-lg border border-gray-300 dark:border-neutral-600 dark:bg-neutral-700 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                    <option>Last 7 days</option>
-                    <option>Last 30 days</option>
-                    <option>Last quarter</option>
-                    <option>This year</option>
-                </select>
-            </div>
-        </div>
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Dashboard Overview</h2>
 
         <!-- Key Metrics Cards with Improved Visual Design -->
-        <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-            <!-- Total Sales Card -->
+        <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             <div
-                class="p-6 border rounded-xl bg-white shadow-md hover:shadow-lg transition-shadow dark:bg-neutral-800 dark:border-neutral-700">
+                class="p-6 border rounded-xl bg-white shadow-md hover:shadow-lg transition-all duration-300 dark:bg-neutral-800 dark:border-neutral-700">
                 <div class="flex justify-between items-start">
                     <div>
                         <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Total Sales</p>
-                        <h4 class="text-2xl font-bold mt-1 text-gray-900 dark:text-white">$1,230,500</h4>
-                        <div class="flex items-center mt-2">
-                            <span class="text-sm font-medium text-green-500">+5%</span>
-                            <svg class="w-4 h-4 text-green-500 ml-1" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
-                            </svg>
-                            <span class="text-xs text-gray-500 ml-2 dark:text-gray-400">vs last period</span>
+                        <h4 class="text-3xl font-bold mt-1 text-gray-900 dark:text-white">AUD${{
+                            number_format($totalSales, 2) }}</h4>
+                        <div class="flex items-center mt-3">
+                            @if ($salesChange >= 0)
+                            <span class="text-sm font-semibold text-green-500 flex items-center">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+                                </svg>
+                                +{{ number_format($salesChange, 2) }}%
+                            </span>
+                            @else
+                            <span class="text-sm font-semibold text-red-500 flex items-center">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                                </svg>
+                                {{ number_format($salesChange, 2) }}%
+                            </span>
+                            @endif
+                            <span class="text-xs text-gray-500 ml-2 dark:text-gray-400">vs last month</span>
                         </div>
                     </div>
-                    <div class="p-3 bg-green-100 rounded-lg dark:bg-green-900/30">
+                    <div class="p-3 bg-green-100 rounded-full dark:bg-green-900/30">
                         <svg class="w-6 h-6 text-green-600 dark:text-green-400" fill="none" stroke="currentColor"
                             viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -54,24 +46,37 @@
                 </div>
             </div>
 
-            <!-- Total Orders Card -->
             <div
-                class="p-6 border rounded-xl bg-white shadow-md hover:shadow-lg transition-shadow dark:bg-neutral-800 dark:border-neutral-700">
+                class="p-6 border rounded-xl bg-white shadow-md hover:shadow-lg transition-all duration-300 dark:bg-neutral-800 dark:border-neutral-700">
                 <div class="flex justify-between items-start">
                     <div>
                         <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Total Orders</p>
-                        <h4 class="text-2xl font-bold mt-1 text-gray-900 dark:text-white">1,250</h4>
-                        <div class="flex items-center mt-2">
-                            <span class="text-sm font-medium text-red-500">-2%</span>
-                            <svg class="w-4 h-4 text-red-500 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-                            </svg>
-                            <span class="text-xs text-gray-500 ml-2 dark:text-gray-400">vs last period</span>
+                        <h4 class="text-3xl font-bold mt-1 text-gray-900 dark:text-white">{{ number_format($totalOrders)
+                            }}</h4>
+                        <div class="flex items-center mt-3">
+                            @if ($ordersChange >= 0)
+                            <span class="text-sm font-semibold text-green-500 flex items-center">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+                                </svg>
+                                +{{ number_format($ordersChange, 2) }}%
+                            </span>
+                            @else
+                            <span class="text-sm font-semibold text-red-500 flex items-center">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                                </svg>
+                                {{ number_format($ordersChange, 2) }}%
+                            </span>
+                            @endif
+                            <span class="text-xs text-gray-500 ml-2 dark:text-gray-400">vs last month</span>
                         </div>
                     </div>
-                    <div class="p-3 bg-blue-100 rounded-lg dark:bg-blue-900/30">
+                    <div class="p-3 bg-blue-100 rounded-full dark:bg-blue-900/30">
                         <svg class="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor"
                             viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -81,24 +86,37 @@
                 </div>
             </div>
 
-            <!-- Total Customers Card -->
             <div
-                class="p-6 border rounded-xl bg-white shadow-md hover:shadow-lg transition-shadow dark:bg-neutral-800 dark:border-neutral-700">
+                class="p-6 border rounded-xl bg-white shadow-md hover:shadow-lg transition-all duration-300 dark:bg-neutral-800 dark:border-neutral-700">
                 <div class="flex justify-between items-start">
                     <div>
                         <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Total Customers</p>
-                        <h4 class="text-2xl font-bold mt-1 text-gray-900 dark:text-white">4,320</h4>
-                        <div class="flex items-center mt-2">
-                            <span class="text-sm font-medium text-green-500">+3%</span>
-                            <svg class="w-4 h-4 text-green-500 ml-1" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
-                            </svg>
-                            <span class="text-xs text-gray-500 ml-2 dark:text-gray-400">vs last period</span>
+                        <h4 class="text-3xl font-bold mt-1 text-gray-900 dark:text-white">{{
+                            number_format($totalCustomers) }}</h4>
+                        <div class="flex items-center mt-3">
+                            @if ($customersChange >= 0)
+                            <span class="text-sm font-semibold text-green-500 flex items-center">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+                                </svg>
+                                +{{ number_format($customersChange, 2) }}%
+                            </span>
+                            @else
+                            <span class="text-sm font-semibold text-red-500 flex items-center">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                                </svg>
+                                {{ number_format($customersChange, 2) }}%
+                            </span>
+                            @endif
+                            <span class="text-xs text-gray-500 ml-2 dark:text-gray-400">vs last month</span>
                         </div>
                     </div>
-                    <div class="p-3 bg-yellow-100 rounded-lg dark:bg-yellow-900/30">
+                    <div class="p-3 bg-yellow-100 rounded-full dark:bg-yellow-900/30">
                         <svg class="w-6 h-6 text-yellow-600 dark:text-yellow-400" fill="none" stroke="currentColor"
                             viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -109,24 +127,37 @@
                 </div>
             </div>
 
-            <!-- Average Order Value (new card) -->
             <div
-                class="p-6 border rounded-xl bg-white shadow-md hover:shadow-lg transition-shadow dark:bg-neutral-800 dark:border-neutral-700">
+                class="p-6 border rounded-xl bg-white shadow-md hover:shadow-lg transition-all duration-300 dark:bg-neutral-800 dark:border-neutral-700">
                 <div class="flex justify-between items-start">
                     <div>
                         <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Avg. Order Value</p>
-                        <h4 class="text-2xl font-bold mt-1 text-gray-900 dark:text-white">$984.40</h4>
-                        <div class="flex items-center mt-2">
-                            <span class="text-sm font-medium text-green-500">+7%</span>
-                            <svg class="w-4 h-4 text-green-500 ml-1" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
-                            </svg>
-                            <span class="text-xs text-gray-500 ml-2 dark:text-gray-400">vs last period</span>
+                        <h4 class="text-3xl font-bold mt-1 text-gray-900 dark:text-white">AUD${{
+                            number_format($averageOrderValue, 2) }}</h4>
+                        <div class="flex items-center mt-3">
+                            @if ($aovChange >= 0)
+                            <span class="text-sm font-semibold text-green-500 flex items-center">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+                                </svg>
+                                +{{ number_format($aovChange, 2) }}%
+                            </span>
+                            @else
+                            <span class="text-sm font-semibold text-red-500 flex items-center">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                                </svg>
+                                {{ number_format($aovChange, 2) }}%
+                            </span>
+                            @endif
+                            <span class="text-xs text-gray-500 ml-2 dark:text-gray-400">vs last month</span>
                         </div>
                     </div>
-                    <div class="p-3 bg-purple-100 rounded-lg dark:bg-purple-900/30">
+                    <div class="p-3 bg-purple-100 rounded-full dark:bg-purple-900/30">
                         <svg class="w-6 h-6 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor"
                             viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -138,51 +169,87 @@
             </div>
 
 
-            {{-- row 2 --}}
 
-            <!-- Total Products -->
-            <div
-                class="p-6 border rounded-xl bg-white shadow-md hover:shadow-lg transition-shadow dark:bg-neutral-800 dark:border-neutral-700">
-                <a href="#" class="flex justify-between items-start">
+            <a href="{{ route('admin.products.index') }}"
+                class="block p-6 border rounded-xl bg-white shadow-md hover:shadow-lg transition-all duration-300 dark:bg-neutral-800 dark:border-neutral-700 group">
+                <div class="flex justify-between items-start">
                     <div>
                         <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Total Products</p>
-                        <h4 class="text-2xl font-bold mt-1 text-gray-900 dark:text-white">9,788</h4>
+                        <h4 class="text-3xl font-bold mt-1 text-gray-900 dark:text-white">{{
+                            number_format($totalProducts) }}</h4>
                     </div>
-                    <div class="px-4 py-2 bg-purple-100 rounded-lg dark:bg-purple-900/30">
-                        <i class="far text-lg text-green-500 fa-list"></i>
+                    <div
+                        class="p-3 bg-indigo-100 rounded-full dark:bg-indigo-900/30 group-hover:bg-indigo-200 dark:group-hover:bg-indigo-800 transition-colors duration-200">
+                        <svg class="w-6 h-6 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4">
+                            </path>
+                        </svg>
                     </div>
-                </a>
-            </div>
-            <!-- Total Products -->
-            <div
-                class="p-6 border rounded-xl bg-white shadow-md hover:shadow-lg transition-shadow dark:bg-neutral-800 dark:border-neutral-700">
-                <a href="#" class="flex justify-between items-start">
+                </div>
+            </a>
+
+            <a href="{{ route('admin.categories.index') }}"
+                class="block p-6 border rounded-xl bg-white shadow-md hover:shadow-lg transition-all duration-300 dark:bg-neutral-800 dark:border-neutral-700 group">
+                <div class="flex justify-between items-start">
                     <div>
                         <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Total Categories</p>
-                        <h4 class="text-2xl font-bold mt-1 text-gray-900 dark:text-white">9,788</h4>
+                        <h4 class="text-3xl font-bold mt-1 text-gray-900 dark:text-white">{{
+                            number_format($totalCategories) }}</h4>
                     </div>
-                    <div class="px-4 py-2 bg-purple-100 rounded-lg dark:bg-purple-900/30">
-                        <i class="far text-lg text-green-500 fa-list"></i>
+                    <div
+                        class="p-3 bg-red-100 rounded-full dark:bg-red-900/30 group-hover:bg-red-200 dark:group-hover:bg-red-800 transition-colors duration-200">
+                        <svg class="w-6 h-6 text-red-600 dark:text-red-400" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path>
+                        </svg>
                     </div>
-                </a>
-            </div>
-            <!-- Total Products -->
-            <div
-                class="p-6 border rounded-xl bg-white shadow-md hover:shadow-lg transition-shadow dark:bg-neutral-800 dark:border-neutral-700">
-                <a href="#" class="flex justify-between items-start">
+                </div>
+            </a>
+
+            <a href="{{ route('admin.brands.index') }}"
+                class="block p-6 border rounded-xl bg-white shadow-md hover:shadow-lg transition-all duration-300 dark:bg-neutral-800 dark:border-neutral-700 group">
+                <div class="flex justify-between items-start">
                     <div>
                         <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Total Brands</p>
-                        <h4 class="text-2xl font-bold mt-1 text-gray-900 dark:text-white">9,788</h4>
+                        <h4 class="text-3xl font-bold mt-1 text-gray-900 dark:text-white">{{ number_format($totalBrands)
+                            }}</h4>
                     </div>
-                    <div class="px-4 py-2 bg-purple-100 rounded-lg dark:bg-purple-900/30">
-                        <i class="far text-lg text-green-500 fa-list"></i>
+                    <div
+                        class="p-3 bg-orange-100 rounded-full dark:bg-orange-900/30 group-hover:bg-orange-200 dark:group-hover:bg-orange-800 transition-colors duration-200">
+                        <svg class="w-6 h-6 text-orange-600 dark:text-orange-400" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M7 7h.01M7 3h.01M3 7h.01M3 3h.01M21 7h.01M21 3h.01M17 7h.01M17 3h.01M14 7h.01M10 7h.01M10 3h.01M14 3h.01M9 12l2 2 4-4m5-4H3v10a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2z">
+                            </path>
+                        </svg>
                     </div>
-                </a>
-            </div>
+                </div>
+            </a>
 
-
-
+            <a href="{{ route('admin.users.index') }}"
+                class="block p-6 border rounded-xl bg-white shadow-md hover:shadow-lg transition-all duration-300 dark:bg-neutral-800 dark:border-neutral-700 group">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Total Admins</p>
+                        <h4 class="text-3xl font-bold mt-1 text-gray-900 dark:text-white">{{ number_format($totalAdmins)
+                            }}</h4>
+                    </div>
+                    <div
+                        class="p-3 bg-teal-100 rounded-full dark:bg-teal-900/30 group-hover:bg-teal-200 dark:group-hover:bg-teal-800 transition-colors duration-200">
+                        <svg class="w-6 h-6 text-teal-600 dark:text-teal-400" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                    </div>
+                </div>
+            </a>
         </div>
+
+
 
         <!-- Product Table with Enhanced Features -->
         <div class="rounded-xl border border-neutral-200 overflow-hidden dark:border-neutral-700">

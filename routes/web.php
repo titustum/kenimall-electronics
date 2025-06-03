@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\BrandController; 
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
@@ -27,7 +29,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\WishlistController;
-
+use App\Models\Category;
 use Illuminate\Support\Facades\Mail;
 
 Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index'); 
@@ -48,6 +50,22 @@ Route::delete('/cart/clear', [CartController::class, 'clear'])->name('cart.clear
 Route::resource('cart', CartController::class)->only(['index', 'store', 'update', 'destroy']);
 Route::resource('products' , ProductController::class);
 Route::resource('categories' , CategoryController::class);  
+
+
+
+// Admin Routes Group
+Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
+    // Dashboard route (if you have one)
+    Route::get('dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
+
+    // Product Routes
+    Route::resource('products', App\Http\Controllers\Admin\ProductController::class); 
+    Route::resource('categories', App\Http\Controllers\Admin\CategoryController::class); 
+    Route::resource('brands', App\Http\Controllers\Admin\BrandController::class); 
+    Route::resource('users', App\Http\Controllers\Admin\UserController::class);  
+    Route::resource('orders', App\Http\Controllers\Admin\OrderController::class);
+
+});
 
 
 
