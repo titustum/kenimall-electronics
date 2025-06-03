@@ -39,7 +39,7 @@ class OrderConfirmationMail extends Mailable // implements ShouldQueue // Implem
     public function content(): Content
     {
         return new Content(
-            markdown: 'emails.orders.confirmation', // This points to your Blade Markdown template
+            view: 'emails.orders.confirmation', // This points to your Blade Markdown template
             with: [
                 'order' => $this->order,
             ],

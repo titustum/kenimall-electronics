@@ -13,20 +13,33 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
-            $table->string('order_number')->unique(); // Tracking-friendly order number
-            $table->string('payment_intent_id')->unique()->nullable();
-            $table->string('name');
-            $table->string('email');
-            $table->string('phone')->nullable(); // New: Phone number
-            $table->string('address');
-            $table->string('suburb');   // New: Suburb (previously city)
-            $table->string('state');    // New: State (e.g., NSW, VIC)
-            $table->string('postcode'); // New: Postcode (4 digits)
-            $table->string('country')->default('AU'); // New: Country, defaulting to Australia
-            $table->decimal('total', 10, 2);
-            $table->string('status')->default('pending');
-            $table->timestamps();
+            
+            // Customer/User Information
+            $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete(); // User who placed the order
+            $table->string('name');    // Customer's full name
+            $table->string('email');   // Customer's email address
+            $table->string('phone')->nullable(); // Customer's phone number (nullable if not always required)
+
+            // Australian Shipping Address Details
+            $table->string('address');   // Street Address (e.g., Unit 1, 123 Main St)
+            $table->string('suburb');    // Suburb (equivalent to City in many other countries)
+            $table->string('state');     // State (e.g., NSW, VIC, QLD, ACT, etc.)
+            $table->string('postcode');  // Postcode (4 digits in Australia)
+            $table->string('country')->default('AU'); // Country, defaulting to Australia
+
+            // Order Details
+            $table->string('order_number')->unique(); // Unique, tracking-friendly order number
+            $table->decimal('total', 10, 2);       // Total amount of the order (e.g., AUD)
+            $table->string('status')->default('pending'); // Current status of the order (e.g., pending, paid, shipped, delivered, cancelled)
+
+            // Payment Integration Details (e.g., Stripe)
+            $table->string('payment_intent_id')->unique()->nullable(); // Stripe Payment Intent ID
+
+            // Shipping Tracking Details
+            $table->string('tracking_number')->nullable(); // Tracking number from carrier
+            $table->string('carrier')->nullable();         // Shipping carrier name (e.g., Australia Post, Sendle, DHL)
+
+            $table->timestamps(); // created_at and updated_at
         });
     }
 

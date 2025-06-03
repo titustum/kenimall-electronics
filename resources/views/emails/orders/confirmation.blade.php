@@ -92,7 +92,9 @@
     </p>
 
     <p style="text-align: center;">
-        <a href="{{ route('orders.track') }}" class="button" target="_blank">Track Your Order</a>
+        <a href="{{ route('orders.show', $order) }}" class="button" style="background-color: #e66200"
+            target="_blank">Track
+            Your Order</a>
     </p>
 
     <p style="text-align: center; margin-top: 25px;">

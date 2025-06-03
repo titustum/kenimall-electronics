@@ -161,7 +161,7 @@
                             </td>
                             <td colspan="2" class="px-6 py-4">
                                 <span class="cart-total text-2xl font-bold text-orange-600">
-                                    ${{ number_format($cartTotal, 2) }}
+                                    AUD ${{ number_format($cartTotal, 2) }}
                                 </span>
                             </td>
                         </tr>
@@ -304,7 +304,7 @@
                 <h3 class="text-2xl font-semibold text-gray-900 mb-4">Your cart is empty</h3>
                 <p class="text-gray-600 mb-8">Looks like you haven't added any items to your cart yet. Start shopping to
                     fill it up!</p>
-                <a href="{{ route('products.index') ?? '#' }}"
+                <a href="{{ route('products.index') }}"
                     class="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-0.5">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

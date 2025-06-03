@@ -7,20 +7,23 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Order extends Model
 {
+    // app/Models/Order.php
     protected $fillable = [
-        'user_id', // nullable for guest checkout
+        'user_id',
         'order_number',
         'name',
         'email',
-        'phone',
+        'phone',          // Add this
         'address',
-        'suburb',   // Add this
-        'state',    // Add this
-        'postcode', // Add this
-        'country',
+        'suburb',         // Add this
+        'state',          // Add this
+        'postcode',       // Add this
+        'country',        // Add this
         'total',
         'status',
         'payment_intent_id',
+        'tracking_number', // Add this
+        'carrier',         // Add this
     ];
 
 

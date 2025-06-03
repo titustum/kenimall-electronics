@@ -620,11 +620,6 @@
 
                     <!-- Enhanced Action Icons -->
                     <div class="flex items-center space-x-2">
-                        <!-- Search icon for mobile -->
-                        <button
-                            class="md:hidden text-gray-700 hover:text-orange-500 p-2 rounded-lg hover:bg-orange-50 transition-all duration-300">
-                            <i class="fas fa-search text-lg"></i>
-                        </button>
 
                         <!-- Wishlist -->
                         <a href="{{ route('wishlist.index')  }}"
@@ -646,10 +641,10 @@
                                 count(session('cart', [])) }}</span>
                         </a>
 
-                        <!-- User Account -->
-                        <a href="{{ route('login') }}"
+                        <!-- Track order -->
+                        <a href="{{ route('orders.track-form') }}"
                             class="text-gray-700 hover:text-blue-500 p-2 rounded-lg hover:bg-blue-50 transition-all duration-300">
-                            <i class="fas fa-user text-lg"></i>
+                            <i class="fas fa-shipping-fast text-lg"></i>
                         </a>
 
                         <!-- Enhanced Mobile Menu Button -->
@@ -703,10 +698,10 @@
                         <i class="fas fa-heart mr-2"></i>
                         <span class="text-sm font-medium">Wishlist</span>
                         <a>
-                            <a href="{{ route('login') }}"
+                            <a href="{{ route('orders.track-form') }}"
                                 class="flex items-center justify-center py-3 px-4 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors">
-                                <i class="fas fa-user mr-2"></i>
-                                <span class="text-sm font-medium">Account</span>
+                                <i class="fas fa-shipping-fast mr-2"></i>
+                                <span class="text-sm font-medium">Orders</span>
                             </a>
                 </div>
 
