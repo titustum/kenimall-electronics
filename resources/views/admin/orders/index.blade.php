@@ -102,20 +102,16 @@
                                     class="text-orange-600 hover:text-orange-800 dark:text-orange-400 dark:hover:text-orange-300">
                                     View
                                 </a>
-                                {{-- Optional: Add Edit/Delete buttons if you allow direct order modification/deletion
-                                --}}
-                                {{--
                                 <a href="{{ route('admin.orders.edit', $order) }}"
                                     class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300 ml-3">Edit</a>
-                                <form action="{{ route('admin.orders.destroy', $order) }}" method="POST"
+                                {{-- <form action="{{ route('admin.orders.destroy', $order) }}" method="POST"
                                     class="inline-block ml-3"
                                     onsubmit="return confirm('Are you sure you want to delete this order? This action cannot be undone.');">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit"
                                         class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">Delete</button>
-                                </form>
-                                --}}
+                                </form> --}}
                             </td>
                         </tr>
                         @endforeach

@@ -14,6 +14,11 @@ class Category extends Model
         return $this->belongsTo(User::class, 'added_by');
     }
 
+    public function addedBy()
+    {
+        return $this->belongsTo(User::class, 'added_by');
+    }
+
     public function getRouteKeyName()
     {
         return 'slug';

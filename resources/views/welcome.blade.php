@@ -405,8 +405,7 @@
                 <a href="{{ route('products.index', ['brands[]' => $brand->id]) }}"
                     class="flex flex-col items-center bg-white p-4 rounded-2xl shadow-sm hover:shadow-md transition"
                     data-aos="fade-up" data-aos-delay="{{ $delay }}">
-                    <div
-                        class="w-24 h-24 mb-3 overflow-hidden rounded-full bg-gray-100 flex items-center justify-center">
+                    <div class="w-24 h-24 mb-3 overflow-hidden flex items-center justify-center">
                         <img src="{{ Storage::url($brand->image_path)  }}" alt="{{ $brand->name }}"
                             class="object-contain w-full h-full transition-transform group-hover:scale-105">
                     </div>

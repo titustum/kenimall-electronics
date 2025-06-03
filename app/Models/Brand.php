@@ -13,4 +13,10 @@ class Brand extends Model
     {
         return $this->belongsTo(User::class, 'added_by');
     }
+
+    // Define the relationship to the User model (the admin who added it)
+    public function addedBy()
+    {
+        return $this->belongsTo(User::class, 'added_by');
+    }
 }
