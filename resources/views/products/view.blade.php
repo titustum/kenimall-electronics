@@ -61,13 +61,12 @@
             {{-- Product Images --}}
             <div class="space-y-4">
                 @php
-                $imageUrl = Storage::exists($product->image_path) ? Storage::url($product->image_path) :
-                $product->image_path;
+
                 $additionalImages = $product->additional_images ? json_decode($product->additional_images, true) : [];
                 @endphp
 
                 <div class="relative">
-                    <img src="{{ $imageUrl }}" alt="{{ $product->name }}"
+                    <img src="{{ Storage::url($product->image_path) }}" alt="{{ $product->name }}"
                         class="w-full h-96 lg:h-[500px] object-contain rounded-xl shadow-lg bg-white"
                         id="main-product-image" />
 
@@ -264,8 +263,6 @@
 
                 @foreach ($relatedProducts as $related)
                 @php
-                $relImage = Storage::exists($related->image_path) ? Storage::url($related->image_path) :
-                $related->image_path;
                 $relPrice = $related->sale_price ?? $related->price;
                 $delay += 50;
                 @endphp
@@ -274,7 +271,7 @@
                     class="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden group border border-gray-100">
                     <a href="{{ route('products.show', $related->slug) }}" class="block">
                         <div class="relative overflow-hidden">
-                            <img src="{{ $relImage }}" alt="{{ $related->name }}"
+                            <img src="{{ Storage::url($related->image_path) }}" alt="{{ $related->name }}"
                                 class="w-full h-48 object-contain p-4 transition-transform duration-300 group-hover:scale-105">
 
                             @if($related->sale_price)

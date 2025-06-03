@@ -23,8 +23,7 @@
                 @foreach ($products as $index => $product)
                 @php
                 $filterClass = strtolower(str_replace(' ', '-', $product->category->name ?? 'all'));
-                $imageUrl = Storage::exists($product->image_path) ? Storage::url($product->image_path) :
-                $product->image_path;
+
                 $price = $product->sale_price ?? $product->price;
                 $hasSale = !is_null($product->sale_price) && $product->sale_price < $product->price;
                     $delay = 200 + ($index * 50);
@@ -42,7 +41,7 @@
                         <!-- Product Image Container -->
                         <div class="relative overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
                             <a href="{{ route('products.show', $product->slug) }}" class="block">
-                                <img src="{{ $imageUrl }}" alt="{{ $product->name }}"
+                                <img src="{{ Storage::url($product->image_path) }}" alt="{{ $product->name }}"
                                     class="w-full h-64 object-contain p-4 group-hover:scale-110 transition-transform duration-500"
                                     loading="lazy">
                             </a>
