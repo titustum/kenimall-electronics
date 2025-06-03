@@ -86,7 +86,7 @@ class UserController extends Controller
                 Rule::unique('users')->ignore($user->id),
             ],
             'password' => 'nullable|string|min:8',
-            'is_admin' => 'boolean',
+            'role' => 'required|in:admin,customer',
         ]);
 
         if (!empty($validatedData['password'])) {
@@ -94,9 +94,7 @@ class UserController extends Controller
         } else {
             unset($validatedData['password']);
         }
-
-        $validatedData['role'] = $request->has('is_admin') ? 'admin' : 'customer'; // Assuming 'role' is used to differentiate admin and customer
-
+        // dd($validatedData);
         try {
             $user->update($validatedData);
 

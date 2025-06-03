@@ -45,21 +45,27 @@
                     @enderror
                 </div>
 
-
-                {{-- Is Admin Checkbox --}}
+                {{-- User role --}}
                 <div>
-                    <div class="flex items-center">
-                        <input type="checkbox" name="is_admin" id="is_admin" value="1" {{ old('is_admin',
-                            $user->is_admin) ? 'checked' : '' }}
-                        class="h-4 w-4 text-orange-600 focus:ring-orange-500 border-gray-300 rounded dark:bg-neutral-700
-                        dark:border-neutral-600 dark:checked:bg-orange-500">
-                        <label for="is_admin" class="ml-2 block text-sm text-gray-900 dark:text-gray-300">Grant Admin
-                            Privileges</label>
-                    </div>
-                    @error('is_admin')
+                    <label for="role" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        Select User Role
+                    </label>
+                    <select name="role" id="role"
+                        class="w-full px-4 py-2 border border-gray-300 mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300  rounded-md dark:bg-neutral-700 dark:border-neutral-600 dark:text-white">
+                        <option value="customer" {{ old('role', $user->role ?? 'customer') == 'customer' ? 'selected' :
+                            '' }}>
+                            Customer
+                        </option>
+                        <option value="admin" {{ old('role', $user->role ?? '') == 'admin' ? 'selected' : '' }}>
+                            Admin
+                        </option>
+                    </select>
+
+                    @error('role')
                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                     @enderror
                 </div>
+
 
                 <div class="flex items-center justify-end gap-4">
                     <a href="{{ route('admin.users.index') }}"
