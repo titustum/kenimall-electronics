@@ -11,6 +11,8 @@ class Order extends Model
         'user_id',      // nullable if guest orders allowed
         'status',       // pending, completed, canceled, etc.
         'total',
+        'order_number', // unique order number for tracking
+        'payment_intent_id', // for payment processing
         'name',
         'email',
         'address', 
@@ -27,4 +29,10 @@ class Order extends Model
     {
         return $this->belongsTo(User::class);
     }
+ 
+    public function getRouteKeyName()
+    {
+        return 'order_number';
+    }
+
 }

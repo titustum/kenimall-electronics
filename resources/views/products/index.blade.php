@@ -2,10 +2,20 @@
 
     <section class="bg-gray-50 py-12 mt-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
-            <!-- Sidebar Filters -->
+
+
+            <!-- Button to toggle filters on small screens -->
+            <div class="lg:hidden mb-4">
+                <button onclick="toggleFiltersVisibility()" id="toggleFilters"
+                    class="w-full bg-teal-600 hover:bg-teal-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2">
+                    Show Filters
+                </button>
+            </div>
+
 
             <!-- Sidebar Filters -->
-            <aside class="bg-white p-6 rounded-2xl shadow-md space-y-6 max-w-sm">
+            <aside id="aside-filters"
+                class="bg-white p-6 rounded-2xl shadow-md space-y-6 max-w-sm hidden lg:block transition duration-300">
                 <h2 class="text-xl font-semibold text-gray-800">Filters</h2>
 
                 <form id="filterForm" method="GET" action="{{ route('products.index') }}">
@@ -100,9 +110,21 @@
             <!-- Product Grid -->
             <div class="md:col-span-3">
 
-                <div class="py-6 px-4 bg-gray-800 rounded-lg text-white text-center flex justify-center">
-                    <h1 class="text-2xl font-bold">{{ $filterName ?? 'All' }} products</h1>
+                <div
+                    class="py-6 px-6 bg-gradient-to-r from-orange-600 to-teal-600 rounded-xl shadow-lg text-white text-center">
+                    <h1 class="text-2xl font-extrabold tracking-tight truncate max-w-full mx-auto"
+                        title="{{ $filterName ?? 'All Products' }}">
+                        {{ Str::limit($filterName ?? 'All Products', 80, '...') }}
+                    </h1>
+
+                    @if(request()->has('q') || request()->has('categories') || request()->has('brands'))
+                    <p class="mt-1 text-sm text-orange-100">
+                        Showing filtered results based on your selection.
+                    </p>
+                    @endif
                 </div>
+
+
 
                 <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8" id="products-grid">
                     @foreach ($products as $index => $product)
@@ -245,6 +267,19 @@
 
 
     @push('scripts')
+
+    <script>
+        function toggleFiltersVisibility() {
+        const filters = document.getElementById('aside-filters');
+        const toggleButton = document.getElementById('toggleFilters');
+
+        const isHidden = filters.classList.contains('hidden');
+
+        filters.classList.toggle('hidden');
+        toggleButton.textContent = isHidden ? 'Hide Filters' : 'Show Filters';
+    }
+    </script>
+
 
     <script>
         const priceRange = document.getElementById('priceRange');

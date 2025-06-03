@@ -44,7 +44,7 @@
 
     <div class="max-w-7xl mx-auto px-4 py-8 mt-20">
         {{-- Breadcrumb Navigation --}}
-        <nav class="mb-8" aria-label="Breadcrumb">
+        <nav class="mb-8 hidden lg:block" aria-label="Breadcrumb">
             <ol class="flex items-center space-x-2 text-sm text-gray-500">
                 <li><a href="{{ route('home') }}" class="hover:text-orange-600 transition">Home</a></li>
                 <li><span class="mx-2">/</span></li>
@@ -190,7 +190,7 @@
                     </div>
 
                     <div class="flex space-x-3">
-                        <button onclick="quickAddToCart({{ $product->id }})"
+                        <button onclick="quickBuyNow({{ $product->id }})"
                             class="flex-1 bg-gray-900 text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition font-medium">
                             <i class="fas fa-bolt mr-2"></i>Buy Now
                         </button>

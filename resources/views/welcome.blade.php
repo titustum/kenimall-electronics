@@ -24,16 +24,16 @@
                                         class="inline-flex items-center justify-center bg-yellow-400 text-gray-900 px-8 py-4 rounded-full font-semibold text-lg hover:bg-yellow-300 transition-all duration-300 ease-in-out transform hover:scale-105 shadow-lg animate-pulse-once">
                                         <i class="fas fa-shopping-bag mr-2"></i>Shop Now
                                     </a>
-                                    <a href="#demo-video"
+                                    {{-- <a href="#demo-video"
                                         class="inline-flex items-center justify-center bg-transparent border-2 border-white text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white hover:text-gray-900 transition-all duration-300 ease-in-out transform hover:scale-105 shadow-lg">
                                         <i class="fas fa-play mr-2"></i>Watch Demo
-                                    </a>
+                                    </a> --}}
                                 </div>
                             </div>
                             <div class="relative flex justify-center lg:justify-end" data-aos="fade-left"
                                 data-aos-once="true">
                                 <div class="floating-animation">
-                                    <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
+                                    <img src="{{  asset('images/Latest Smartphone.webp') }}"
                                         alt="Latest Smartphone - iPhone 15 Pro"
                                         class="w-full max-w-md mx-auto rounded-3xl shadow-2xl ring-4 ring-yellow-400 ring-offset-2 ring-offset-transparent">
                                 </div>
@@ -61,20 +61,20 @@
                                     accessories. Built for serious gamers, by gamers.
                                 </p>
                                 <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                                    <a href="{{ route('products.index').'?q=gaming'}}"
+                                    <a href="{{ route('products.index')}}?q=gaming"
                                         class="inline-flex items-center justify-center bg-cyan-400 text-gray-900 px-8 py-4 rounded-full font-semibold text-lg hover:bg-cyan-300 transition-all duration-300 ease-in-out transform hover:scale-105 shadow-lg animate-pulse-once">
                                         <i class="fas fa-gamepad mr-2"></i>Explore Gaming
                                     </a>
-                                    <a href="#specs-guide"
+                                    {{-- <a href="#specs-guide"
                                         class="inline-flex items-center justify-center bg-transparent border-2 border-white text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white hover:text-gray-900 transition-all duration-300 ease-in-out transform hover:scale-105 shadow-lg">
                                         <i class="fas fa-chart-line mr-2"></i>View Specs
-                                    </a>
+                                    </a> --}}
                                 </div>
                             </div>
                             <div class="relative flex justify-center lg:justify-end" data-aos="fade-left"
                                 data-aos-once="true">
                                 <div class="floating-animation">
-                                    <img src="https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
+                                    <img src="{{ asset('images/gaming-devices.webp') }}"
                                         alt="High-Performance Gaming Laptop"
                                         class="w-full max-w-md mx-auto rounded-3xl shadow-2xl ring-4 ring-cyan-400 ring-offset-2 ring-offset-transparent">
                                 </div>
@@ -102,20 +102,20 @@
                                     and more connected than ever before.
                                 </p>
                                 <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                                    <a href="{{ route('products.index').'?q=smart-home '}}"
+                                    <a href="{{ route('products.index').'?q=home'}}"
                                         class="inline-flex items-center justify-center bg-green-400 text-gray-900 px-8 py-4 rounded-full font-semibold text-lg hover:bg-green-300 transition-all duration-300 ease-in-out transform hover:scale-105 shadow-lg animate-pulse-once">
                                         <i class="fas fa-home mr-2"></i>Smart Home Collection
                                     </a>
-                                    <a href="#smart-home-guide"
+                                    {{-- <a href="#smart-home-guide"
                                         class="inline-flex items-center justify-center bg-transparent border-2 border-white text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white hover:text-gray-900 transition-all duration-300 ease-in-out transform hover:scale-105 shadow-lg">
                                         <i class="fas fa-info-circle mr-2"></i>Learn More
-                                    </a>
+                                    </a> --}}
                                 </div>
                             </div>
                             <div class="relative flex justify-center lg:justify-end" data-aos="fade-left"
                                 data-aos-once="true">
                                 <div class="floating-animation">
-                                    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
+                                    <img src="{{ asset('images/smart-home-devices.webp') }}"
                                         alt="Intelligent Smart Home Device"
                                         class="w-full max-w-md mx-auto rounded-3xl shadow-2xl ring-4 ring-green-400 ring-offset-2 ring-offset-transparent">
                                 </div>
@@ -171,26 +171,18 @@
 
             <!-- Product Filter Tabs -->
             <div class="flex flex-wrap justify-center gap-4 mb-12" data-aos="fade-up" data-aos-delay="100">
-                <button
+                <a href="{{ route('products.index') }}"
                     class="filter-btn active bg-gradient-to-r from-orange-600 to-pink-600 text-white px-6 py-3 rounded-full font-semibold transition-all hover-scale"
                     data-filter="all">
                     <i class="fas fa-th-large mr-2"></i>All Products
-                </button>
-                <button
-                    class="filter-btn bg-white text-gray-700 px-6 py-3 rounded-full font-semibold border-2 border-gray-200 hover:border-purple-300 transition-all hover-scale"
-                    data-filter="smartphones">
-                    <i class="fas fa-mobile-alt mr-2"></i>Smartphones
-                </button>
-                <button
-                    class="filter-btn bg-white text-gray-700 px-6 py-3 rounded-full font-semibold border-2 border-gray-200 hover:border-purple-300 transition-all hover-scale"
-                    data-filter="laptops">
-                    <i class="fas fa-laptop mr-2"></i>Laptops
-                </button>
-                <button
-                    class="filter-btn bg-white text-gray-700 px-6 py-3 rounded-full font-semibold border-2 border-gray-200 hover:border-purple-300 transition-all hover-scale"
-                    data-filter="accessories">
-                    <i class="fas fa-headphones mr-2"></i>Accessories
-                </button>
+                </a>
+
+                @foreach ($categories as $category)
+                <a href="{{ route('products.index') }}?category={{ $category->slug }}"
+                    class="filter-btn bg-white text-gray-700 px-6 py-3 rounded-full font-semibold border-2 border-gray-200 hover:border-purple-300 transition-all hover-scale">
+                    <i class="fas fa-mobile-alt mr-2"></i>{{ Str::limit($category->name,10) }}
+                </a>
+                @endforeach
             </div>
 
             <!-- Products Grid -->
@@ -384,15 +376,47 @@
 
             <!-- View All Button -->
             <div class="text-center mt-12" data-aos="fade-up" data-aos-delay="1000">
-                <button
+                <a href="{{ route('categories.index') }}"
                     class="bg-gradient-to-r from-orange-600 to-pink-600 text-white px-12 py-4 rounded-full font-semibold text-lg hover:from-orange-700 hover:to-pink-700 transition-all hover-scale pulse-glow">
                     <i class="fas fa-th-large mr-2"></i>View All Categories
-                </button>
+                </a>
             </div>
 
 
         </div>
     </section>
+
+
+
+    <!-- Top Product Brands Section -->
+    <section class="py-20 bg-gray-50" data-aos="fade-up">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">Top Product Brands</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Shop from trusted brands across all categories</p>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-8 items-center">
+                @foreach ($brands as $index => $brand)
+                @php
+                $delay = $index * 100;
+                @endphp
+
+                <a href="{{ route('products.index', ['brands[]' => $brand->id]) }}"
+                    class="flex flex-col items-center bg-white p-4 rounded-2xl shadow-sm hover:shadow-md transition"
+                    data-aos="fade-up" data-aos-delay="{{ $delay }}">
+                    <div
+                        class="w-24 h-24 mb-3 overflow-hidden rounded-full bg-gray-100 flex items-center justify-center">
+                        <img src="{{ Storage::url($brand->image_path)  }}" alt="{{ $brand->name }}"
+                            class="object-contain w-full h-full transition-transform group-hover:scale-105">
+                    </div>
+                    <span class="text-sm font-medium text-gray-700">{{ $brand->name }}</span>
+                </a>
+                @endforeach
+            </div>
+        </div>
+    </section>
+
 
 
 

@@ -17,67 +17,28 @@ class ProductController extends Controller
  
     public function index(Request $request)
     {
-        $filterName = 'All';
+        $filterName = '';
         $query = Product::query();
 
-        // Handle category filter by slug (?category=electronics)
-        if ($request->filled('category')) {
-            $categorySlug = $request->input('category');
-            $category = Category::where('slug', $categorySlug)->first();
+        [$query, $filterName] = $this->applyCategoryFilter($request, $query, $filterName);
+        [$query, $filterName] = $this->applySearchFilter($request, $query, $filterName);
+        [$query, $filterName] = $this->applyCheckboxFilters($request, $query, $filterName);
+        [$query, $filterName] = $this->applyPriceFilter($request, $query, $filterName);
+        [$query, $filterName] = $this->applyConditionFilter($request, $query, $filterName);
+        [$query, $filterName] = $this->applyStockFilter($request, $query, $filterName);
 
-            if ($category) {
-                $query->where('category_id', $category->id);
-                $filterName = $category->name;
-            }
-        }
-
-        // Handle search filter (?q=earphones)
-        if ($request->filled('q')) {
-            $searchTerm = $request->input('q');
-            $query->where(function($q) use ($searchTerm) {
-                $q->where('name', 'like', '%' . $searchTerm . '%')
-                ->orWhere('description', 'like', '%' . $searchTerm . '%');
-            });
-            $filterName = 'Search results for: ' . $searchTerm;
-        }
-
-        // Handle checkbox filters (categories[], brands[])
-        if ($request->has('categories') && is_array($request->categories)) {
-            $query->whereIn('category_id', $request->categories);
-            $filterName = 'Filtered';
-        }
-
-        if ($request->has('brands') && is_array($request->brands)) {
-            $query->whereIn('brand_id', $request->brands);
-            $filterName = 'Filtered';
-        }
-
-        // Handle max price filter
-        if ($request->filled('max_price')) {
-            $query->where('price', '<=', $request->max_price);
-            $filterName = 'Filtered';
-        }
-
-        // Handle condition filter
-        if ($request->filled('condition')) {
-            $query->where('condition', $request->condition);
-            $filterName = 'Filtered ';
-        }
-
-        // Handle in stock filter
-        if ($request->boolean('in_stock')) {
-            $query->where('stock', '>', 0);
-            $filterName = 'Filtered';
-        }
-
-        // Paginate results with query string to keep filters in URL
         $products = $query->paginate(15)->withQueryString();
-
         $categories = Category::all();
         $brands = Brand::all();
 
+        if(!isset($filterName )|| empty($filterName))
+        {
+            $filterName = 'All Products';
+        }
+
         return view('products.index', compact('products', 'categories', 'brands', 'filterName'));
-    }
+}
+
 
     /**
      * Show the form for creating a new resource.
@@ -213,4 +174,95 @@ class ProductController extends Controller
     {
         //
     }
+
+
+    private function applyCategoryFilter(Request $request, $query, $filterName)
+    {
+        if ($request->filled('category')) {
+            $category = Category::where('slug', $request->input('category'))->first();
+            if ($category) {
+                $query->where('category_id', $category->id);
+                $filterName = $category->name;
+            }
+        }
+        return [$query, $filterName];
+    }
+
+    private function applySearchFilter(Request $request, $query, $filterName)
+    {
+        if ($request->filled('q')) {
+            // Split comma-separated search terms and trim whitespace
+            $searchTerms = array_filter(array_map('trim', explode(',', $request->input('q'))));
+
+            $query->where(function ($q) use ($searchTerms) {
+                foreach ($searchTerms as $term) {
+                    $q->orWhere('name', 'like', "%{$term}%")
+                    ->orWhere('description', 'like', "%{$term}%");
+                }
+            });
+
+            $filterName = 'Search results for: ' . implode(', ', $searchTerms);
+        }
+
+        return [$query, $filterName];
+    }
+
+
+    private function applyCheckboxFilters(Request $request, $query, &$filterName)
+    {
+        $labels = [];
+
+        if ($request->has('categories') && is_array($request->categories)) {
+            $query->whereIn('category_id', $request->categories);
+            $categoryNames = Category::whereIn('id', $request->categories)->pluck('name')->toArray();
+            $labels[] = 'Categories: ' . implode(', ', $categoryNames);
+        }
+
+        if ($request->has('brands') && is_array($request->brands)) {
+            $query->whereIn('brand_id', $request->brands);
+            $brandNames = Brand::whereIn('id', $request->brands)->pluck('name')->toArray();
+            $labels[] = 'Brands: ' . implode(', ', $brandNames);
+        }
+
+        if (!empty($labels)) {
+            $filterName .= ($filterName ? ' | ' : '') . implode(' | ', $labels);
+        }
+
+        return [$query, $filterName];
+    }
+
+
+    private function applyPriceFilter(Request $request, $query, &$filterName)
+    {
+        if ($request->filled('max_price')) {
+            $query->where('price', '<=', $request->max_price);
+            $filterName .= ($filterName ? ' | ' : '') . 'Max Price: $' . number_format($request->max_price);
+        }
+
+        return [$query, $filterName];
+    }
+
+
+    private function applyConditionFilter(Request $request, $query, &$filterName)
+    {
+        if ($request->filled('condition')) {
+            $query->where('condition', $request->condition);
+            $filterName .= ($filterName ? ' | ' : '') . ucfirst($request->condition) . ' Condition';
+        }
+
+        return [$query, $filterName];
+    }
+
+
+     private function applyStockFilter(Request $request, $query, &$filterName)
+    {
+        if ($request->boolean('in_stock')) {
+            $query->where('stock', '>', 0);
+            $filterName .= ($filterName ? ' | ' : '') . 'In Stock';
+        }
+
+        return [$query, $filterName];
+    }
+
+
 }

@@ -442,35 +442,45 @@
                 </a>
 
                 <!-- Enhanced Search Bar -->
+                <!-- Enhanced Search Bar -->
                 <div class="flex-1 mx-4 hidden md:flex max-w-2xl lg:max-w-4xl">
-                    <div class="search-container relative w-full">
+                    <form action="{{ route('products.index') }}" method="GET" class="search-container relative w-full"
+                        autocomplete="off">
                         <div class="flex w-full">
                             <div class="relative flex-1">
-                                <input type="text" placeholder="Search for products, brands, categories..."
-                                    class="w-full px-4 py-3 pr-10 border border-gray-200 rounded-l-lg focus:outline-none focus:ring-1 focus:ring-orange-500 focus:border-transparent transition-all duration-300 bg-gray-50 focus:bg-white" />
+                                <input type="text" name="q" placeholder="Search for products, brands, categories..."
+                                    class="w-full px-4 py-3 pr-10 border border-gray-200 rounded-l-lg focus:outline-none focus:ring-1 focus:ring-orange-500 focus:border-transparent transition-all duration-300 bg-gray-50 focus:bg-white"
+                                    id="search-input" aria-label="Search products, brands, categories"
+                                    autocomplete="off" />
                                 <i
                                     class="fas fa-microphone absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-orange-500 cursor-pointer transition-colors"></i>
                             </div>
-                            <button
-                                class="px-6 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-r-lg hover:from-orange-600 hover:to-orange-700 transition-all duration-300 shadow-lg hover:shadow-xl">
+                            <button type="submit"
+                                class="px-6 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-r-lg hover:from-orange-600 hover:to-orange-700 transition-all duration-300 shadow-lg hover:shadow-xl"
+                                aria-label="Search">
                                 <i class="fas fa-search"></i>
                             </button>
                         </div>
-                        <!-- Search suggestions (hidden by default) -->
-                        <div
-                            class="absolute top-full left-0 right-0 bg-white shadow-lg rounded-b-lg border border-t-0 border-gray-200 hidden">
+                        <!-- Search suggestions -->
+                        <div id="search-suggestions"
+                            class="absolute top-full left-0 right-0 bg-white shadow-lg rounded-b-lg border border-t-0 border-gray-200 hidden z-10">
                             <div class="p-2">
                                 <div class="text-xs text-gray-500 mb-2">Popular searches</div>
                                 <div class="space-y-1">
-                                    <a href="#" class="block px-3 py-2 text-sm hover:bg-gray-50 rounded">iPhone 15</a>
-                                    <a href="#" class="block px-3 py-2 text-sm hover:bg-gray-50 rounded">MacBook Pro</a>
-                                    <a href="#" class="block px-3 py-2 text-sm hover:bg-gray-50 rounded">Gaming
-                                        Laptop</a>
+                                    <a href="{{ route('products.index', ['q' => 'iphone 15']) }}"
+                                        class="block px-3 py-2 text-sm hover:bg-gray-50 rounded">iPhone 15</a>
+                                    <a href="{{ route('products.index', ['q' => 'macbook pro']) }}"
+                                        class="block px-3 py-2 text-sm hover:bg-gray-50 rounded">MacBook Pro</a>
+                                    <a href="{{ route('products.index', ['q' => 'gaming laptop']) }}"
+                                        class="block px-3 py-2 text-sm hover:bg-gray-50 rounded">Gaming Laptop</a>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
+
+
+
 
                 <!-- Navigation & Icons -->
                 <div class="flex items-center space-x-2 md:space-x-4">
@@ -489,42 +499,50 @@
                                 class="nav-dropdown absolute left-0 bg-white shadow-xl mt-2 rounded-xl border border-gray-100 w-64 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0">
                                 <div class="p-4">
                                     <div class="space-y-1">
-                                        <a href="{{ route('products.index')}}?q=phones"
+                                        <a href="{{ route('products.index', ['q' => 'phone,android,iphone,earphone,earpod,charger,cable']) }}"
                                             class="flex items-center px-4 py-3 hover:bg-orange-50 rounded-lg transition-colors group/item">
                                             <i class="fas fa-mobile-alt text-orange-500 w-5 mr-3"></i>
                                             <div>
                                                 <div class="font-medium text-gray-900 group-hover/item:text-orange-600">
-                                                    Smartphones</div>
+                                                    Smartphones
+                                                </div>
                                                 <div class="text-xs text-gray-500">Latest models & accessories</div>
                                             </div>
                                         </a>
-                                        <a href="{{ route('products.index').'?q=laptop'}}"
+
+                                        <a href="{{ route('products.index', ['q' => 'laptop,notebook,ultrabook,gaming laptop,macbook']) }}"
                                             class="flex items-center px-4 py-3 hover:bg-orange-50 rounded-lg transition-colors group/item">
                                             <i class="fas fa-laptop text-orange-500 w-5 mr-3"></i>
                                             <div>
                                                 <div class="font-medium text-gray-900 group-hover/item:text-orange-600">
-                                                    Laptops</div>
+                                                    Laptops
+                                                </div>
                                                 <div class="text-xs text-gray-500">Gaming, business & ultrabooks</div>
                                             </div>
                                         </a>
-                                        <a href="{{ route('products.index').'?q=audio'}}"
+
+                                        <a href="{{ route('products.index', ['q' => 'headphones,speaker,earbuds,earphones,audio,bluetooth speaker']) }}"
                                             class="flex items-center px-4 py-3 hover:bg-orange-50 rounded-lg transition-colors group/item">
                                             <i class="fas fa-headphones text-orange-500 w-5 mr-3"></i>
                                             <div>
                                                 <div class="font-medium text-gray-900 group-hover/item:text-orange-600">
-                                                    Audio</div>
+                                                    Audio
+                                                </div>
                                                 <div class="text-xs text-gray-500">Headphones, speakers & more</div>
                                             </div>
                                         </a>
-                                        <a href="{{ route('products.index').'?q=wearable'}}"
+
+                                        <a href="{{ route('products.index', ['q' => 'smartwatch,fitness tracker,wearable,band,tracker']) }}"
                                             class="flex items-center px-4 py-3 hover:bg-orange-50 rounded-lg transition-colors group/item">
                                             <i class="far fa-clock text-orange-500 w-5 mr-3"></i>
                                             <div>
                                                 <div class="font-medium text-gray-900 group-hover/item:text-orange-600">
-                                                    Wearables</div>
+                                                    Wearables
+                                                </div>
                                                 <div class="text-xs text-gray-500">Smartwatches & fitness trackers</div>
                                             </div>
                                         </a>
+
                                     </div>
                                 </div>
                             </div>
@@ -542,43 +560,51 @@
                                 class="nav-dropdown absolute left-0 bg-white shadow-xl mt-2 rounded-xl border border-gray-100 w-64 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0">
                                 <div class="p-4">
                                     <div class="space-y-1">
-                                        <a href="{{ route('products.index').'?q=gaming'}}"
+                                        <a href="{{ route('products.index', ['q' => 'gaming,console,pc gaming,video game,accessory,controller,playstation,xbox,nintendo']) }}"
                                             class="flex items-center px-4 py-3 hover:bg-orange-50 rounded-lg transition-colors group/item">
                                             <i class="fas fa-gamepad text-orange-500 w-5 mr-3"></i>
                                             <div>
                                                 <div class="font-medium text-gray-900 group-hover/item:text-orange-600">
-                                                    Gaming</div>
+                                                    Gaming
+                                                </div>
                                                 <div class="text-xs text-gray-500">Consoles, PC gaming & accessories
                                                 </div>
                                             </div>
                                         </a>
-                                        <a href="{{ route('products.index').'?q=smart-home'}}"
+
+                                        <a href="{{ route('products.index', ['q' => 'smart home,iot,automation,security camera,smart bulb,smart thermostat,smart lock']) }}"
                                             class="flex items-center px-4 py-3 hover:bg-orange-50 rounded-lg transition-colors group/item">
                                             <i class="fas fa-home text-orange-500 w-5 mr-3"></i>
                                             <div>
                                                 <div class="font-medium text-gray-900 group-hover/item:text-orange-600">
-                                                    Smart Home</div>
+                                                    Smart Home
+                                                </div>
                                                 <div class="text-xs text-gray-500">IoT devices & automation</div>
                                             </div>
                                         </a>
-                                        <a href="{{ route('products.index').'?q=photography'}}"
+
+                                        <a href="{{ route('products.index', ['q' => 'photography,camera,lens,tripod,dslr,mirrorless,studio gear,flash']) }}"
                                             class="flex items-center px-4 py-3 hover:bg-orange-50 rounded-lg transition-colors group/item">
                                             <i class="fas fa-camera text-orange-500 w-5 mr-3"></i>
                                             <div>
                                                 <div class="font-medium text-gray-900 group-hover/item:text-orange-600">
-                                                    Photography</div>
+                                                    Photography
+                                                </div>
                                                 <div class="text-xs text-gray-500">Cameras, lenses & studio gear</div>
                                             </div>
                                         </a>
-                                        <a href="{{ route('products.index').'?q=entertainment'}}"
+
+                                        <a href="{{ route('products.index', ['q' => 'entertainment,tv,streaming,media,projector,speaker,soundbar']) }}"
                                             class="flex items-center px-4 py-3 hover:bg-orange-50 rounded-lg transition-colors group/item">
                                             <i class="fas fa-tv text-orange-500 w-5 mr-3"></i>
                                             <div>
                                                 <div class="font-medium text-gray-900 group-hover/item:text-orange-600">
-                                                    Entertainment</div>
+                                                    Entertainment
+                                                </div>
                                                 <div class="text-xs text-gray-500">TVs, streaming & media</div>
                                             </div>
                                         </a>
+
                                     </div>
                                 </div>
                             </div>
@@ -657,15 +683,18 @@
 
                 <!-- Mobile Search -->
                 <div class="mb-6">
-                    <div class="flex">
-                        <input type="text" placeholder="Search products..."
-                            class="flex-1 px-4 py-3 border rounded-l-lg focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm">
-                        <button
-                            class="px-4 bg-orange-500 text-white rounded-r-lg hover:bg-orange-600 transition-colors">
+                    <form action="{{ route('products.index') }}" method="GET" class="flex">
+                        <input type="text" name="q" placeholder="Search products..."
+                            class="flex-1 px-4 py-3 border rounded-l-lg focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm"
+                            aria-label="Search products" autocomplete="off" />
+                        <button type="submit"
+                            class="px-4 bg-orange-500 text-white rounded-r-lg hover:bg-orange-600 transition-colors"
+                            aria-label="Search">
                             <i class="fas fa-search"></i>
                         </button>
-                    </div>
+                    </form>
                 </div>
+
 
                 <!-- Quick Actions -->
                 <div class="grid grid-cols-2 gap-3 mb-6">
@@ -690,26 +719,30 @@
                             Products
                         </div>
                         <div class="space-y-1 ml-6">
-                            <a href="{{ route('products.index') }}?q=phones"
+                            <a href="{{ route('products.index', ['q' => 'phone,android,iphone,earphone,earpod,charger']) }}"
                                 class="flex items-center py-2 text-gray-600 hover:text-orange-500 hover:bg-orange-50 px-3 rounded-lg transition-all">
                                 <i class="fas fa-mobile-alt text-xs mr-3 w-4"></i>
                                 Smartphones
                             </a>
-                            <a href="{{ route('products.index') }}?q=laptops"
+
+                            <a href="{{ route('products.index', ['q' => 'laptop,notebook,macbook,gaming laptop,ultrabook']) }}"
                                 class="flex items-center py-2 text-gray-600 hover:text-orange-500 hover:bg-orange-50 px-3 rounded-lg transition-all">
                                 <i class="fas fa-laptop text-xs mr-3 w-4"></i>
                                 Laptops
                             </a>
-                            <a href="{{ route('products.index') }}?q=audio"
+
+                            <a href="{{ route('products.index', ['q' => 'audio,headphones,speaker,earbuds,soundbar,microphone']) }}"
                                 class="flex items-center py-2 text-gray-600 hover:text-orange-500 hover:bg-orange-50 px-3 rounded-lg transition-all">
                                 <i class="fas fa-headphones text-xs mr-3 w-4"></i>
                                 Audio
                             </a>
-                            <a href="{{ route('products.index') }}?q=wearable"
+
+                            <a href="{{ route('products.index', ['q' => 'wearable,smartwatch,fitness tracker,band,heartrate monitor']) }}"
                                 class="flex items-center py-2 text-gray-600 hover:text-orange-500 hover:bg-orange-50 px-3 rounded-lg transition-all">
                                 <i class="fas fa-clock text-xs mr-3 w-4"></i>
                                 Wearables
                             </a>
+
                         </div>
                     </div>
 
@@ -720,26 +753,30 @@
                             Categories
                         </div>
                         <div class="space-y-1 ml-6">
-                            <a href="{{ route('products.index') }}?q=gaming"
+                            <a href="{{ route('products.index', ['q' => 'gaming,console,pc,gamepad,accessories']) }}"
                                 class="flex items-center py-2 text-gray-600 hover:text-orange-500 hover:bg-orange-50 px-3 rounded-lg transition-all">
                                 <i class="fas fa-gamepad text-xs mr-3 w-4"></i>
                                 Gaming
                             </a>
-                            <a href="{{ route('products.index') }}?q=home"
+
+                            <a href="{{ route('products.index', ['q' => 'smart-home,iot,automation,security,camera']) }}"
                                 class="flex items-center py-2 text-gray-600 hover:text-orange-500 hover:bg-orange-50 px-3 rounded-lg transition-all">
                                 <i class="fas fa-home text-xs mr-3 w-4"></i>
                                 Smart Home
                             </a>
-                            <a href="{{ route('products.index') }}?q=photography"
+
+                            <a href="{{ route('products.index', ['q' => 'photography,camera,lens,dslr,mirrorless,studio gear']) }}"
                                 class="flex items-center py-2 text-gray-600 hover:text-orange-500 hover:bg-orange-50 px-3 rounded-lg transition-all">
                                 <i class="fas fa-camera text-xs mr-3 w-4"></i>
                                 Photography
                             </a>
-                            <a href="{{ route('products.index') }}?q=entertainment"
+
+                            <a href="{{ route('products.index', ['q' => 'entertainment,tv,streaming,media,projector']) }}"
                                 class="flex items-center py-2 text-gray-600 hover:text-orange-500 hover:bg-orange-50 px-3 rounded-lg transition-all">
                                 <i class="fas fa-tv text-xs mr-3 w-4"></i>
                                 Entertainment
                             </a>
+
                         </div>
                     </div>
 
@@ -980,7 +1017,31 @@
 
 
 
+    <script>
+        const searchInput = document.getElementById('search-input');
+                    const suggestionsBox = document.getElementById('search-suggestions');
 
+                    // Show suggestions on focus
+                    searchInput.addEventListener('focus', () => {
+                        suggestionsBox.classList.remove('hidden');
+                    });
+
+                    // Hide suggestions on blur, with slight delay to allow clicks
+                    searchInput.addEventListener('blur', () => {
+                        setTimeout(() => {
+                        suggestionsBox.classList.add('hidden');
+                        }, 200);
+                    });
+
+                    // Optional: Hide suggestions if input is empty
+                    searchInput.addEventListener('input', () => {
+                        if (searchInput.value.trim() === '') {
+                        suggestionsBox.classList.remove('hidden');
+                        } else {
+                        suggestionsBox.classList.add('hidden');
+                        }
+                    });
+    </script>
 
     <script>
         function showToast(message, type = 'success') {
@@ -1031,6 +1092,39 @@
     }
     </script>
 
+    <script>
+        function quickBuyNow(productId) {
+            fetch("{{ route('cart.store') }}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({
+                    product_id: productId,
+                    quantity: 1
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    // Optional toast
+                    showToast(data.message || 'Product added to cart', 'success');
+
+                    // Redirect to cart
+                    window.location.href = "{{ route('cart.index') }}";
+                } else {
+                    showToast(data.message || 'Something went wrong', 'error');
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                showToast('Error adding product to cart.', 'error');
+            });
+        }
+    </script>
+
+
 
     <script>
         function toggleWishlist(productId) {
@@ -1040,7 +1134,7 @@
                     'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                 },
-                body: JSON.strgify({ product_id: productId })
+                body: JSON.stringify({ product_id: productId })
             })
             .then(res => res.json())
             .then(data => {

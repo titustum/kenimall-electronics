@@ -9,7 +9,7 @@
         @endif
 
         <p class="mb-4">
-            Your order <strong>#{{ $order->id }}</strong> has been placed successfully.
+            Your order <strong>#{{ $order->order_number }}</strong> has been placed successfully.
         </p>
 
         <div class="mb-6">

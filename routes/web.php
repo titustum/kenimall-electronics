@@ -33,7 +33,10 @@ Route::post('/wishlist/toggle', [WishlistController::class, 'toggle'])->name('wi
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
 Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store'); 
 Route::get('/checkout/return', [CheckoutController::class, 'return'])->name('checkout.return');
-Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show'); 
+Route::view('/orders/not-found', 'orders.not-found')->name('orders.not-found'); 
+Route::view('/orders/payment-failed', 'orders.payment-failed')->name('orders.payment-failed');
+
 
 Route::delete('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
 Route::resource('cart', CartController::class)->only(['index', 'store', 'update', 'destroy']);

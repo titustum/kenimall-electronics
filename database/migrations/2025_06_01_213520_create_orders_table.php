@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('orders', function (Blueprint $table) {
-            // orders table
+        Schema::create('orders', function (Blueprint $table) { 
             $table->id();
             $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
+            $table->string('order_number')->unique(); // Tracking-friendly order number
+            $table->string('payment_intent_id')->unique()->nullable();
             $table->string('name');
             $table->string('email');
             $table->string('address');
