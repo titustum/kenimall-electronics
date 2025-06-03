@@ -27,5 +27,29 @@ class OrderController extends Controller
     }
 
 
- 
+    public function trackForm()
+    {
+        return view('orders.track');
+    }
+
+
+    public function track(Request $request)
+    {
+        $request->validate([
+            'order_number' => 'required|string',
+            'email' => 'required|email',
+        ]);
+
+        $order = Order::where('order_number', $request->order_number)
+                    ->where('email', $request->email)
+                    ->first();
+
+        if ($order) {
+            return redirect()->route('orders.show', $order);
+        }
+
+        return redirect()->back()->with('error', 'Order not found. Please check your details.');
+    }
+
+
 }

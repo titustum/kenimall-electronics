@@ -9,6 +9,9 @@ use App\Models\OrderItem;
 use Illuminate\Support\Str;
 use Stripe\Stripe;
 use Stripe\PaymentIntent;
+use Illuminate\Support\Facades\Mail; // Don't forget to import Mail
+use App\Mail\OrderConfirmationMail; // Don't forget to import your Mailable
+use Illuminate\Support\Facades\Log;
 
 class CheckoutController extends Controller
 {
@@ -56,7 +59,7 @@ class CheckoutController extends Controller
         try {
             $paymentIntent = PaymentIntent::create([
                 'amount' => $totalAmountInCents,
-                'currency' => 'usd',
+                'currency' => 'usd', // Ensure this matches your currency configuration
                 'payment_method' => $request->payment_method_id,
                 'confirmation_method' => 'manual',
                 'confirm' => true,
@@ -70,6 +73,7 @@ class CheckoutController extends Controller
                     'checkout_email' => $request->email,
                     'checkout_address' => $request->address,
                     'payment_intent_id' => $paymentIntent->id,
+                    'cart_for_return' => $cart, // Store cart in session for the return path
                 ]);
 
                 return response()->json([
@@ -105,6 +109,16 @@ class CheckoutController extends Controller
 
                 session()->forget('cart');
 
+                // --- Debugging line ---
+                Log::info('Attempting to send order confirmation email for order ID: ' . $order->id . ' to ' . $order->email);
+                // dd('Sending email now!'); // Uncomment this to halt execution and confirm this line is reached
+                // ----------------------
+
+
+                // --- Send the Order Confirmation Email Here ---
+                Mail::to($order->email)->send(new OrderConfirmationMail($order));
+                // ---------------------------------------------
+
                 return redirect()->route('orders.show', $order)
                     ->with('success', 'Order placed successfully! You can track your order here.');
             }
@@ -132,31 +146,31 @@ class CheckoutController extends Controller
             $order = Order::where('payment_intent_id', $paymentIntentId)->first();
 
             if ($order) {
+                // If order already exists, it means it was processed, just redirect.
+                // We don't want to re-send email or re-create order items.
                 return redirect()->route('orders.show', $order)->with('info', 'Order already processed.');
             }
 
             $paymentIntent = PaymentIntent::retrieve($paymentIntentId);
 
             if ($paymentIntent->status === 'succeeded') {
-                $cart = session('cart');
-
-                if (!$cart || count($cart) === 0) {
-                    $order = Order::where('payment_intent_id', $paymentIntentId)->first();
-                    return $order
-                        ? redirect()->route('orders.show', $order)->with('success', 'Your order was completed successfully.')
-                        : redirect()->route('orders.not-found')->with('error', 'Order not found.');
-                }
-
+                // Retrieve checkout details from session that were stored before 3D Secure redirect
                 $name = session('checkout_name');
                 $email = session('checkout_email');
                 $address = session('checkout_address');
+                $cart = session('cart_for_return'); // Use the cart stored for return
+
+                // Basic validation for critical session data
+                if (!$name || !$email || !$address || !$cart || count($cart) === 0) {
+                    return redirect()->route('orders.payment-failed')->with('error', 'Missing session data for order creation after payment confirmation. Please contact support.');
+                }
 
                 do {
                     $orderNumber = 'ORD-' . date('Ymd') . '-' . strtoupper(Str::random(6));
                 } while (Order::where('order_number', $orderNumber)->exists());
 
                 $order = Order::create([
-                    'user_id' => Auth::id(),
+                    'user_id' => Auth::id(), // Adjust if users can checkout as guests
                     'order_number' => $orderNumber,
                     'name' => $name,
                     'email' => $email,
@@ -174,7 +188,16 @@ class CheckoutController extends Controller
                     ]);
                 }
 
-                session()->forget(['cart', 'checkout_name', 'checkout_email', 'checkout_address', 'payment_intent_id']);
+                session()->forget(['cart', 'checkout_name', 'checkout_email', 'checkout_address', 'payment_intent_id', 'cart_for_return']);
+
+                // --- Debugging line ---
+                Log::info('Attempting to send order confirmation email (return path) for order ID: ' . $order->id . ' to ' . $order->email);
+                // dd('Sending email from return path!'); // Uncomment this to halt execution
+                //
+
+                // --- Send the Order Confirmation Email Here as well for 3D Secure path ---
+                Mail::to($order->email)->send(new OrderConfirmationMail($order));
+                // -----------------------------------------------------------------------
 
                 return redirect()->route('orders.show', $order)
                     ->with('success', 'Order placed and payment completed!');
@@ -185,6 +208,4 @@ class CheckoutController extends Controller
             return redirect()->route('orders.payment-failed')->with('error', 'Payment error: ' . $e->getMessage());
         }
     }
-
-
 }

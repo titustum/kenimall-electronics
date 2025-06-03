@@ -27,14 +27,19 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\WishlistController;
 
+use Illuminate\Support\Facades\Mail;
+
 Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index'); 
 Route::post('/wishlist/toggle', [WishlistController::class, 'toggle'])->name('wishlist.toggle'); 
 
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
 Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store'); 
 Route::get('/checkout/return', [CheckoutController::class, 'return'])->name('checkout.return');
+Route::get('/orders', [OrderController::class, 'index'])->name('orders.index'); 
 Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show'); 
-Route::view('/orders/not-found', 'orders.not-found')->name('orders.not-found'); 
+Route::get('/track-order', [OrderController::class, 'trackForm'])->name('orders.track-form');
+Route::post('/orders/track', [OrderController::class, 'track'])->name('orders.track');
+Route::view('/order-not-found', 'orders.not-found')->name('orders.not-found'); 
 Route::view('/orders/payment-failed', 'orders.payment-failed')->name('orders.payment-failed');
 
 
@@ -42,6 +47,14 @@ Route::delete('/cart/clear', [CartController::class, 'clear'])->name('cart.clear
 Route::resource('cart', CartController::class)->only(['index', 'store', 'update', 'destroy']);
 Route::resource('products' , ProductController::class);
 Route::resource('categories' , CategoryController::class);  
+
+
+
+Route::get('/test-email', function () {
+    Mail::raw('This is a test email!', function ($message) {
+        $message->to('test@example.com')->subject('Test Email');
+    });
+});
 
 
 
