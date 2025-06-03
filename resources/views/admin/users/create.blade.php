@@ -3,6 +3,17 @@
 
         <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Create New User</h2>
 
+
+        {{-- Get errors --}}
+        @if (session('error'))
+        <div class="bg-red-50 border-l-4 border-red-400 p-4 mb-4">
+            <h3 class="p-2 text-red-800">{{ session('error') }}</h3>
+        </div>
+        @endif
+
+
+        {{-- Form for creating a new user --}}
+
         <div class="bg-white dark:bg-neutral-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
             <form action="{{ route('admin.users.store') }}" method="POST" class="space-y-6">
                 @csrf
@@ -43,14 +54,7 @@
                     @enderror
                 </div>
 
-                {{-- Confirm Password --}}
-                <div>
-                    <label for="password_confirmation"
-                        class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Confirm Password</label>
-                    <input type="password" name="password_confirmation" id="password_confirmation"
-                        class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:border-orange-500 focus:ring-orange-500 dark:bg-neutral-700 dark:border-neutral-600 dark:text-white"
-                        required>
-                </div>
+
 
                 {{-- Is Admin Checkbox --}}
                 <div>

@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail; // Import Mail facade
+use App\Mail\ShippingConfirmationMail; // Import your Mailable class
 
 class OrderController extends Controller
 {
@@ -49,7 +51,7 @@ class OrderController extends Controller
     /**
      * Show the form for editing the specified order.
      */
-    public function edit(Order $order) // Using route model binding
+    public function edit(Order $order)
     {
         $order->load('user'); // Eager load the 'user' relationship for customer details
         return view('admin.orders.edit', compact('order'));
@@ -62,11 +64,21 @@ class OrderController extends Controller
     {
         try {
             if ($request->input('update_field') === 'status') {
+                // Get the old status before updating
+                $oldStatus = $order->status;
+
                 // Handle status update
                 $validatedData = $request->validate([
                     'status' => 'required|string|in:pending,paid,shipped,delivered,cancelled',
                 ]);
                 $order->update(['status' => $validatedData['status']]);
+
+                // Check if status changed from 'paid' to 'shipped'
+                if ($oldStatus === 'paid' && $validatedData['status'] === 'shipped') {
+                    $this->dispatchShippingConfirmation($request, $order);
+                    return back()->with('success', 'Order status updated to Shipped and confirmation email dispatched!');
+                }
+
                 return back()->with('success', 'Order status updated successfully!');
 
             } elseif ($request->input('update_field') === 'shipping_tracking') {
@@ -108,6 +120,41 @@ class OrderController extends Controller
         } catch (\Exception $e) {
             Log::error('Error deleting order: ' . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine());
             return back()->with('error', 'Failed to delete order. Please try again.');
+        }
+    }
+
+    /**
+     * Dispatches a shipping confirmation email for the given order.
+     * This method assumes tracking details are either hardcoded or fetched.
+     * In a real application, these would likely come from the form submission
+     * or a response from a shipping API.
+     */
+    public function dispatchShippingConfirmation(Request $request, Order $order)
+    {
+        // --- IMPORTANT: Replace with actual data from your shipping system ---
+        // In a real application, these would come from your database
+        // or a response from a shipping API (e.g., Australia Post, Sendle, etc.)
+        // For this example, we'll use the order's tracking_number and carrier if available,
+        // otherwise default placeholders.
+        $trackingNumber = $order->tracking_number ?? 'AP123456789AU'; // Example Australian Post tracking number
+        $carrierName = $order->carrier ?? 'Australia Post';
+        $trackingUrl = 'https://auspost.com.au/mypost/track/#/details/' . $trackingNumber;
+        // --- End of example data ---
+
+        // Ensure the order status and tracking details are saved before sending email
+        // This part is already handled in the update method if status is changed to 'shipped'
+        // and tracking info is updated separately. This method just dispatches the email.
+
+        // Send the email
+        try {
+            Mail::to($order->email)->send(
+                new ShippingConfirmationMail($order, $trackingNumber, $carrierName, $trackingUrl)
+            );
+            Log::info('Shipping confirmation email sent for order: ' . $order->order_number);
+            // No redirect here, as this is called from within the update method
+        } catch (\Exception $e) {
+            Log::error('Failed to send shipping confirmation email for order ' . $order->order_number . ': ' . $e->getMessage());
+            // You might want to add a session flash message here if this method was standalone
         }
     }
 }

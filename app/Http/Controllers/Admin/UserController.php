@@ -31,29 +31,29 @@ class UserController extends Controller
     /**
      * Store a newly created user in storage.
      */
-    public function store(Request $request)
+     public function store(Request $request)
     {
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-            'is_admin' => 'boolean',
+            'password' => 'required|string|min:8',
+            'is_admin' => 'nullable|boolean',
         ]);
 
         $validatedData['password'] = Hash::make($validatedData['password']);
-        $validatedData['role'] = $request->has('is_admin') ? 'admin' : 'customer'; // Assuming 'role' is used to differentiate admin and customer
-    
+        $validatedData['role'] = $request->has('is_admin') ? 'admin' : 'customer';
 
         try {
             User::create($validatedData);
 
             return redirect()->route('admin.users.index')
-                             ->with('success', 'User created successfully!');
+                            ->with('success', 'User created successfully!');
         } catch (\Exception $e) {
             Log::error('Error creating user: ' . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine());
             return back()->withInput()->with('error', 'Failed to create user. Please try again.');
         }
     }
+
 
     /**
      * Display the specified user.
@@ -85,7 +85,7 @@ class UserController extends Controller
                 'max:255',
                 Rule::unique('users')->ignore($user->id),
             ],
-            'password' => 'nullable|string|min:8|confirmed',
+            'password' => 'nullable|string|min:8',
             'is_admin' => 'boolean',
         ]);
 

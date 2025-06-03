@@ -45,14 +45,6 @@
                     @enderror
                 </div>
 
-                {{-- Confirm Password --}}
-                <div>
-                    <label for="password_confirmation"
-                        class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Confirm New
-                        Password</label>
-                    <input type="password" name="password_confirmation" id="password_confirmation"
-                        class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:border-orange-500 focus:ring-orange-500 dark:bg-neutral-700 dark:border-neutral-600 dark:text-white">
-                </div>
 
                 {{-- Is Admin Checkbox --}}
                 <div>
