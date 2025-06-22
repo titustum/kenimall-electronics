@@ -79,7 +79,7 @@
                             <td class="px-6 py-4">
                                 <div class="flex items-center space-x-4">
                                     <div class="flex-shrink-0 h-20 w-20">
-                                        <img src="{{ $item['image'] }}" alt="{{ $item['name'] }}"
+                                        <img src="{{ Storage::url($item['image']) }}" alt="{{ $item['name'] }}"
                                             class="h-20 w-20 p-2 object-contain rounded-xl shadow-sm">
                                     </div>
                                     <div class="flex-1 min-w-0">
@@ -180,7 +180,7 @@
                 <div class="border-b border-gray-200 p-6 mobile-cart-item" id="mobile-cart-item-{{ $id }}">
                     <div class="flex space-x-4">
                         <div class="flex-shrink-0">
-                            <img src="{{ $item['image'] }}" alt="{{ $item['name'] }}"
+                            <img src="{{ Storage::url($item['image']) }}" alt="{{ $item['name'] }}"
                                 class="h-20 w-20 p-2 object-contain rounded-xl shadow-sm">
                         </div>
                         <div class="flex-1 min-w-0">
