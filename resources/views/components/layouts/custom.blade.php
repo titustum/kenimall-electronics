@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kamarona - Premium Electronics Store</title>
+    <title>Kenimall - Premium Electronics Store</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.4.7/swiper-bundle.min.css">
@@ -419,7 +419,7 @@
 
                 <!-- Enhanced Logo -->
                 <a href="{{ route('home') }}" class="logo-link inline-block group"
-                    aria-label="KAMARONA - Quality Electronics Home">
+                    aria-label="Kenimall - Quality Electronics Home">
                     <div class="logo-container grid gap-1">
                         <div class="flex items-center">
                             <div class="relative mr-2">
@@ -431,7 +431,7 @@
                             </div>
                             <span
                                 class="text-xl md:text-2xl lg:text-3xl font-bold gradient-text brand-glow tracking-wide">
-                                KAMARONA
+                                Kenimall
                             </span>
                         </div>
                         <div
@@ -669,7 +669,7 @@
                     class="flex items-center justify-between mb-8 border-b border-gray-100 pb-4">
                     <div class="flex items-center">
                         <i class="fas fa-bolt text-orange-500 text-xl mr-2"></i>
-                        <span class="font-bold text-gray-900 text-lg">KAMARONA</span>
+                        <span class="font-bold text-gray-900 text-lg">Kenimall</span>
                     </div>
                     <button onclick="toggleMobileMenu()" class="text-gray-500 hover:text-gray-700 p-2">
                         <i class="fas fa-times text-xl"></i>
@@ -821,7 +821,7 @@
                     <div class="lg:col-span-2" data-aos="fade-up">
                         <div class="mb-6">
                             <div class="text-3xl font-bold text-white mb-4">
-                                <i class="fas fa-bolt text-yellow-400 mr-2"></i>Kamarona
+                                <i class="fas fa-bolt text-yellow-400 mr-2"></i>Kenimall
                             </div>
                             <p class="text-gray-300 text-lg leading-relaxed mb-6">
                                 Your trusted partner for premium electronics. We bring you the latest technology with
@@ -962,7 +962,7 @@
                             </div>
                             <div>
                                 <h4 class="font-semibold text-white">Email Us</h4>
-                                <p class="text-gray-300 text-sm">hello@kamarona.com</p>
+                                <p class="text-gray-300 text-sm">hello@Kenimall.com</p>
                             </div>
                         </div>
                     </div>
@@ -975,7 +975,7 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
                     <div class="text-gray-300 text-sm">
-                        © 2025 Kamarona Electronics. All rights reserved. Made with <i
+                        © 2025 Kenimall Electronics. All rights reserved. Made with <i
                             class="fas fa-heart text-red-500 mx-1"></i> in Australia
                     </div>
 
