@@ -1,7 +1,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<title>Admin Dashboard - Kamarona Electronics</title>
+<title>Admin Dashboard - Kenimall Electronics</title>
 
 <link rel="shortcut icon" href="{{ asset('favicon.svg') }}" type="image/svg">
 

@@ -34,8 +34,8 @@ class DashboardController extends Controller
         $currentTotalOrders = Order::whereBetween('created_at', [$currentMonthStart, $currentMonthEnd])
                                    ->count();
 
-        // Assuming 'is_admin' column differentiates customers (is_admin = false)
-        $currentTotalCustomers = User::where('is_admin', false)
+        // Assuming 'role' column differentiates customers (role=customer)
+        $currentTotalCustomers = User::where('role', "customer")
                                      ->whereBetween('created_at', [$currentMonthStart, $currentMonthEnd])
                                      ->count();
 
@@ -50,7 +50,7 @@ class DashboardController extends Controller
         $lastPeriodTotalOrders = Order::whereBetween('created_at', [$lastMonthStart, $lastMonthEnd])
                                       ->count();
 
-        $lastPeriodTotalCustomers = User::where('is_admin', false)
+        $lastPeriodTotalCustomers = User::where('role', "customer")
                                        ->whereBetween('created_at', [$lastMonthStart, $lastMonthEnd])
                                        ->count();
 
