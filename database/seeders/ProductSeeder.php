@@ -164,7 +164,7 @@ class ProductSeeder extends Seeder
                 'specifications' => json_encode($data['specifications']),
                 'features' => json_encode($data['features']),
                 'color' => $data['color'],
-                'image_path' => "/products/{$imageFile}",
+                'image_path' => "products/{$imageFile}",
                 'slug' => $slugged,
             ]);
         }
