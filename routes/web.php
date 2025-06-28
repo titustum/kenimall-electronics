@@ -68,6 +68,50 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
 });
 
 
+
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Http\Request;
+
+Route::get('/run-artisan/{command}', function ($command, Request $request) {
+    $secret = $request->query('key');
+    if ($secret !== env('ARTISAN_RUN_KEY')) {
+        abort(403, 'Unauthorized');
+    }
+
+    $allowedCommands = [
+        'migrate',
+        'migrate:fresh',
+        'cache:clear',
+        'config:cache',
+        'route:cache',
+        'storage:link',
+    ];
+
+    if (!in_array($command, $allowedCommands)) {
+        abort(400, 'Command not allowed');
+    }
+
+    try {
+        $options = ['--force' => true];
+
+        // For migrate:fresh you might want to pass extra options here if needed
+        Artisan::call($command, $options);
+
+        return response()->json([
+            'status' => 'success',
+            'command' => $command,
+            'output' => Artisan::output(),
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'status' => 'error',
+            'message' => $e->getMessage(),
+        ], 500);
+    }
+});
+
+
+
  
 
 
