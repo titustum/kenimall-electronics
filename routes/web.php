@@ -81,6 +81,9 @@ Route::get('/run-artisan/{command}', function ($command, Request $request) {
     $allowedCommands = [
         'migrate',
         'migrate:fresh',
+        'migrate:fresh --seed',
+        'db:seed',
+        'optimize',
         'cache:clear',
         'config:cache',
         'route:cache',
