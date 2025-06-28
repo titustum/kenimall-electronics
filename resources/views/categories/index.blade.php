@@ -10,9 +10,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 @foreach ($categories as $index => $category)
                 @php
-                $imageUrl = Storage::exists($category->image_path)
-                ? Storage::url($category->image_path)
-                : $category->image_path;
+                // Calculate delay for AOS animation based on index
                 $delay = $index * 75;
                 @endphp
 
@@ -20,7 +18,7 @@
                     class="group bg-gray-50 border border-gray-200 rounded-xl p-4 flex flex-col items-center text-center hover:shadow-md transition"
                     data-aos="fade-up" data-aos-delay="{{ $delay }}">
                     <div class="w-full h-36 overflow-hidden rounded-lg mb-3">
-                        <img src="{{ $imageUrl }}" alt="{{ $category->name }}"
+                        <img src="{{ Storage::url($category->image_path) }}" alt="{{ $category->name }}"
                             class="w-full h-full object-contain group-hover:scale-105 transition duration-300">
                     </div>
                     <h3 class="text-lg font-semibold text-gray-800 group-hover:text-orange-600">
