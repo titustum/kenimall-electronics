@@ -126,4 +126,4 @@ We welcome contributions to make **Kenimall Electronics** even better. Here’s 
 
 ## License
 
-This project is open-source and available under the [MIT License](LICENSE).
+This project is open-source and available under the [MIT License](LICENSE). 
