@@ -1,8 +1,8 @@
-# Kamarona Electronics - eCommerce Website
+# Kenimall Electronics - eCommerce Website
 
 ## Overview
 
-Welcome to the **Kamarona Electronics** project! This is an eCommerce website built using **Laravel 12**, **TailwindCSS**, and **FontAwesome** icons, providing a seamless and visually appealing shopping experience for electronic products. It includes user authentication, product management, shopping cart functionality, and more.
+Welcome to the **Kenimall Electronics** project! This is an eCommerce website built using **Laravel 12**, **TailwindCSS**, and **FontAwesome** icons, providing a seamless and visually appealing shopping experience for electronic products. It includes user authentication, product management, shopping cart functionality, and more.
 
 ## Features
 
@@ -30,13 +30,13 @@ To set up the project locally, follow these steps:
 1. **Clone the Repository**:
 
    ```bash
-   git clone https://github.com/titustum/kamarona-electronics.git
+   git clone https://github.com/titustum/Kenimall-electronics.git
    ```
 
 2. **Navigate into the project directory**:
 
    ```bash
-   cd kamarona-electronics
+   cd Kenimall-electronics
    ```
 
 3. **Install PHP dependencies**:
@@ -69,7 +69,7 @@ To set up the project locally, follow these steps:
    DB_CONNECTION=mysql
    DB_HOST=127.0.0.1
    DB_PORT=3306
-   DB_DATABASE=kamarona_electronics
+   DB_DATABASE=Kenimall_electronics
    DB_USERNAME=root
    DB_PASSWORD=
    ```
@@ -112,11 +112,11 @@ To set up the project locally, follow these steps:
 
 Add some images or screenshots of your project here (if any). Example:
 
-![Homepage](kamarona-electronics-home.jpeg)
+![Homepage](Kenimall-electronics-home.jpeg)
 
 ## Contributing
 
-We welcome contributions to make **Kamarona Electronics** even better. Here’s how you can help:
+We welcome contributions to make **Kenimall Electronics** even better. Here’s how you can help:
 
 1. Fork the repository.
 2. Create a new branch for your feature (`git checkout -b feature-name`).

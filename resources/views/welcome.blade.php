@@ -211,7 +211,7 @@
                                 <img src="{{ Storage::url($product->image_path) }}" alt="{{ $product->name }}"
                                     class="w-full h-64 object-contain p-4 group-hover:scale-110 transition-transform duration-500"
                                     loading="lazy">
-                            </a>
+                            </a> 
 
                             <!-- Discount Badge -->
                             @if($hasSale)
