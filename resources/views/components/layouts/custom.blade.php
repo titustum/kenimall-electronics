@@ -405,6 +405,16 @@
         .navbar-shadow {
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
         }
+
+        /* Tailwind plugin or custom CSS */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
     </style>
 </head>
 
@@ -441,7 +451,6 @@
                     </div>
                 </a>
 
-                <!-- Enhanced Search Bar -->
                 <!-- Enhanced Search Bar -->
                 <div class="flex-1 mx-4 hidden md:flex max-w-2xl lg:max-w-4xl">
                     <form action="{{ route('products.index') }}" method="GET" class="search-container relative w-full"
@@ -678,12 +687,12 @@
 
                 <!-- Mobile Search -->
                 <div class="mb-6">
-                    <form action="{{ route('products.index') }}" method="GET" class="flex">
+                    <form action="{{ route('products.index') }}" method="GET" class="flex w-full">
                         <input type="text" name="q" placeholder="Search products..."
-                            class="flex-1 px-4 py-3 border rounded-l-lg focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm"
+                            class="flex-grow w-1/2 px-4 py-3 border rounded-l-lg focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm"
                             aria-label="Search products" autocomplete="off" />
                         <button type="submit"
-                            class="px-4 bg-orange-500 text-white rounded-r-lg hover:bg-orange-600 transition-colors"
+                            class="px-4 shrink-0 bg-orange-500 text-white rounded-r-lg hover:bg-orange-600 transition-colors"
                             aria-label="Search">
                             <i class="fas fa-search"></i>
                         </button>
@@ -697,12 +706,12 @@
                         class="flex items-center justify-center py-3 px-4 bg-orange-50 text-orange-600 rounded-lg hover:bg-orange-100 transition-colors">
                         <i class="fas fa-heart mr-2"></i>
                         <span class="text-sm font-medium">Wishlist</span>
-                        <a>
-                            <a href="{{ route('orders.track-form') }}"
-                                class="flex items-center justify-center py-3 px-4 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors">
-                                <i class="fas fa-shipping-fast mr-2"></i>
-                                <span class="text-sm font-medium">Orders</span>
-                            </a>
+                    </a>
+                    <a href="{{ route('orders.track-form') }}"
+                        class="flex items-center justify-center py-3 px-4 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors">
+                        <i class="fas fa-shipping-fast mr-2"></i>
+                        <span class="text-sm font-medium">Orders</span>
+                    </a>
                 </div>
 
                 <!-- Mobile Navigation Links -->
@@ -811,159 +820,113 @@
     {{ $slot }}
 
 
-    <!-- Footer Section -->
+
+    <!-- Footer with collapsible sections -->
     <section class="bg-gray-900 text-white">
-        <!-- Main Footer -->
-        <div class="py-16">
+        <div class="py-12">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
-                    <!-- Brand Column -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+                    <!-- Brand Info (Always Expanded) -->
                     <div class="lg:col-span-2" data-aos="fade-up">
                         <div class="mb-6">
-                            <div class="text-3xl font-bold text-white mb-4">
-                                <i class="fas fa-bolt text-yellow-400 mr-2"></i>Kenimall
-                            </div>
-                            <p class="text-gray-300 text-lg leading-relaxed mb-6">
-                                Your trusted partner for premium electronics. We bring you the latest technology with
-                                unmatched quality and service.
+                            <h2 class="text-2xl font-bold mb-4"><i class="fas fa-bolt text-yellow-400 mr-2"></i>Kenimall
+                            </h2>
+                            <p class="text-sm text-gray-300 mb-4">
+                                Your trusted partner for premium electronics. We bring you the latest tech with
+                                unmatched quality.
                             </p>
 
-                            <!-- Social Links -->
-                            <div class="flex space-x-4">
-                                <a href="#"
-                                    class="bg-gray-800 hover:bg-purple-600 p-3 rounded-full transition-all hover-scale">
-                                    <i class="fab fa-facebook-f text-lg"></i>
-                                </a>
-                                <a href="#"
-                                    class="bg-gray-800 hover:bg-blue-500 p-3 rounded-full transition-all hover-scale">
-                                    <i class="fab fa-twitter text-lg"></i>
-                                </a>
-                                <a href="#"
-                                    class="bg-gray-800 hover:bg-pink-600 p-3 rounded-full transition-all hover-scale">
-                                    <i class="fab fa-instagram text-lg"></i>
-                                </a>
-                                <a href="#"
-                                    class="bg-gray-800 hover:bg-red-600 p-3 rounded-full transition-all hover-scale">
-                                    <i class="fab fa-youtube text-lg"></i>
-                                </a>
-                                <a href="#"
-                                    class="bg-gray-800 hover:bg-blue-700 p-3 rounded-full transition-all hover-scale">
-                                    <i class="fab fa-linkedin text-lg"></i>
-                                </a>
+                            <!-- Social Icons -->
+                            <div class="flex space-x-3">
+                                <a href="#" class="p-2 bg-gray-800 rounded-full hover:bg-purple-600"><i
+                                        class="fab fa-facebook-f"></i></a>
+                                <a href="#" class="p-2 bg-gray-800 rounded-full hover:bg-blue-500"><i
+                                        class="fab fa-twitter"></i></a>
+                                <a href="#" class="p-2 bg-gray-800 rounded-full hover:bg-pink-500"><i
+                                        class="fab fa-instagram"></i></a>
+                                <a href="#" class="p-2 bg-gray-800 rounded-full hover:bg-red-600"><i
+                                        class="fab fa-youtube"></i></a>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Quick Links -->
+                    <!-- Collapsible Quick Links -->
                     <div data-aos="fade-up" data-aos-delay="100">
-                        <h3 class="text-xl font-semibold mb-6 text-white">Quick Links</h3>
-                        <ul class="space-y-3">
-                            <li><a href="#"
-                                    class="text-gray-300 hover:text-yellow-400 transition-colors flex items-center"><i
-                                        class="fas fa-chevron-right text-xs mr-2"></i>Home</a></li>
-                            <li><a href="#"
-                                    class="text-gray-300 hover:text-yellow-400 transition-colors flex items-center"><i
-                                        class="fas fa-chevron-right text-xs mr-2"></i>Products</a></li>
-                            <li><a href="#"
-                                    class="text-gray-300 hover:text-yellow-400 transition-colors flex items-center"><i
-                                        class="fas fa-chevron-right text-xs mr-2"></i>Categories</a></li>
-                            <li><a href="#"
-                                    class="text-gray-300 hover:text-yellow-400 transition-colors flex items-center"><i
-                                        class="fas fa-chevron-right text-xs mr-2"></i>Deals</a></li>
-                            <li><a href="#"
-                                    class="text-gray-300 hover:text-yellow-400 transition-colors flex items-center"><i
-                                        class="fas fa-chevron-right text-xs mr-2"></i>About Us</a></li>
-                            <li><a href="#"
-                                    class="text-gray-300 hover:text-yellow-400 transition-colors flex items-center"><i
-                                        class="fas fa-chevron-right text-xs mr-2"></i>Contact</a></li>
-                        </ul>
+                        <details class="lg:open group">
+                            <summary
+                                class="text-lg font-semibold cursor-pointer text-white flex justify-between items-center lg:pointer-events-none">
+                                Quick Links <span class="lg:hidden text-yellow-400">&#x25BC;</span>
+                            </summary>
+                            <ul class="mt-4 space-y-2 text-sm text-gray-300 group-open:block hidden lg:block">
+                                <li><a href="#" class="hover:text-yellow-400">Home</a></li>
+                                <li><a href="#" class="hover:text-yellow-400">Products</a></li>
+                                <li><a href="#" class="hover:text-yellow-400">Categories</a></li>
+                                <li><a href="#" class="hover:text-yellow-400">Deals</a></li>
+                                <li><a href="#" class="hover:text-yellow-400">About Us</a></li>
+                                <li><a href="#" class="hover:text-yellow-400">Contact</a></li>
+                            </ul>
+                        </details>
                     </div>
 
-                    <!-- Product Categories -->
+                    <!-- Collapsible Categories -->
                     <div data-aos="fade-up" data-aos-delay="200">
-                        <h3 class="text-xl font-semibold mb-6 text-white">Categories</h3>
-                        <ul class="space-y-3">
-                            <li><a href="#"
-                                    class="text-gray-300 hover:text-yellow-400 transition-colors flex items-center"><i
-                                        class="fas fa-mobile-alt text-xs mr-2"></i>Smartphones</a></li>
-                            <li><a href="#"
-                                    class="text-gray-300 hover:text-yellow-400 transition-colors flex items-center"><i
-                                        class="fas fa-laptop text-xs mr-2"></i>Laptops</a></li>
-                            <li><a href="#"
-                                    class="text-gray-300 hover:text-yellow-400 transition-colors flex items-center"><i
-                                        class="fas fa-headphones text-xs mr-2"></i>Audio</a></li>
-                            <li><a href="#"
-                                    class="text-gray-300 hover:text-yellow-400 transition-colors flex items-center"><i
-                                        class="fas fa-gamepad text-xs mr-2"></i>Gaming</a></li>
-                            <li><a href="#"
-                                    class="text-gray-300 hover:text-yellow-400 transition-colors flex items-center"><i
-                                        class="fas fa-home text-xs mr-2"></i>Smart Home</a></li>
-                            <li><a href="#"
-                                    class="text-gray-300 hover:text-yellow-400 transition-colors flex items-center"><i
-                                        class="fas fa-camera text-xs mr-2"></i>Cameras</a></li>
-                        </ul>
+                        <details class="lg:open group">
+                            <summary
+                                class="text-lg font-semibold cursor-pointer text-white flex justify-between items-center lg:pointer-events-none">
+                                Categories <span class="lg:hidden text-yellow-400">&#x25BC;</span>
+                            </summary>
+                            <ul class="mt-4 space-y-2 text-sm text-gray-300 group-open:block hidden lg:block">
+                                <li><a href="#" class="hover:text-yellow-400">Smartphones</a></li>
+                                <li><a href="#" class="hover:text-yellow-400">Laptops</a></li>
+                                <li><a href="#" class="hover:text-yellow-400">Audio</a></li>
+                                <li><a href="#" class="hover:text-yellow-400">Gaming</a></li>
+                                <li><a href="#" class="hover:text-yellow-400">Smart Home</a></li>
+                                <li><a href="#" class="hover:text-yellow-400">Cameras</a></li>
+                            </ul>
+                        </details>
                     </div>
 
-                    <!-- Customer Service -->
+                    <!-- Collapsible Support -->
                     <div data-aos="fade-up" data-aos-delay="300">
-                        <h3 class="text-xl font-semibold mb-6 text-white">Support</h3>
-                        <ul class="space-y-3">
-                            <li><a href="#"
-                                    class="text-gray-300 hover:text-yellow-400 transition-colors flex items-center"><i
-                                        class="fas fa-question-circle text-xs mr-2"></i>Help Center</a></li>
-                            <li><a href="#"
-                                    class="text-gray-300 hover:text-yellow-400 transition-colors flex items-center"><i
-                                        class="fas fa-truck text-xs mr-2"></i>Shipping Info</a></li>
-                            <li><a href="#"
-                                    class="text-gray-300 hover:text-yellow-400 transition-colors flex items-center"><i
-                                        class="fas fa-undo text-xs mr-2"></i>Returns</a></li>
-                            <li><a href="#"
-                                    class="text-gray-300 hover:text-yellow-400 transition-colors flex items-center"><i
-                                        class="fas fa-shield-alt text-xs mr-2"></i>Warranty</a></li>
-                            <li><a href="#"
-                                    class="text-gray-300 hover:text-yellow-400 transition-colors flex items-center"><i
-                                        class="fas fa-file-alt text-xs mr-2"></i>Terms</a></li>
-                            <li><a href="#"
-                                    class="text-gray-300 hover:text-yellow-400 transition-colors flex items-center"><i
-                                        class="fas fa-lock text-xs mr-2"></i>Privacy</a></li>
-                        </ul>
+                        <details class="lg:open group">
+                            <summary
+                                class="text-lg font-semibold cursor-pointer text-white flex justify-between items-center lg:pointer-events-none">
+                                Support <span class="lg:hidden text-yellow-400">&#x25BC;</span>
+                            </summary>
+                            <ul class="mt-4 space-y-2 text-sm text-gray-300 group-open:block hidden lg:block">
+                                <li><a href="#" class="hover:text-yellow-400">Help Center</a></li>
+                                <li><a href="#" class="hover:text-yellow-400">Shipping Info</a></li>
+                                <li><a href="#" class="hover:text-yellow-400">Returns</a></li>
+                                <li><a href="#" class="hover:text-yellow-400">Warranty</a></li>
+                                <li><a href="#" class="hover:text-yellow-400">Terms</a></li>
+                                <li><a href="#" class="hover:text-yellow-400">Privacy</a></li>
+                            </ul>
+                        </details>
                     </div>
                 </div>
 
-                <!-- Contact Info Bar -->
-                <div class="mt-12 pt-8 border-t border-gray-700">
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center md:text-left">
-                        <div class="flex items-center justify-center md:justify-start" data-aos="fade-up"
-                            data-aos-delay="400">
-                            <div class="bg-purple-600 px-5 p-3 rounded-full mr-4">
-                                <i class="fas fa-map-marker-alt text-lg"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-semibold text-white">Visit Our Store</h4>
-                                <p class="text-gray-300 text-sm">123 Tech Street, Nairobi, Kenya</p>
-                            </div>
+                <!-- Contact Info -->
+                <div
+                    class="mt-10 pt-6 border-t border-gray-700 grid grid-cols-1 md:grid-cols-3 gap-6 text-sm text-gray-300">
+                    <div class="flex items-center">
+                        <i class="fas fa-map-marker-alt text-purple-500 mr-3"></i>
+                        <div>
+                            <div class="font-semibold text-white">Visit Us</div>
+                            123 Tech Street, Nairobi
                         </div>
-
-                        <div class="flex items-center justify-center md:justify-start" data-aos="fade-up"
-                            data-aos-delay="500">
-                            <div class="bg-green-600 px-5 p-3 rounded-full mr-4">
-                                <i class="fas fa-phone text-lg"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-semibold text-white">Call Us</h4>
-                                <p class="text-gray-300 text-sm">+254 700 123 456</p>
-                            </div>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-phone text-green-500 mr-3"></i>
+                        <div>
+                            <div class="font-semibold text-white">Call Us</div>
+                            +254 700 123 456
                         </div>
-
-                        <div class="flex items-center justify-center md:justify-start" data-aos="fade-up"
-                            data-aos-delay="600">
-                            <div class="bg-blue-600 px-5 p-3 rounded-full mr-4">
-                                <i class="fas fa-envelope text-lg"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-semibold text-white">Email Us</h4>
-                                <p class="text-gray-300 text-sm">hello@Kenimall.com</p>
-                            </div>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-envelope text-blue-400 mr-3"></i>
+                        <div>
+                            <div class="font-semibold text-white">Email Us</div>
+                            hello@kenimall.com
                         </div>
                     </div>
                 </div>
@@ -971,40 +934,18 @@
         </div>
 
         <!-- Bottom Footer -->
-        <div class="border-t border-gray-700 py-6">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-                    <div class="text-gray-300 text-sm">
-                        © 2025 Kenimall Electronics. All rights reserved. Made with <i
-                            class="fas fa-heart text-red-500 mx-1"></i> in Australia
-                    </div>
-
-                    <div class="flex items-center space-x-6">
-                        <div class="text-gray-300 text-sm">We Accept:</div>
-                        <div class="flex space-x-3">
-                            <div class="bg-white p-2 rounded">
-                                <i class="fab fa-cc-visa text-blue-600 text-lg"></i>
-                            </div>
-                            <div class="bg-white p-2 rounded">
-                                <i class="fab fa-cc-mastercard text-red-600 text-lg"></i>
-                            </div>
-                            <div class="bg-white p-2 rounded">
-                                <i class="fab fa-cc-paypal text-blue-500 text-lg"></i>
-                            </div>
-                            <div class="bg-white p-2 rounded">
-                                <i class="fab fa-cc-apple-pay text-gray-800 text-lg"></i>
-                            </div>
-                        </div>
-                    </div>
+        <div class="border-t border-gray-800 py-5">
+            <div
+                class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center text-xs text-gray-400">
+                <p>© 2025 Kenimall. All rights reserved.</p>
+                <div class="flex gap-3 mt-2 sm:mt-0">
+                    <i class="fab fa-cc-visa text-blue-500 text-lg"></i>
+                    <i class="fab fa-cc-mastercard text-red-600 text-lg"></i>
+                    <i class="fab fa-cc-paypal text-blue-400 text-lg"></i>
+                    <i class="fab fa-cc-apple-pay text-white text-lg"></i>
                 </div>
             </div>
         </div>
-
-        <!-- Back to Top Button -->
-        <button id="backToTop"
-            class="fixed bottom-6 right-6 bg-gradient-to-r from-purple-600 to-pink-600 text-white p-4 rounded-full shadow-lg hover:from-purple-700 hover:to-pink-700 transition-all hover-scale opacity-0 invisible z-50">
-            <i class="fas fa-chevron-up text-lg"></i>
-        </button>
     </section>
 
 
