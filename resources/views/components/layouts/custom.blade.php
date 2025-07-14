@@ -792,7 +792,7 @@
                         <i class="fas fa-envelope text-blue-400 mr-3"></i>
                         <div>
                             <div class="font-semibold text-white">Email Us</div>
-                            contact@kenimall.com
+                            orders@kenimall.com
                         </div>
                     </div>
                 </div>
