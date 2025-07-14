@@ -6,8 +6,14 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
-use Livewire\Volt\Volt;
- 
+use Livewire\Volt\Volt; 
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\WishlistController;
+use App\Http\Controllers\ProductImageController;
+use Illuminate\Support\Facades\Storage; 
 
 Route::get('/', [WelcomeController::class, 'index'])->name('home');
 
@@ -21,16 +27,13 @@ Route::middleware(['auth'])->group(function () {
     Volt::route('settings/profile', 'settings.profile')->name('settings.profile');
     Volt::route('settings/password', 'settings.password')->name('settings.password');
     Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');
+
+
+    /// Product Images
+    Route::get('/admin/products/{product:id}/images/create', [ProductImageController::class, 'create'])->name('admin.products.images.create');
+    Route::post('/admin/products/{product:id}/images', [ProductImageController::class, 'store'])->name('admin.products.images.store');
+    Route::delete('/admin/products/{product:id}/images/{image}', [ProductImageController::class, 'destroy'])->name('admin.products.images.destroy');
 });
-
-
-use App\Http\Controllers\CartController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\CheckoutController;
-use App\Http\Controllers\OrderController;
-use App\Http\Controllers\WishlistController;
-use App\Models\Category;
-use Illuminate\Support\Facades\Mail;
 
 Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index'); 
 Route::post('/wishlist/toggle', [WishlistController::class, 'toggle'])->name('wishlist.toggle'); 
@@ -66,56 +69,5 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::resource('orders', App\Http\Controllers\Admin\OrderController::class);
 
 });
-
-
-
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Http\Request;
-
-Route::get('/run-artisan/{command}', function ($command, Request $request) {
-    $secret = $request->query('key');
-    if ($secret !== env('ARTISAN_RUN_KEY')) {
-        abort(403, 'Unauthorized');
-    }
-
-    $allowedCommands = [
-        'migrate',
-        'migrate:fresh',
-        'migrate:fresh --seed',
-        'db:seed',
-        'optimize',
-        'cache:clear',
-        'config:cache',
-        'route:cache',
-        'storage:link',
-    ];
-
-    if (!in_array($command, $allowedCommands)) {
-        abort(400, 'Command not allowed');
-    }
-
-    try {
-        $options = ['--force' => true];
-
-        // For migrate:fresh you might want to pass extra options here if needed
-        Artisan::call($command, $options);
-
-        return response()->json([
-            'status' => 'success',
-            'command' => $command,
-            'output' => Artisan::output(),
-        ]);
-    } catch (\Exception $e) {
-        return response()->json([
-            'status' => 'error',
-            'message' => $e->getMessage(),
-        ], 500);
-    }
-});
-
-
-
  
-
-
 require __DIR__.'/auth.php';

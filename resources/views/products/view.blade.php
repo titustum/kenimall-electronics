@@ -61,12 +61,12 @@
             {{-- Product Images --}}
             <div class="space-y-3">
                 @php
-                $additionalImages = $product->additional_images ? json_decode($product->additional_images, true) : [];
+                $additionalImages = $product->images ? json_decode($product->images, true) : [];
                 @endphp
 
                 <div class="relative">
                     <img src="{{ Storage::url($product->image_path) }}" alt="{{ $product->name }}"
-                        class="w-full h-72 lg:h-[400px] object-contain rounded-lg shadow bg-white"
+                        class="w-full py-8 h-72 lg:h-[400px] object-contain rounded-lg shadow bg-white"
                         id="main-product-image" />
 
                     {{-- Stock Badge --}}
@@ -90,11 +90,12 @@
                     @foreach($additionalImages as $index => $image)
                     <button
                         class="flex-shrink-0 w-12 h-12 rounded-lg border-2 border-gray-200 hover:border-orange-600 overflow-hidden transition"
-                        onclick="changeMainImage('{{ Storage::url($image) }}')">
-                        <img src="{{ Storage::url($image) }}" alt="View {{ $index + 2 }}"
+                        onclick="changeMainImage('{{ Storage::url($image['image_path']) }}')">
+                        <img src="{{ Storage::url($image['image_path']) }}" alt="View {{ $index + 2 }}"
                             class="w-full h-full object-contain">
                     </button>
                     @endforeach
+
                 </div>
                 @endif
             </div>

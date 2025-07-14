@@ -3,6 +3,24 @@
 
         <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Product Details: {{ $product->name }}</h2>
 
+
+        @if (session('success'))
+        <div
+            class="mb-4 px-4 py-3 rounded-md bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 border border-green-300 dark:border-green-700 shadow">
+            <i class="fas fa-check-circle mr-2"></i>
+            {{ session('success') }}
+        </div>
+        @endif
+        @if (session('error'))
+        <div
+            class="mb-4 px-4 py-3 rounded-md bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200 border border-red-300 dark:border-red-700 shadow">
+            <i class="fas fa-exclamation-circle mr-2"></i>
+            {{ session('error') }}
+        </div>
+        @endif
+
+        {{-- Product Details --}}
+
         <div class="bg-white dark:bg-neutral-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {{-- Product Name --}}
@@ -140,6 +158,17 @@
                     <p class="text-gray-600 dark:text-gray-400">No main image uploaded for this product.</p>
                     @endif
                 </div>
+
+
+                {{-- Additional Images Link --}}
+                <div class="md:col-span-2">
+                    <a href="{{ route('admin.products.images.create', $product) }}"
+                        class="inline-flex items-center mt-4 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-md shadow focus:outline-none focus:ring ring-blue-300 transition">
+                        <i class="fas fa-image mr-2"></i>
+                        Add More Images
+                    </a>
+                </div>
+
 
                 {{-- Added By --}}
                 <div>
