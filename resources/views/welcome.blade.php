@@ -1,137 +1,86 @@
 <x-custom-layout>
 
 
-    <section id="hero-slider"
-        class="relative min-h-screen pt-16 md:pt-24 overflow-hidden bg-gradient-to-b from-gray-900 to-black">
+    <section id="hero"
+        class="relative py-12 flex flex-col justify-center min-h-screen pt-24 px-4 sm:px-6 lg:px-12 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white overflow-hidden">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center h-full">
 
-        <div class="swiper hero-swiper h-full">
+            <!-- Text Content -->
+            <div class="text-center lg:text-left space-y-6" data-aos="fade-right">
+                <div
+                    class="inline-flex items-center gap-2 bg-white/10 backdrop-blur px-4 py-2 rounded-full text-sm font-medium">
+                    <i class="fas fa-bolt text-yellow-400"></i>
+                    <span>Latest Technology</span>
+                </div>
 
-            <div class="swiper-wrapper">
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black leading-tight">
+                    Discover the Future of
+                    <span class="relative text-yellow-400">
+                        Electronics
+                        <span class="absolute -bottom-1 left-0 w-full h-1 bg-yellow-400 rounded-full"></span>
+                    </span>
+                </h1>
 
-                <!-- Slide 1 -->
-                <article class="swiper-slide slide-bg-1 flex items-center justify-center h-full px-4 sm:px-6 lg:px-12"
-                    role="group" aria-label="Slide 1 - Electronics Collection">
+                <p class="text-gray-300 text-lg max-w-xl mx-auto lg:mx-0">
+                    Premium smartphones, laptops & smart devices — innovation meets performance.
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                    <a href="{{ route('products.index') }}"
+                        class="group bg-yellow-400 hover:bg-yellow-300 text-gray-900 px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl flex items-center justify-center gap-3">
+                        <i class="fas fa-shopping-bag group-hover:rotate-12 transition-transform"></i>
+                        <span>Shop Now</span>
+                        <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+
+                    <a href="#"
+                        class="group bg-white/10 backdrop-blur hover:bg-white hover:text-gray-900 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 flex items-center justify-center gap-3">
+                        <i class="fas fa-play-circle"></i>
+                        <span>Watch Demo</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Image Content -->
+            <div class="relative flex justify-center lg:justify-end" data-aos="fade-left">
+                <div class="relative floating-animation">
                     <div
-                        class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center text-center lg:text-left">
-
-                        <!-- Text Content -->
-                        <header class="py-6 lg:py-0" data-aos="fade-right" data-aos-once="true">
-                            <h1
-                                class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-4 leading-tight drop-shadow-lg">
-                                Discover Our Latest <span class="text-yellow-400">Electronics</span> Collection
-                            </h1>
-                            <p
-                                class="text-sm sm:text-base md:text-lg text-gray-200 mb-6 max-w-md sm:max-w-lg md:max-w-none mx-auto lg:mx-0 leading-relaxed">
-                                Explore cutting-edge technology with our premium selection of smartphones, laptops, and
-                                smart devices. Experience innovation at its finest.
-                            </p>
-                            <nav class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start"
-                                aria-label="Primary call to action">
-                                <a href="{{ route('products.index') }}"
-                                    class="inline-flex items-center justify-center bg-yellow-400 text-gray-900 px-6 py-3 sm:px-8 sm:py-4 rounded-full font-semibold text-sm sm:text-base hover:bg-yellow-300 transition-transform duration-300 ease-in-out transform hover:scale-105 shadow-lg animate-pulse-once"
-                                    aria-label="Shop now for electronics">
-                                    <i class="fas fa-shopping-bag mr-2 text-sm sm:text-base"></i>Shop Now
-                                </a>
-                            </nav>
-                        </header>
-
-                        <!-- Image Content -->
-                        <div class="relative flex justify-center lg:justify-end" data-aos="fade-left"
-                            data-aos-once="true">
-                            <div class="floating-animation max-w-[320px] sm:max-w-md">
-                                <img src="{{ asset('images/Latest Smartphone.webp') }}"
-                                    alt="Latest Smartphone - iPhone 15 Pro"
-                                    class="w-full rounded-3xl shadow-2xl ring-4 ring-yellow-400 ring-offset-2 ring-offset-transparent"
-                                    loading="lazy" decoding="async">
-                            </div>
-                            <span
-                                class="absolute -top-3 md:-top-8 -right-3 md:-right-8 bg-yellow-400 text-gray-900 px-3 py-1 rounded-full font-bold text-xs sm:text-sm uppercase shadow-md animate-bounce-once"
-                                aria-label="New Arrival">
-                                NEW ARRIVAL
-                            </span>
+                        class="w-80 h-80 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full pulse-glow flex items-center justify-center">
+                        <div class="w-72 h-72 bg-white rounded-full flex items-center justify-center shadow-2xl">
+                            <i class="fas fa-mobile-alt text-6xl text-gray-800"></i>
                         </div>
                     </div>
-                </article>
 
-                <!-- Slide 2 -->
-                <article class="swiper-slide slide-bg-2 flex items-center justify-center h-full px-4 sm:px-6 lg:px-12"
-                    role="group" aria-label="Slide 2 - Gaming Revolution">
                     <div
-                        class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center text-center lg:text-left">
-
-                        <!-- Text Content -->
-                        <header class="py-6 lg:py-0" data-aos="fade-right" data-aos-once="true">
-                            <h1
-                                class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-4 leading-tight drop-shadow-lg">
-                                The Gaming <span class="text-cyan-400">Revolution</span> Starts Here
-                            </h1>
-                            <p
-                                class="text-sm sm:text-base md:text-lg text-gray-200 mb-6 max-w-md sm:max-w-lg md:max-w-none mx-auto lg:mx-0 leading-relaxed">
-                                Unleash your full potential with our high-performance gaming laptops and accessories.
-                                Built for serious gamers, by gamers.
-                            </p>
-                            <nav class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start"
-                                aria-label="Primary call to action">
-                                <a href="{{ route('products.index') }}?q=gaming"
-                                    class="inline-flex items-center justify-center bg-cyan-400 text-gray-900 px-6 py-3 sm:px-8 sm:py-4 rounded-full font-semibold text-sm sm:text-base hover:bg-cyan-300 transition-transform duration-300 ease-in-out transform hover:scale-105 shadow-lg animate-pulse-once"
-                                    aria-label="Explore gaming products">
-                                    <i class="fas fa-gamepad mr-2 text-sm sm:text-base"></i>Explore Gaming
-                                </a>
-                            </nav>
-                        </header>
-
-                        <!-- Image Content -->
-                        <div class="relative flex justify-center lg:justify-end" data-aos="fade-left"
-                            data-aos-once="true">
-                            <div class="floating-animation max-w-[320px] sm:max-w-md">
-                                <img src="{{ asset('images/gaming-devices.webp') }}"
-                                    alt="High-Performance Gaming Laptop"
-                                    class="w-full rounded-3xl shadow-2xl ring-4 ring-cyan-400 ring-offset-2 ring-offset-transparent"
-                                    loading="lazy" decoding="async">
-                            </div>
-                            <span
-                                class="absolute -top-3 md:-top-8 -right-3 md:-right-8 bg-red-500 text-white px-3 py-1 rounded-full font-bold text-xs sm:text-sm uppercase shadow-md animate-bounce-once"
-                                aria-label="50 percent off">
-                                50% OFF
-                            </span>
-                        </div>
+                        class="absolute -top-4 -right-4 bg-white/10 backdrop-blur px-4 py-2 rounded-full text-white font-bold text-sm shadow-lg">
+                        NEW ARRIVAL
                     </div>
-                </article>
 
-            </div>
-
-            <!-- Swiper Controls -->
-            <button class="swiper-button-prev text-white hover:text-yellow-400 transition-colors"
-                aria-label="Previous Slide"></button>
-            <button class="swiper-button-next text-white hover:text-yellow-400 transition-colors"
-                aria-label="Next Slide"></button>
-
-            <div class="swiper-pagination text-white" aria-label="Pagination"></div>
-
-        </div>
-
-        <!-- Stats Section -->
-        <div class="absolute bottom-6 md:bottom-10 left-1/2 transform -translate-x-1/2 flex flex-wrap justify-center gap-4 sm:gap-8 text-center w-full max-w-lg px-4"
-            data-aos="fade-up" data-aos-delay="900" data-aos-once="true" role="region" aria-label="Customer statistics">
-            <div class="glass-effect rounded-xl px-3 py-2 sm:px-5 sm:py-3 flex-1 min-w-[110px]">
-                <div class="text-lg sm:text-xl font-bold text-white">10K+</div>
-                <div class="text-xs sm:text-sm text-gray-200">Happy Customers</div>
-            </div>
-            <div class="glass-effect rounded-xl px-3 py-2 sm:px-5 sm:py-3 flex-1 min-w-[110px]">
-                <div class="text-lg sm:text-xl font-bold text-white">500+</div>
-                <div class="text-xs sm:text-sm text-gray-200">Products Available</div>
-            </div>
-            <div class="glass-effect rounded-xl px-3 py-2 sm:px-5 sm:py-3 flex-1 min-w-[110px]">
-                <div class="text-lg sm:text-xl font-bold text-white">24/7</div>
-                <div class="text-xs sm:text-sm text-gray-200">Customer Support</div>
+                    <div
+                        class="absolute -bottom-4 -left-4 bg-green-500 text-white px-4 py-2 rounded-full font-bold text-sm shadow-lg">
+                        ✓ In Stock
+                    </div>
+                </div>
             </div>
         </div>
+
+        <a href="#products"
+            class="absolute bottom-6 left-1/2 transform -translate-x-1/2 group flex flex-col items-center text-white text-sm">
+            <div
+                class="w-6 h-10 border-2 border-white rounded-full flex items-start justify-center p-1 mb-2 animate-bounce group-hover:scale-105 transition-transform">
+                <div class="w-1 h-2 bg-white rounded-full"></div>
+            </div>
+            <span class="opacity-70 group-hover:opacity-100 transition-opacity duration-300">
+                Scroll to explore
+            </span>
+        </a>
 
     </section>
 
 
+
     <!-- Popular Products Section -->
-    <section class="py-12 sm:py-16 md:py-20 bg-white/10" data-aos="fade-up">
+    <section id="products" class="py-12 sm:py-16 md:py-20 bg-white/10" data-aos="fade-up">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
             <!-- Section Header -->
@@ -148,7 +97,7 @@
             </div>
 
             <!-- Filter Tabs (Scroll on mobile) -->
-            <div class="flex overflow-x-auto sm:justify-center gap-3 sm:gap-4 mb-8 sm:mb-12 no-scrollbar px-2 sm:px-0"
+            <div class="flex overflow-x-auto w-full sm:justify-start gap-3 sm:gap-4 mb-8 sm:mb-12 no-scrollbar scroll-pl-4 sm:scroll-pl-0"
                 data-aos="fade-up" data-aos-delay="100">
                 <a href="{{ route('products.index') }}"
                     class="filter-btn active bg-gradient-to-r from-orange-600 to-pink-600 text-white px-5 sm:px-6 py-2 sm:py-3 rounded-full text-sm sm:text-base font-semibold whitespace-nowrap transition-all hover:scale-105"
@@ -159,7 +108,7 @@
                 @foreach ($categories as $category)
                 <a href="{{ route('products.index') }}?category={{ $category->slug }}"
                     class="filter-btn bg-white text-gray-700 px-5 sm:px-6 py-2 sm:py-3 rounded-full text-sm sm:text-base font-semibold border border-gray-200 hover:border-purple-300 whitespace-nowrap transition-all hover:scale-105">
-                    <i class="fas fa-mobile-alt mr-2"></i>{{ Str::limit($category->name, 10) }}
+                    <i class="fas fa-mobile-alt mr-2"></i>{{ $category->name }}
                 </a>
                 @endforeach
             </div>
@@ -190,104 +139,61 @@
                                     class="w-full h-40 sm:h-48 md:h-56 object-contain p-3 transition-transform duration-300 group-hover:scale-105"
                                     loading="lazy" />
                             </a>
-
-                            <!-- Discount Badge -->
-                            @if($hasSale)
-                            <div class="hidden md:block absolute top-3 left-3 z-10">
-                                <div
-                                    class="bg-gradient-to-r from-red-500 to-pink-500 text-white px-2 py-1 text-xs rounded-full font-bold shadow">
-                                    <i class="fas fa-percent mr-1"></i>{{ $discount }}% OFF
-                                </div>
-                            </div>
-                            @endif
-
-                            <!-- HOT Badge -->
-                            @if($product->is_featured || $index < 3) {{-- <div
-                                class="absolute {{ $hasSale ? 'top-12' : 'top-3' }} left-3 z-10">
-                                <div
-                                    class="bg-gradient-to-r from-orange-500 to-red-500 text-white px-2 py-1 text-xs rounded-full font-bold shadow animate-pulse">
-                                    🔥 HOT
-                                </div>
-                        </div> --}}
-                        @endif
-
-                        <!-- Stock Badge -->
-                        @if($product->stock <= 5 && $product->stock > 0)
-                            <div class="absolute bottom-3 left-3 z-10">
-                                <div class="bg-orange-500 text-white px-2 py-1 text-xs rounded-full font-semibold">
-                                    Only {{ $product->stock }} left!
-                                </div>
-                            </div>
-                            @endif
-
-                            <!-- Hover Actions -->
-                            <div
-                                class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition duration-200 flex items-center justify-center opacity-0 group-hover:opacity-100">
-                                <div class="flex space-x-2">
-                                    <button onclick="toggleWishlist({{ $product->id }})"
-                                        class="bg-white p-2 rounded-full text-gray-700 hover:text-red-500 hover:bg-red-50 shadow transition transform hover:scale-110">
-                                        <i class="fas fa-heart"></i>
-                                    </button>
-                                    <button onclick="quickAddToCart({{ $product->id }})"
-                                        class="bg-orange-600 p-2 rounded-full text-white hover:bg-orange-700 shadow transition transform hover:scale-110">
-                                        <i class="fas fa-shopping-cart"></i>
-                                    </button>
-                                </div>
-                            </div>
-                    </div>
-
-                    <!-- Info -->
-                    <div class="p-4 sm:p-5 space-y-3 text-sm sm:text-base">
-
-                        <!-- Rating -->
-                        <div class="flex items-center justify-between text-xs sm:text-sm">
-                            <div class="flex items-center space-x-1 text-yellow-400">
-                                @for ($i = 1; $i <= 5; $i++) <i
-                                    class="fas fa-star {{ $i <= $rating ? '' : 'text-gray-300' }}"></i>
-                                    @endfor
-                                    <span class="text-gray-500 ml-1">({{ $reviewCount }})</span>
-                            </div>
                         </div>
 
-                        <!-- Name -->
-                        <a href="{{ route('products.show', $product->slug) }}">
-                            <h3
-                                class="text-base sm:text-lg font-semibold text-gray-900 hover:text-blue-600 transition line-clamp-2">
-                                {{ $product->name }}
-                            </h3>
-                        </a>
+                        <!-- Info -->
+                        <div class="p-4 sm:p-5 space-y-3 text-sm sm:text-base">
 
-                        <!-- Description -->
-                        <p class="text-gray-600 text-xs sm:text-sm line-clamp-2">
-                            {{ Str::limit($product->description, 80) }}
-                        </p>
+                            <!-- Rating -->
+                            <div class="flex items-center justify-between text-xs sm:text-sm">
+                                <div class="flex items-center space-x-1 text-yellow-400">
+                                    @for ($i = 1; $i <= 5; $i++) <i
+                                        class="fas fa-star {{ $i <= $rating ? '' : 'text-gray-300' }}"></i>
+                                        @endfor
+                                        <span class="text-gray-500 ml-1">({{ $reviewCount }})</span>
+                                </div>
+                            </div>
 
-                        <!-- Actions -->
-                        <div class="flex space-x-2 pt-2">
-                            <a href="{{ route('products.show', $product->slug) }}"
-                                class="flex-1 bg-orange-600 text-white text-center py-2 rounded-lg text-sm font-semibold hover:bg-orange-700 transition hover:scale-105">
-                                View
+                            <!-- Name -->
+                            <a href="{{ route('products.show', $product->slug) }}">
+                                <h3
+                                    class="text-base sm:text-lg font-semibold text-gray-900 hover:text-blue-600 transition line-clamp-2">
+                                    {{ Str::limit($product->name, 20) }}
+                                </h3>
                             </a>
-                            @if($product->stock > 0)
-                            <button onclick="quickAddToCart({{ $product->id }})"
-                                class="px-3 py-2 border border-orange-600 text-orange-600 rounded-lg hover:bg-orange-600 hover:text-white transition hover:scale-105">
-                                <i class="fas fa-plus"></i>
-                            </button>
-                            @endif
+
+                            <!-- Price -->
+                            <div class="flex items-center justify-between text-sm">
+                                <div>
+                                    <span class="text-lg font-bold text-orange-600">${{ number_format($product->price,
+                                        2)
+                                        }}</span>
+                                    @if($product->sale_price)
+                                    <span class="text-xs text-gray-400 line-through ml-1">${{
+                                        number_format($product->price, 2) }}</span>
+                                    @endif
+                                </div>
+
+                                @if($product->stock > 0)
+                                <button onclick="quickAddToCart({{ $product->id }}, event)"
+                                    class="opacity-0 group-hover:opacity-100 transition-opacity bg-orange-600 text-white p-1.5 rounded-lg hover:bg-orange-700">
+                                    <i class="fas fa-plus text-xs"></i>
+                                </button>
+                                @endif
+                            </div>
+
                         </div>
-
                     </div>
+                    @endforeach
             </div>
-            @endforeach
-        </div>
 
-        <!-- View All -->
-        <div class="text-center mt-10 sm:mt-12" data-aos="fade-up" data-aos-delay="1000">
-            <a href="{{ route('products.index') }}"
-                class="bg-gradient-to-r from-orange-600 to-pink-600 text-white px-8 sm:px-12 py-3 sm:py-4 rounded-full font-semibold text-sm sm:text-lg hover:from-orange-700 hover:to-pink-700 transition hover:scale-105 shadow">
-                <i class="fas fa-th-large mr-2"></i>View All Products
-            </a>
-        </div>
+            <!-- View All -->
+            <div class="text-center mt-10 sm:mt-12" data-aos="fade-up" data-aos-delay="1000">
+                <a href="{{ route('products.index') }}"
+                    class="bg-gradient-to-r from-orange-600 to-pink-600 text-white px-8 sm:px-12 py-3 sm:py-4 rounded-full font-semibold text-sm sm:text-lg hover:from-orange-700 hover:to-pink-700 transition hover:scale-105 shadow">
+                    <i class="fas fa-th-large mr-2"></i>View All Products
+                </a>
+            </div>
 
         </div>
     </section>

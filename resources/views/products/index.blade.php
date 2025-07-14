@@ -128,19 +128,20 @@
 
 
 
-                <div class="mt-6 grid grid-cols-2 gap-2 md:gap-4 md:grid-cols-3 lg:grid-cols-4 lg:gap-8"
+                <!-- Product Grid -->
+                <div class="grid grid-cols-2 mt-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8"
                     id="products-grid">
                     @foreach ($products as $index => $product)
                     @php
                     $filterClass = strtolower(str_replace(' ', '-', $product->category->name ?? 'all'));
-
                     $price = $product->sale_price ?? $product->price;
                     $hasSale = !is_null($product->sale_price) && $product->sale_price < $product->price;
-                        $delay = 200 + ($index * 50);
                         $discount = $hasSale ? round((($product->price - $product->sale_price) / $product->price) * 100)
-                        : 0;
+                        :
+                        0;
                         $rating = $product->average_rating ?? 4.5;
                         $reviewCount = $product->reviews_count ?? rand(50, 200);
+                        $delay = 200 + ($index * 50);
                         @endphp
 
                         <div class="product-card {{ $filterClass }} bg-white rounded-2xl overflow-hidden shadow hover:shadow-lg transition-all hover:scale-[1.02] duration-300 relative border border-gray-100"
@@ -148,120 +149,67 @@
                             data-name="{{ $product->name }}" data-created="{{ $product->created_at }}">
 
                             <!-- Image -->
-                            <div class="relative overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
+                            <div class="relative overflow-hidden bg-white border-b border-gray-200">
                                 <a href="{{ route('products.show', $product->slug) }}">
                                     <img src="{{ Storage::url($product->image_path) }}" alt="{{ $product->name }}"
                                         class="w-full h-40 sm:h-48 md:h-56 object-contain p-3 transition-transform duration-300 group-hover:scale-105"
                                         loading="lazy" />
                                 </a>
-
-                                <!-- Discount Badge -->
-                                @if($hasSale)
-                                <div class="hidden lg:block absolute top-3 left-3 z-10">
-                                    <div
-                                        class="bg-gradient-to-r from-red-500 to-pink-500 text-white px-2 py-1 text-xs rounded-full font-bold shadow">
-                                        <i class="fas fa-percent mr-1"></i>{{ $discount }}% OFF
-                                    </div>
-                                </div>
-                                @endif
-
-                                <!-- HOT Badge -->
-                                @if($product->is_featured || $index < 3) {{-- <div
-                                    class="absolute {{ $hasSale ? 'top-12' : 'top-3' }} left-3 z-10">
-                                    <div
-                                        class="bg-gradient-to-r from-orange-500 to-red-500 text-white px-2 py-1 text-xs rounded-full font-bold shadow animate-pulse">
-                                        🔥 HOT
-                                    </div>
-                            </div> --}}
-                            @endif
-
-                            <!-- Stock Badge -->
-                            @if($product->stock <= 5 && $product->stock > 0)
-                                <div class="absolute bottom-3 left-3 z-10">
-                                    <div class="bg-orange-500 text-white px-2 py-1 text-xs rounded-full font-semibold">
-                                        Only {{ $product->stock }} left!
-                                    </div>
-                                </div>
-                                @endif
-
-                                <!-- Hover Actions -->
-                                <div
-                                    class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition duration-200 flex items-center justify-center opacity-0 group-hover:opacity-100">
-                                    <div class="flex space-x-2">
-                                        <button onclick="toggleWishlist({{ $product->id }})"
-                                            class="bg-white p-2 rounded-full text-gray-700 hover:text-red-500 hover:bg-red-50 shadow transition transform hover:scale-110">
-                                            <i class="fas fa-heart"></i>
-                                        </button>
-                                        <button onclick="quickAddToCart({{ $product->id }})"
-                                            class="bg-orange-600 p-2 rounded-full text-white hover:bg-orange-700 shadow transition transform hover:scale-110">
-                                            <i class="fas fa-shopping-cart"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                        </div>
-
-                        <!-- Info -->
-                        <div class="p-4 sm:p-5 space-y-3 text-sm sm:text-base">
-
-                            <!-- Rating -->
-                            <div class="flex items-center justify-between text-xs sm:text-sm">
-                                <div class="flex items-center space-x-1 text-yellow-400">
-                                    @for ($i = 1; $i <= 5; $i++) <i
-                                        class="fas fa-star {{ $i <= $rating ? '' : 'text-gray-300' }}"></i>
-                                        @endfor
-                                        <span class="text-gray-500 ml-1">({{ $reviewCount }})</span>
-                                </div>
                             </div>
 
-                            <!-- Name -->
-                            <a href="{{ route('products.show', $product->slug) }}">
-                                <h3
-                                    class="text-base sm:text-lg font-semibold text-gray-900 hover:text-blue-600 transition line-clamp-2">
-                                    {{ $product->name }}
-                                </h3>
-                            </a>
+                            <!-- Info -->
+                            <div class="p-4 sm:p-5 space-y-3 text-sm sm:text-base">
 
-                            <!-- Description -->
-                            <p class="text-gray-600 text-xs sm:text-sm line-clamp-2">
-                                {{ Str::limit($product->description, 80) }}
-                            </p>
+                                <!-- Rating -->
+                                <div class="flex items-center justify-between text-xs sm:text-sm">
+                                    <div class="flex items-center space-x-1 text-yellow-400">
+                                        @for ($i = 1; $i <= 5; $i++) <i
+                                            class="fas fa-star {{ $i <= $rating ? '' : 'text-gray-300' }}"></i>
+                                            @endfor
+                                            <span class="text-gray-500 ml-1">({{ $reviewCount }})</span>
+                                    </div>
+                                </div>
 
-                            <!-- Price & Stock -->
-                            <div class="flex items-center justify-between pt-2 border-t border-gray-200">
-                                <span class="text-blue-600 font-bold text-lg sm:text-xl">${{ number_format($price, 2)
-                                    }}</span>
-                                {{-- <span
-                                    class="{{ $product->stock > 0 ? 'text-green-600' : 'text-red-600' }} font-semibold text-xs sm:text-sm">
-                                    <i
-                                        class="fas {{ $product->stock > 0 ? 'fa-check-circle' : 'fa-times-circle' }} mr-1"></i>
-                                    {{ $product->stock > 0 ? 'In Stock' : 'Out of Stock' }}
-                                </span> --}}
-                            </div>
-
-                            <!-- Actions -->
-                            <div class="flex space-x-2">
-                                <a href="{{ route('products.show', $product->slug) }}"
-                                    class="flex-1 bg-orange-600 text-white text-center py-2 rounded-lg text-sm font-semibold hover:bg-orange-700 transition hover:scale-105">
-                                    View
+                                <!-- Name -->
+                                <a href="{{ route('products.show', $product->slug) }}">
+                                    <h3
+                                        class="text-base sm:text-lg font-semibold text-gray-900 hover:text-blue-600 transition line-clamp-2">
+                                        {{ Str::limit($product->name, 20) }}
+                                    </h3>
                                 </a>
-                                @if($product->stock > 0)
-                                <button onclick="quickAddToCart({{ $product->id }})"
-                                    class="px-3 py-2 border border-orange-600 text-orange-600 rounded-lg hover:bg-orange-600 hover:text-white transition hover:scale-105">
-                                    <i class="fas fa-plus"></i>
-                                </button>
-                                @endif
+
+                                <!-- Price -->
+                                <div class="flex items-center justify-between text-sm">
+                                    <div>
+                                        <span class="text-lg font-bold text-orange-600">${{
+                                            number_format($product->price,
+                                            2)
+                                            }}</span>
+                                        @if($product->sale_price)
+                                        <span class="text-xs text-gray-400 line-through ml-1">${{
+                                            number_format($product->price, 2) }}</span>
+                                        @endif
+                                    </div>
+
+                                    @if($product->stock > 0)
+                                    <button onclick="quickAddToCart({{ $product->id }}, event)"
+                                        class="opacity-0 group-hover:opacity-100 transition-opacity bg-orange-600 text-white p-1.5 rounded-lg hover:bg-orange-700">
+                                        <i class="fas fa-plus text-xs"></i>
+                                    </button>
+                                    @endif
+                                </div>
+
                             </div>
-
                         </div>
+                        @endforeach
                 </div>
-                @endforeach
-            </div>
 
-            <!-- Pagination (if needed) -->
-            <div class="mt-10">
-                {{ $products->links() }}
+
+                <!-- Pagination (if needed) -->
+                <div class="mt-10">
+                    {{ $products->links() }}
+                </div>
             </div>
-        </div>
         </div>
     </section>
 
