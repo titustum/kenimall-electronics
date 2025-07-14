@@ -64,9 +64,10 @@
                 </table>
             </div>
 
-            <div class="mt-4">
-                {{ $categories->links() }} {{-- Pagination links --}}
-            </div>
+            {{-- <div class="mt-4">
+                {{ $categories->links() }}
+            </div> --}}
+
             @endif
         </div>
 
