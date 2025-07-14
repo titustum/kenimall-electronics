@@ -458,11 +458,9 @@
                         <div class="flex w-full">
                             <div class="relative flex-1">
                                 <input type="text" name="q" placeholder="Search for products, brands, categories..."
-                                    class="w-full px-4 py-3 pr-10 border border-gray-200 rounded-l-lg focus:outline-none focus:ring-1 focus:ring-orange-500 focus:border-transparent transition-all duration-300 bg-gray-50 focus:bg-white"
+                                    class="w-full px-4 py-3 pr-10 border border-gray-300 rounded-l-lg   focus:ring-1 focus:ring-orange-500 focus:border-transparent transition-all duration-300 bg-gray-50 focus:bg-white"
                                     id="search-input" aria-label="Search products, brands, categories"
                                     autocomplete="off" />
-                                <i
-                                    class="fas fa-microphone absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-orange-500 cursor-pointer transition-colors"></i>
                             </div>
                             <button type="submit"
                                 class="px-6 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-r-lg hover:from-orange-600 hover:to-orange-700 transition-all duration-300 shadow-lg hover:shadow-xl"
@@ -495,67 +493,13 @@
                 <div class="flex items-center space-x-2 md:space-x-4">
 
                     <!-- Enhanced Dropdown Menus -->
-                    <div class="hidden lg:flex space-x-6">
-                        <!-- Products Dropdown -->
-                        <div class="relative group">
-                            <button
-                                class="flex items-center text-gray-700 hover:text-orange-500 font-medium py-2 px-3 rounded-lg hover:bg-orange-50 transition-all duration-300">
-                                Products
-                                <i
-                                    class="fas fa-chevron-down ml-1 text-xs group-hover:rotate-180 transition-transform duration-300"></i>
-                            </button>
-                            <div
-                                class="nav-dropdown absolute left-0 bg-white shadow-xl mt-2 rounded-xl border border-gray-100 w-64 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0">
-                                <div class="p-4">
-                                    <div class="space-y-1">
-                                        <a href="{{ route('products.index', ['q' => 'phone,android,iphone,earphone,earpod,charger,cable']) }}"
-                                            class="flex items-center px-4 py-3 hover:bg-orange-50 rounded-lg transition-colors group/item">
-                                            <i class="fas fa-mobile-alt text-orange-500 w-5 mr-3"></i>
-                                            <div>
-                                                <div class="font-medium text-gray-900 group-hover/item:text-orange-600">
-                                                    Smartphones
-                                                </div>
-                                                <div class="text-xs text-gray-500">Latest models & accessories</div>
-                                            </div>
-                                        </a>
+                    <div class="hidden lg:flex space-x-3">
 
-                                        <a href="{{ route('products.index', ['q' => 'laptop,notebook,ultrabook,gaming laptop,macbook']) }}"
-                                            class="flex items-center px-4 py-3 hover:bg-orange-50 rounded-lg transition-colors group/item">
-                                            <i class="fas fa-laptop text-orange-500 w-5 mr-3"></i>
-                                            <div>
-                                                <div class="font-medium text-gray-900 group-hover/item:text-orange-600">
-                                                    Laptops
-                                                </div>
-                                                <div class="text-xs text-gray-500">Gaming, business & ultrabooks</div>
-                                            </div>
-                                        </a>
-
-                                        <a href="{{ route('products.index', ['q' => 'headphones,speaker,earbuds,earphones,audio,bluetooth speaker']) }}"
-                                            class="flex items-center px-4 py-3 hover:bg-orange-50 rounded-lg transition-colors group/item">
-                                            <i class="fas fa-headphones text-orange-500 w-5 mr-3"></i>
-                                            <div>
-                                                <div class="font-medium text-gray-900 group-hover/item:text-orange-600">
-                                                    Audio
-                                                </div>
-                                                <div class="text-xs text-gray-500">Headphones, speakers & more</div>
-                                            </div>
-                                        </a>
-
-                                        <a href="{{ route('products.index', ['q' => 'smartwatch,fitness tracker,wearable,band,tracker']) }}"
-                                            class="flex items-center px-4 py-3 hover:bg-orange-50 rounded-lg transition-colors group/item">
-                                            <i class="far fa-clock text-orange-500 w-5 mr-3"></i>
-                                            <div>
-                                                <div class="font-medium text-gray-900 group-hover/item:text-orange-600">
-                                                    Wearables
-                                                </div>
-                                                <div class="text-xs text-gray-500">Smartwatches & fitness trackers</div>
-                                            </div>
-                                        </a>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <!-- All Products -->
+                        <a href="{{ route('products.index') }}"
+                            class="flex items-center text-gray-700 hover:text-orange-500 font-medium py-2 px-3 rounded-lg hover:bg-orange-50 transition-all duration-300">
+                            All Products
+                        </a>
 
                         <!-- Categories Dropdown -->
                         <div class="relative group">
@@ -569,62 +513,26 @@
                                 class="nav-dropdown absolute left-0 bg-white shadow-xl mt-2 rounded-xl border border-gray-100 w-64 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0">
                                 <div class="p-4">
                                     <div class="space-y-1">
-                                        <a href="{{ route('products.index', ['q' => 'gaming,console,pc gaming,video game,accessory,controller,playstation,xbox,nintendo']) }}"
-                                            class="flex items-center px-4 py-3 hover:bg-orange-50 rounded-lg transition-colors group/item">
-                                            <i class="fas fa-gamepad text-orange-500 w-5 mr-3"></i>
-                                            <div>
-                                                <div class="font-medium text-gray-900 group-hover/item:text-orange-600">
-                                                    Gaming
-                                                </div>
-                                                <div class="text-xs text-gray-500">Consoles, PC gaming & accessories
-                                                </div>
-                                            </div>
-                                        </a>
 
-                                        <a href="{{ route('products.index', ['q' => 'smart home,iot,automation,security camera,smart bulb,smart thermostat,smart lock']) }}"
+                                        @foreach ($categories as $category)
+                                        <a href="{{ route('products.index', ['category' => $category]) }}"
                                             class="flex items-center px-4 py-3 hover:bg-orange-50 rounded-lg transition-colors group/item">
-                                            <i class="fas fa-home text-orange-500 w-5 mr-3"></i>
+                                            <i class="fas fa-tag text-orange-500 w-5 mr-3"></i>
                                             <div>
                                                 <div class="font-medium text-gray-900 group-hover/item:text-orange-600">
-                                                    Smart Home
+                                                    {{ $category->name }}
                                                 </div>
-                                                <div class="text-xs text-gray-500">IoT devices & automation</div>
-                                            </div>
-                                        </a>
 
-                                        <a href="{{ route('products.index', ['q' => 'photography,camera,lens,tripod,dslr,mirrorless,studio gear,flash']) }}"
-                                            class="flex items-center px-4 py-3 hover:bg-orange-50 rounded-lg transition-colors group/item">
-                                            <i class="fas fa-camera text-orange-500 w-5 mr-3"></i>
-                                            <div>
-                                                <div class="font-medium text-gray-900 group-hover/item:text-orange-600">
-                                                    Photography
-                                                </div>
-                                                <div class="text-xs text-gray-500">Cameras, lenses & studio gear</div>
                                             </div>
                                         </a>
-
-                                        <a href="{{ route('products.index', ['q' => 'entertainment,tv,streaming,media,projector,speaker,soundbar']) }}"
-                                            class="flex items-center px-4 py-3 hover:bg-orange-50 rounded-lg transition-colors group/item">
-                                            <i class="fas fa-tv text-orange-500 w-5 mr-3"></i>
-                                            <div>
-                                                <div class="font-medium text-gray-900 group-hover/item:text-orange-600">
-                                                    Entertainment
-                                                </div>
-                                                <div class="text-xs text-gray-500">TVs, streaming & media</div>
-                                            </div>
-                                        </a>
+                                        @endforeach
 
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Deals Link -->
-                        <a href="{{ route('products.index').'?q=deals'}}"
-                            class="flex items-center text-gray-700 hover:text-red-500 font-medium py-2 px-3 rounded-lg hover:bg-red-50 transition-all duration-300">
-                            <i class="fas fa-fire text-red-500 mr-1"></i>
-                            Deals
-                        </a>
+
                     </div>
 
                     <!-- Enhanced Action Icons -->
@@ -716,39 +624,13 @@
 
                 <!-- Mobile Navigation Links -->
                 <div class="space-y-1">
-                    <!-- Products Section -->
-                    <div class="border-b border-gray-100 pb-4 mb-4">
-                        <div class="font-semibold text-gray-900 mb-3 flex items-center">
-                            <i class="fas fa-mobile-alt text-orange-500 mr-2"></i>
-                            Products
-                        </div>
-                        <div class="space-y-1 ml-6">
-                            <a href="{{ route('products.index', ['q' => 'phone,android,iphone,earphone,earpod,charger']) }}"
-                                class="flex items-center py-2 text-gray-600 hover:text-orange-500 hover:bg-orange-50 px-3 rounded-lg transition-all">
-                                <i class="fas fa-mobile-alt text-xs mr-3 w-4"></i>
-                                Smartphones
-                            </a>
 
-                            <a href="{{ route('products.index', ['q' => 'laptop,notebook,macbook,gaming laptop,ultrabook']) }}"
-                                class="flex items-center py-2 text-gray-600 hover:text-orange-500 hover:bg-orange-50 px-3 rounded-lg transition-all">
-                                <i class="fas fa-laptop text-xs mr-3 w-4"></i>
-                                Laptops
-                            </a>
+                    <a href="{{ route('products.index') }}"
+                        class="flex items-center py-3 px-3 text-gray-700 font-medium hover:bg-gray-50 rounded-lg transition-all">
+                        <i class="fas fa-box-open text-lg mr-3"></i>
+                        All Products
+                    </a>
 
-                            <a href="{{ route('products.index', ['q' => 'audio,headphones,speaker,earbuds,soundbar,microphone']) }}"
-                                class="flex items-center py-2 text-gray-600 hover:text-orange-500 hover:bg-orange-50 px-3 rounded-lg transition-all">
-                                <i class="fas fa-headphones text-xs mr-3 w-4"></i>
-                                Audio
-                            </a>
-
-                            <a href="{{ route('products.index', ['q' => 'wearable,smartwatch,fitness tracker,band,heartrate monitor']) }}"
-                                class="flex items-center py-2 text-gray-600 hover:text-orange-500 hover:bg-orange-50 px-3 rounded-lg transition-all">
-                                <i class="fas fa-clock text-xs mr-3 w-4"></i>
-                                Wearables
-                            </a>
-
-                        </div>
-                    </div>
 
                     <!-- Categories Section -->
                     <div class="border-b border-gray-100 pb-4 mb-4">
@@ -757,29 +639,13 @@
                             Categories
                         </div>
                         <div class="space-y-1 ml-6">
-                            <a href="{{ route('products.index', ['q' => 'gaming,console,pc,gamepad,accessories']) }}"
-                                class="flex items-center py-2 text-gray-600 hover:text-orange-500 hover:bg-orange-50 px-3 rounded-lg transition-all">
-                                <i class="fas fa-gamepad text-xs mr-3 w-4"></i>
-                                Gaming
+                            @foreach ($categories as $category)
+                            <a href="{{ route('products.index', ['category' => $category]) }}"
+                                class="flex items-center py-2 px-3 text-gray-700 hover:bg-gray-50 rounded-lg transition-all">
+                                <i class="fas fa-tag text-orange-500 mr-3"></i>
+                                {{ $category->name }}
                             </a>
-
-                            <a href="{{ route('products.index', ['q' => 'smart-home,iot,automation,security,camera']) }}"
-                                class="flex items-center py-2 text-gray-600 hover:text-orange-500 hover:bg-orange-50 px-3 rounded-lg transition-all">
-                                <i class="fas fa-home text-xs mr-3 w-4"></i>
-                                Smart Home
-                            </a>
-
-                            <a href="{{ route('products.index', ['q' => 'photography,camera,lens,dslr,mirrorless,studio gear']) }}"
-                                class="flex items-center py-2 text-gray-600 hover:text-orange-500 hover:bg-orange-50 px-3 rounded-lg transition-all">
-                                <i class="fas fa-camera text-xs mr-3 w-4"></i>
-                                Photography
-                            </a>
-
-                            <a href="{{ route('products.index', ['q' => 'entertainment,tv,streaming,media,projector']) }}"
-                                class="flex items-center py-2 text-gray-600 hover:text-orange-500 hover:bg-orange-50 px-3 rounded-lg transition-all">
-                                <i class="fas fa-tv text-xs mr-3 w-4"></i>
-                                Entertainment
-                            </a>
+                            @endforeach
 
                         </div>
                     </div>
@@ -912,21 +778,21 @@
                         <i class="fas fa-map-marker-alt text-purple-500 mr-3"></i>
                         <div>
                             <div class="font-semibold text-white">Visit Us</div>
-                            123 Tech Street, Nairobi
+                            123 Tech Street, Melbourne, Australia
                         </div>
                     </div>
                     <div class="flex items-center">
                         <i class="fas fa-phone text-green-500 mr-3"></i>
                         <div>
                             <div class="font-semibold text-white">Call Us</div>
-                            +254 700 123 456
+                            +61 421 778 978
                         </div>
                     </div>
                     <div class="flex items-center">
                         <i class="fas fa-envelope text-blue-400 mr-3"></i>
                         <div>
                             <div class="font-semibold text-white">Email Us</div>
-                            hello@kenimall.com
+                            contact@kenimall.com
                         </div>
                     </div>
                 </div>

@@ -7,21 +7,26 @@
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Category Grid -->
+            <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
                 @foreach ($categories as $index => $category)
                 @php
-                // Calculate delay for AOS animation based on index
-                $delay = $index * 75;
+                $delay = $index * 100;
                 @endphp
 
                 <a href="{{ route('products.index', ['category' => $category]) }}"
-                    class="group bg-gray-50 border border-gray-200 rounded-xl p-4 flex flex-col items-center text-center hover:shadow-md transition"
+                    class="category-card group flex flex-col items-center bg-white hover:border-orange-600 hover:text-blue-600 focus:border-orange-600 focus:text-blue-600 border border-gray-200 rounded-2xl p-3 sm:p-4 hover:shadow-lg transition-shadow duration-300"
                     data-aos="fade-up" data-aos-delay="{{ $delay }}">
-                    <div class="w-full h-36 overflow-hidden rounded-lg mb-3">
+
+                    <!-- Image -->
+                    <div class="w-full h-32 sm:h-40 mb-3 sm:mb-4 overflow-hidden rounded-xl bg-white">
                         <img src="{{ Storage::url($category->image_path) }}" alt="{{ $category->name }}"
-                            class="w-full h-full object-contain group-hover:scale-105 transition duration-300">
+                            class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300" />
                     </div>
-                    <h3 class="text-lg font-semibold text-gray-800 group-hover:text-orange-600">
+
+                    <!-- Title -->
+                    <h3
+                        class="text-base sm:text-lg font-semibold text-gray-900 text-center group-hover:text-orange-600 transition-colors">
                         {{ $category->name }}
                     </h3>
                 </a>

@@ -157,7 +157,7 @@
 
                                 <!-- Discount Badge -->
                                 @if($hasSale)
-                                <div class="absolute top-3 left-3 z-10">
+                                <div class="hidden lg:block absolute top-3 left-3 z-10">
                                     <div
                                         class="bg-gradient-to-r from-red-500 to-pink-500 text-white px-2 py-1 text-xs rounded-full font-bold shadow">
                                         <i class="fas fa-percent mr-1"></i>{{ $discount }}% OFF
@@ -166,13 +166,13 @@
                                 @endif
 
                                 <!-- HOT Badge -->
-                                @if($product->is_featured || $index < 3) <div
+                                @if($product->is_featured || $index < 3) {{-- <div
                                     class="absolute {{ $hasSale ? 'top-12' : 'top-3' }} left-3 z-10">
                                     <div
                                         class="bg-gradient-to-r from-orange-500 to-red-500 text-white px-2 py-1 text-xs rounded-full font-bold shadow animate-pulse">
                                         🔥 HOT
                                     </div>
-                            </div>
+                            </div> --}}
                             @endif
 
                             <!-- Stock Badge -->

@@ -131,7 +131,7 @@
 
 
     <!-- Popular Products Section -->
-    <section class="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-gray-50 to-gray-100" data-aos="fade-up">
+    <section class="py-12 sm:py-16 md:py-20 bg-white/10" data-aos="fade-up">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
             <!-- Section Header -->
@@ -184,7 +184,7 @@
                         data-name="{{ $product->name }}" data-created="{{ $product->created_at }}">
 
                         <!-- Image -->
-                        <div class="relative overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
+                        <div class="relative overflow-hidden bg-white border-b border-gray-200">
                             <a href="{{ route('products.show', $product->slug) }}">
                                 <img src="{{ Storage::url($product->image_path) }}" alt="{{ $product->name }}"
                                     class="w-full h-40 sm:h-48 md:h-56 object-contain p-3 transition-transform duration-300 group-hover:scale-105"
@@ -193,7 +193,7 @@
 
                             <!-- Discount Badge -->
                             @if($hasSale)
-                            <div class="absolute top-3 left-3 z-10">
+                            <div class="hidden md:block absolute top-3 left-3 z-10">
                                 <div
                                     class="bg-gradient-to-r from-red-500 to-pink-500 text-white px-2 py-1 text-xs rounded-full font-bold shadow">
                                     <i class="fas fa-percent mr-1"></i>{{ $discount }}% OFF
@@ -202,13 +202,13 @@
                             @endif
 
                             <!-- HOT Badge -->
-                            @if($product->is_featured || $index < 3) <div
+                            @if($product->is_featured || $index < 3) {{-- <div
                                 class="absolute {{ $hasSale ? 'top-12' : 'top-3' }} left-3 z-10">
                                 <div
                                     class="bg-gradient-to-r from-orange-500 to-red-500 text-white px-2 py-1 text-xs rounded-full font-bold shadow animate-pulse">
                                     🔥 HOT
                                 </div>
-                        </div>
+                        </div> --}}
                         @endif
 
                         <!-- Stock Badge -->
@@ -261,18 +261,6 @@
                         <p class="text-gray-600 text-xs sm:text-sm line-clamp-2">
                             {{ Str::limit($product->description, 80) }}
                         </p>
-
-                        <!-- Price & Stock -->
-                        <div class="flex items-center justify-between pt-2 border-t border-gray-200">
-                            <span class="text-blue-600 font-bold text-lg sm:text-xl">${{ number_format($price, 2)
-                                }}</span>
-                            <span
-                                class="{{ $product->stock > 0 ? 'text-green-600' : 'text-red-600' }} font-semibold text-xs sm:text-sm">
-                                <i
-                                    class="fas {{ $product->stock > 0 ? 'fa-check-circle' : 'fa-times-circle' }} mr-1"></i>
-                                {{ $product->stock > 0 ? 'In Stock' : 'Out of Stock' }}
-                            </span>
-                        </div>
 
                         <!-- Actions -->
                         <div class="flex space-x-2 pt-2">
@@ -329,7 +317,7 @@
                 @endphp
 
                 <a href="{{ route('products.index', ['category' => $category]) }}"
-                    class="category-card group flex flex-col items-center bg-gray-50 rounded-2xl p-3 sm:p-4 hover:shadow-lg transition-shadow duration-300"
+                    class="category-card group flex flex-col items-center bg-white hover:border-orange-600 hover:text-blue-600 focus:border-orange-600 focus:text-blue-600 border border-gray-200 rounded-2xl p-3 sm:p-4 hover:shadow-lg transition-shadow duration-300"
                     data-aos="fade-up" data-aos-delay="{{ $delay }}">
 
                     <!-- Image -->
