@@ -1,5 +1,5 @@
 <x-custom-layout>
-    <div class="max-w-4xl mx-auto p-6 mt-20 bg-white shadow-lg rounded-lg">
+    <div class="max-w-4xl mx-auto p-6 mt-20 md:mt-28 bg-white shadow-lg rounded-lg">
         <h2 class="text-3xl font-extrabold text-gray-900 mb-8 text-center">Complete Your Order</h2>
 
         {{-- Session-based success/error messages --}}
@@ -171,18 +171,19 @@
             </div>
 
             {{-- Order Summary Column --}}
-            <div class="md:sticky md:top-20 h-fit"> {{-- Make summary sticky --}}
+            <div class="md:sticky md:top-20 h-fit">
                 <h3 class="text-2xl font-semibold text-gray-800 mb-6">Your Order</h3>
                 <div class="border border-gray-200 rounded-lg p-6 bg-gray-50">
                     <ul class="divide-y divide-gray-200 mb-4">
                         @forelse($cart as $productId => $item)
-                        <li class="py-3 flex justify-between items-center text-sm">
+                        <li class="py-3 flex justify-between items-center text-sm sm:text-base">
                             <div>
                                 <p class="font-medium text-gray-800">{{ $item['name'] }}</p>
                                 <p class="text-gray-500">Qty: {{ $item['quantity'] }}</p>
                             </div>
-                            <span class="font-semibold text-gray-700">AUD${{ number_format($item['price'] *
-                                $item['quantity'], 2) }}</span>
+                            <span class="font-semibold text-gray-700">
+                                AUD${{ number_format($item['price'] * $item['quantity'], 2) }}
+                            </span>
                         </li>
                         @empty
                         <li class="py-3 text-gray-600 text-center">Your cart is empty.</li>
@@ -190,23 +191,24 @@
                     </ul>
 
                     <div class="border-t border-gray-200 pt-4 mt-4">
-                        <div class="flex justify-between items-center mb-2">
-                            <span class="text-lg font-medium text-gray-700">Subtotal:</span>
-                            <span class="text-lg font-semibold text-gray-800">AUD${{ number_format($total, 2) }}</span>
+                        <div class="flex justify-between items-center mb-2 text-base sm:text-lg">
+                            <span class="font-medium text-gray-700">Subtotal:</span>
+                            <span class="font-semibold text-gray-800">AUD${{ number_format($total, 2) }}</span>
                         </div>
-                        <div class="flex justify-between items-center mb-4">
-                            <span class="text-lg font-medium text-gray-700">Shipping:</span>
-                            <span class="text-lg font-semibold text-gray-800">Free</span> {{-- Or calculate based on
-                            your logic --}}
+                        <div class="flex justify-between items-center mb-4 text-base sm:text-lg">
+                            <span class="font-medium text-gray-700">Shipping:</span>
+                            <span class="font-semibold text-gray-800">Free</span> {{-- Or calculate based on your logic
+                            --}}
                         </div>
                         <div
-                            class="flex justify-between items-center text-2xl font-bold text-orange-600 border-t border-gray-300 pt-4">
+                            class="flex justify-between items-center text-base sm:text-xl md:text-2xl font-bold text-orange-600 border-t border-gray-300 pt-4">
                             <span>Order Total:</span>
                             <span>AUD${{ number_format($total, 2) }}</span>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 

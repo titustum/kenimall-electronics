@@ -33,10 +33,10 @@
                         <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
                     </a>
 
-                    <a href="#"
+                    <a href="{{ route('categories.index') }}"
                         class="group bg-white/10 backdrop-blur hover:bg-white hover:text-gray-900 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 flex items-center justify-center gap-3">
-                        <i class="fas fa-play-circle"></i>
-                        <span>Watch Demo</span>
+                        <i class="fas fa-th-large"></i>
+                        <span>View Categories</span>
                     </a>
                 </div>
             </div>

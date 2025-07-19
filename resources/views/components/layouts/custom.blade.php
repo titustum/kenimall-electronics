@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="scroll-smooth text-sm sm:text-base">
 
 <head>
     <meta charset="UTF-8">
@@ -724,9 +724,13 @@
                                 Quick Links <span class="lg:hidden text-yellow-400">&#x25BC;</span>
                             </summary>
                             <ul class="mt-4 space-y-2 text-sm text-gray-300 group-open:block hidden lg:block">
-                                <li><a href="#" class="hover:text-yellow-400">Home</a></li>
-                                <li><a href="#" class="hover:text-yellow-400">Products</a></li>
-                                <li><a href="#" class="hover:text-yellow-400">Categories</a></li>
+                                <li><a href="{{ route('home') }}" class="hover:text-yellow-400">Home</a></li>
+                                <li><a href="{{ route('products.index') }}" class="hover:text-yellow-400">Products</a>
+                                </li>
+                                <li><a href="{{ route('categories.index') }}"
+                                        class="hover:text-yellow-400">Categories</a></li>
+                                <li><a href="{{ route('wishlist.index') }}" class="hover:text-yellow-400">Wishlist</a>
+                                </li>
                                 <li><a href="#" class="hover:text-yellow-400">Deals</a></li>
                                 <li><a href="#" class="hover:text-yellow-400">About Us</a></li>
                                 <li><a href="#" class="hover:text-yellow-400">Contact</a></li>
@@ -742,12 +746,14 @@
                                 Categories <span class="lg:hidden text-yellow-400">&#x25BC;</span>
                             </summary>
                             <ul class="mt-4 space-y-2 text-sm text-gray-300 group-open:block hidden lg:block">
-                                <li><a href="#" class="hover:text-yellow-400">Smartphones</a></li>
-                                <li><a href="#" class="hover:text-yellow-400">Laptops</a></li>
-                                <li><a href="#" class="hover:text-yellow-400">Audio</a></li>
-                                <li><a href="#" class="hover:text-yellow-400">Gaming</a></li>
-                                <li><a href="#" class="hover:text-yellow-400">Smart Home</a></li>
-                                <li><a href="#" class="hover:text-yellow-400">Cameras</a></li>
+                                @foreach ($categories as $category)
+                                <li>
+                                    <a href="{{ route('products.index', ['category' => $category]) }}"
+                                        class="hover:text-yellow-400">{{ $category->name
+                                        }}
+                                    </a>
+                                </li>
+                                @endforeach
                             </ul>
                         </details>
                     </div>
@@ -1036,6 +1042,26 @@
             });
         });
     </script>
+
+    <script>
+        function setDetailsOpenByScreen() {
+                const detailsElements = document.querySelectorAll('details');
+                if (window.innerWidth >= 1024) {  // lg breakpoint is 1024px in Tailwind by default
+                detailsElements.forEach(detail => detail.setAttribute('open', ''));
+                } else {
+                detailsElements.forEach(detail => detail.removeAttribute('open'));
+                }
+            }
+
+            // Run on page load
+            setDetailsOpenByScreen();
+
+            // Run on window resize
+            window.addEventListener('resize', () => {
+                setDetailsOpenByScreen();
+            });
+    </script>
+
 
     {{-- Stack for additional scripts from child views --}}
     @stack('scripts')
