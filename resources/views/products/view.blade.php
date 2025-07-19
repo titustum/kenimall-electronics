@@ -312,6 +312,66 @@
             </div>
         </div>
         @endif
+
+
+
+        {{-- After the Product Details div, add this: --}}
+        <div class="mt-10" data-aos="fade-up" data-aos-delay="150">
+            @php
+            // Sample random reviews array
+            $reviews = [
+            ['name' => 'Alice', 'rating' => 5, 'comment' => 'Amazing product! Highly recommend it.', 'date' =>
+            '2025-06-10'],
+            ['name' => 'Bob', 'rating' => 4, 'comment' => 'Good quality, but delivery was a bit slow.', 'date' =>
+            '2025-06-08'],
+            ['name' => 'Charlie', 'rating' => 3, 'comment' => 'Decent product but expected better features.', 'date' =>
+            '2025-06-05'],
+            ['name' => 'Diana', 'rating' => 5, 'comment' => 'Exceeded my expectations! Excellent value.', 'date' =>
+            '2025-06-01'],
+            ['name' => 'Ethan', 'rating' => 4, 'comment' => 'Solid choice for the price.', 'date' => '2025-05-28'],
+            ];
+
+            $avgRating = collect($reviews)->avg('rating');
+            $totalReviews = count($reviews);
+            @endphp
+
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">Customer Reviews</h3>
+
+            <div class="flex items-center mb-6">
+                <div class="text-3xl font-bold text-orange-600">{{ number_format($avgRating, 1) }}</div>
+                <div class="ml-3 flex items-center">
+                    @for ($i = 1; $i <= 5; $i++) @if($i <=floor($avgRating)) <i class="fas fa-star text-orange-500"></i>
+                        @elseif($i - $avgRating < 1) <i class="fas fa-star-half-alt text-orange-500"></i>
+                            @else
+                            <i class="far fa-star text-orange-500"></i>
+                            @endif
+                            @endfor
+                </div>
+                <span class="ml-3 text-gray-600 text-sm">({{ $totalReviews }} reviews)</span>
+            </div>
+
+            <div class="space-y-6 max-w-3xl">
+                @foreach ($reviews as $review)
+                <div class="border border-gray-200 rounded-lg p-4">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="font-semibold text-gray-800">{{ $review['name'] }}</div>
+                        <div class="flex items-center text-orange-500">
+                            @for ($i = 1; $i <= 5; $i++) @if ($i <=$review['rating']) <i class="fas fa-star text-sm">
+                                </i>
+                                @else
+                                <i class="far fa-star text-sm"></i>
+                                @endif
+                                @endfor
+                        </div>
+                    </div>
+                    <p class="text-gray-700 text-sm mb-2">{{ $review['comment'] }}</p>
+                    <div class="text-gray-400 text-xs">{{ \Carbon\Carbon::parse($review['date'])->format('F j, Y') }}
+                    </div>
+                </div>
+                @endforeach
+            </div>
+        </div>
+
     </div>
 
 
