@@ -148,17 +148,30 @@
                 </div>
                 @endif
 
-                {{-- Main Product Image --}}
+                {{-- Product Images --}}
                 <div class="md:col-span-2">
-                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">Product Image</p>
-                    @if ($product->image_path)
-                    <img src="{{ Storage::url($product->image_path) }}" alt="{{ $product->name }} Image"
-                        class="max-w-xs h-auto rounded-md shadow-md border border-gray-200 dark:border-neutral-700">
+                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">Product Images</p>
+
+                    @if ($product->image_path || $product->images)
+                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                        {{-- Main Product Image --}}
+                        @if ($product->image_path)
+                        <img src="{{ Storage::url($product->image_path) }}" alt="{{ $product->name }} Image"
+                            class="w-full h-auto rounded-md shadow-md border border-gray-200 dark:border-neutral-700">
+                        @endif
+
+                        {{-- Additional Images --}}
+                        @if ($product->images)
+                        @foreach (json_decode($product->images, true) as $image)
+                        <img src="{{ Storage::url($image['image_path']) }}" alt="{{ $product->name }} Additional Image"
+                            class="w-full h-auto rounded-md shadow-md border border-gray-200 dark:border-neutral-700">
+                        @endforeach
+                        @endif
+                    </div>
                     @else
-                    <p class="text-gray-600 dark:text-gray-400">No main image uploaded for this product.</p>
+                    <p class="text-gray-600 dark:text-gray-400">No images uploaded for this product.</p>
                     @endif
                 </div>
-
 
                 {{-- Additional Images Link --}}
                 <div class="md:col-span-2">
