@@ -165,12 +165,13 @@
                             <!-- Price -->
                             <div class="flex items-center justify-between text-sm">
                                 <div>
-                                    <span class="text-lg font-bold text-orange-600">${{ number_format($product->price,
-                                        2)
-                                        }}</span>
+                                    <span class="text-lg font-bold text-orange-600">
+                                        ${{ number_format($product->sale_price ?? $product->price, 2) }}
+                                    </span>
                                     @if($product->sale_price)
-                                    <span class="text-xs text-gray-400 line-through ml-1">${{
-                                        number_format($product->price, 2) }}</span>
+                                    <span class="text-xs text-gray-400 line-through ml-1">
+                                        ${{ number_format($product->price, 2) }}
+                                    </span>
                                     @endif
                                 </div>
 
