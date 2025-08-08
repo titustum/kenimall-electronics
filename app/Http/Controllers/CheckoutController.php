@@ -12,9 +12,21 @@ use Stripe\PaymentIntent;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\OrderConfirmationMail;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Http;
+
 
 class CheckoutController extends Controller
 {
+    protected $apiKey;
+    protected $sandbox;
+
+    public function __construct()
+    {
+        $this->apiKey = config('services.auspost.api_key');
+        $this->sandbox = config('services.auspost.sandbox', true);
+    }
+
+
     public function index()
     {
         // Ensure $cart is available, and set default if empty
@@ -237,4 +249,33 @@ class CheckoutController extends Controller
             return redirect()->route('orders.payment-failed')->with('error', 'Payment error: ' . $e->getMessage());
         }
     }
+
+
+    public function getQuote($toPostcode, $weightKg)
+    {
+        $fromPostcode = '3806'; // Berwick VIC
+
+        $response = Http::withHeaders([
+            'AUTH-KEY' => $this->apiKey
+        ])->get("{$this->baseUrl()}/rates/price", [
+            'from_postcode' => $fromPostcode,
+            'to_postcode' => $toPostcode,
+            'length' => 22,
+            'width' => 16,
+            'height' => 7,
+            'weight' => $weightKg * 1000, // in grams
+            'service_code' => 'AUS_PARCEL_REGULAR',
+        ]);
+
+        return $response->json();
+    }
+
+    protected function baseUrl()
+    {
+        return $this->sandbox
+            ? 'https://digitalapi.auspost.com.au/test/shipping/v1'
+            : 'https://digitalapi.auspost.com.au/shipping/v1';
+    }
+
+
 }
