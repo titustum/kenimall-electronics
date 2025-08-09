@@ -27,19 +27,31 @@ class CheckoutController extends Controller
     }
 
 
-    public function index()
+    public function index() 
     {
-        // Ensure $cart is available, and set default if empty
         $cart = session('cart', []);
         $total = collect($cart)->sum(fn($item) => $item['price'] * $item['quantity']);
 
-        // Check if cart is empty, redirect if so
         if (empty($cart)) {
             return redirect()->route('cart.index')->with('info', 'Your cart is empty. Please add items before checking out.');
         }
 
-        return view('checkout.index', compact('cart', 'total'));
+        // Hardcoded destination postcode for Perth
+        $toPostcode = '6000';
+
+        // Calculate total weight from cart, hardcode weights if not available (e.g. 1kg per item)
+        $totalWeightKg = 0;
+        foreach ($cart as $item) {
+            $weightPerItemKg = $item['weight'] ?? 1; // default 1kg if weight not set
+            $totalWeightKg += $weightPerItemKg * $item['quantity'];
+        }
+
+        // Get shipping quote from AUS Post API
+        $shippingInfo = $this->getQuote($toPostcode, $totalWeightKg);
+
+        return view('checkout.index', compact('cart', 'total', 'shippingInfo'));
     }
+
 
     /**
      * Process payment and create the order if payment succeeds immediately.
@@ -256,25 +268,74 @@ class CheckoutController extends Controller
         $fromPostcode = '3806'; // Berwick VIC
 
         $response = Http::withHeaders([
-            'AUTH-KEY' => $this->apiKey
-        ])->get("{$this->baseUrl()}/rates/price", [
+            'auth-key' => $this->apiKey
+        ])->get($this->baseUrl(), [
             'from_postcode' => $fromPostcode,
             'to_postcode' => $toPostcode,
-            'length' => 22,
-            'width' => 16,
-            'height' => 7,
-            'weight' => $weightKg * 1000, // in grams
+            'length' => 22,  // cm
+            'width' => 16,   // cm
+            'height' => 7,   // cm
+            'weight' => $weightKg, // in KGs, NOT grams
             'service_code' => 'AUS_PARCEL_REGULAR',
         ]);
 
-        return $response->json();
+        // Log for debugging
+        Log::info('AusPost API response', [
+            'status' => $response->status(),
+            'body' => $response->body(),
+        ]);
+
+        if ($response->successful()) {
+            return $response->json();
+        }
+
+        return null;
     }
+ 
+    public function calculate(Request $request)
+    {
+        $validated = $request->validate([
+            'from_postcode' => 'required',
+            'to_postcode' => 'required',
+            'length' => 'required|numeric',
+            'width' => 'required|numeric',
+            'height' => 'required|numeric',
+            'weight' => 'required|numeric',
+            'service_code' => 'required',
+        ]);
+
+        $response = Http::withHeaders([
+            'auth-key' => $this->apiKey, 
+        ])->get($this->baseUrl(), [
+            'from_postcode' => $validated['from_postcode'],
+            'to_postcode' => $validated['to_postcode'],
+            'length' => $validated['length'],
+            'width' => $validated['width'],
+            'height' => $validated['height'],
+            'weight' => $validated['weight'],
+            'service_code' => $validated['service_code'],
+        ]);
+
+        if ($response->successful()) {
+            $result = $response->json();
+
+            return response()->json([
+                'success' => true,
+                'service' => $result['postage_result']['service'],
+                'delivery_time' => $result['postage_result']['delivery_time'] ?? '',
+                'cost' => $result['postage_result']['total_cost'],
+            ]);
+        }
+
+        return response()->json(['success' => false], 400);
+}
+
+
+
 
     protected function baseUrl()
     {
-        return $this->sandbox
-            ? 'https://digitalapi.auspost.com.au/test/shipping/v1'
-            : 'https://digitalapi.auspost.com.au/shipping/v1';
+        return 'https://digitalapi.auspost.com.au/postage/parcel/domestic/calculate.json';
     }
 
 

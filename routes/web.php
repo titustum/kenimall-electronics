@@ -54,6 +54,9 @@ Route::resource('cart', CartController::class)->only(['index', 'store', 'update'
 Route::resource('products' , ProductController::class);
 Route::resource('categories' , CategoryController::class);  
 
+Route::post('/calculate-shipping', [CheckoutController::class, 'calculate'])->name('shipping.calculate');
+
+
 
 
 // Admin Routes Group

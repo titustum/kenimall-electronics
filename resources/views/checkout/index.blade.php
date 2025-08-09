@@ -195,19 +195,43 @@
                             <span class="font-medium text-gray-700">Subtotal:</span>
                             <span class="font-semibold text-gray-800">AUD${{ number_format($total, 2) }}</span>
                         </div>
+
+                        {{-- Shipping Info --}}
+                        @if(isset($shippingInfo['postage_result']))
+                        <div class="flex justify-between items-center mb-2 text-base sm:text-lg">
+                            <span class="font-medium text-gray-700">
+                                Shipping ({{ $shippingInfo['postage_result']['service'] }}):
+                            </span>
+                            <span class="font-semibold text-gray-800">
+                                AUD${{ number_format($shippingInfo['postage_result']['total_cost'], 2) }}
+                            </span>
+                        </div>
+                        <div class="text-sm text-gray-600 mb-4">
+                            {{ $shippingInfo['postage_result']['delivery_time'] }}
+                        </div>
+                        @else
                         <div class="flex justify-between items-center mb-4 text-base sm:text-lg">
                             <span class="font-medium text-gray-700">Shipping:</span>
-                            <span class="font-semibold text-gray-800">Free</span> {{-- Or calculate based on your logic
-                            --}}
+                            <span class="font-semibold text-gray-800">Pending</span>
                         </div>
+                        @endif
+
+                        {{-- Order Total --}}
+                        @php
+                        $shippingCost = isset($shippingInfo['postage_result']['total_cost']) ?
+                        floatval($shippingInfo['postage_result']['total_cost']) : 0;
+                        $grandTotal = $total + $shippingCost;
+                        @endphp
+
                         <div
                             class="flex justify-between items-center text-base sm:text-xl md:text-2xl font-bold text-orange-600 border-t border-gray-300 pt-4">
                             <span>Order Total:</span>
-                            <span>AUD${{ number_format($total, 2) }}</span>
+                            <span>AUD${{ number_format($grandTotal, 2) }}</span>
                         </div>
                     </div>
                 </div>
             </div>
+
 
         </div>
     </div>
