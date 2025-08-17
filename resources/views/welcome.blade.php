@@ -1,95 +1,13 @@
 <x-custom-layout>
 
 
-    <section id="hero"
-        class="relative py-12 flex flex-col justify-center min-h-screen pt-24 px-4 sm:px-6 lg:px-12 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white overflow-hidden">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center h-full">
-
-            <!-- Text Content -->
-            <div class="text-center lg:text-left space-y-6" data-aos="fade-right">
-                <div
-                    class="inline-flex items-center gap-2 bg-white/10 backdrop-blur px-4 py-2 rounded-full text-sm font-medium">
-                    <i class="fas fa-bolt text-yellow-400"></i>
-                    <span>Latest Technology</span>
-                </div>
-
-                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black leading-tight">
-                    Discover the Future of
-                    <span class="relative text-yellow-400">
-                        Electronics
-                        <span class="absolute -bottom-1 left-0 w-full h-1 bg-yellow-400 rounded-full"></span>
-                    </span>
-                </h1>
-
-                <p class="text-gray-300 text-lg max-w-xl mx-auto lg:mx-0">
-                    Premium smartphones, laptops & smart devices — innovation meets performance.
-                </p>
-
-                <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                    <a href="{{ route('products.index') }}"
-                        class="group bg-yellow-400 hover:bg-yellow-300 text-gray-900 px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl flex items-center justify-center gap-3">
-                        <i class="fas fa-shopping-bag group-hover:rotate-12 transition-transform"></i>
-                        <span>Shop Now</span>
-                        <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
-                    </a>
-
-                    <a href="{{ route('categories.index') }}"
-                        class="group bg-white/10 backdrop-blur hover:bg-white hover:text-gray-900 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 flex items-center justify-center gap-3">
-                        <i class="fas fa-th-large"></i>
-                        <span>View Categories</span>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Image Content -->
-            <div class="relative flex justify-center lg:justify-end" data-aos="fade-left">
-                <div class="relative floating-animation">
-                    <div
-                        class="w-80 h-80 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full pulse-glow flex items-center justify-center">
-                        <div class="w-72 h-72 bg-white rounded-full flex items-center justify-center shadow-2xl">
-                            <i class="fas fa-mobile-alt text-6xl text-gray-800"></i>
-                        </div>
-                    </div>
-
-                    <div
-                        class="absolute -top-4 -right-4 bg-white/10 backdrop-blur px-4 py-2 rounded-full text-white font-bold text-sm shadow-lg">
-                        NEW ARRIVAL
-                    </div>
-
-                    <div
-                        class="absolute -bottom-4 -left-4 bg-green-500 text-white px-4 py-2 rounded-full font-bold text-sm shadow-lg">
-                        ✓ In Stock
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <a href="#products"
-            class="absolute bottom-6 left-1/2 transform -translate-x-1/2 group flex flex-col items-center text-white text-sm">
-            <div
-                class="w-6 h-10 border-2 border-white rounded-full flex items-start justify-center p-1 mb-2 animate-bounce group-hover:scale-105 transition-transform">
-                <div class="w-1 h-2 bg-white rounded-full"></div>
-            </div>
-            <span class="opacity-70 group-hover:opacity-100 transition-opacity duration-300">
-                Scroll to explore
-            </span>
-        </a>
-
-    </section>
-
-
-
     <!-- Popular Products Section -->
-    <section id="products" class="py-12 sm:py-16 md:py-20 bg-white/10" data-aos="fade-up">
+    <section id="products" class="mt-20 py-12 sm:py-16 md:py-20 bg-white/10" data-aos="fade-up">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
             <!-- Section Header -->
             <div class="text-center mb-10 sm:mb-16">
-                <div
-                    class="inline-flex items-center bg-gradient-to-r from-purple-100 to-pink-100 px-3 sm:px-4 py-1 sm:py-2 rounded-full text-purple-700 text-sm sm:text-base font-medium mb-3 sm:mb-4">
-                    <i class="fas fa-fire mr-2"></i>
-                    Trending Now
-                </div>
+
                 <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 sm:mb-4">Popular
                     Products</h2>
                 <p class="text-sm sm:text-base md:text-xl text-gray-600 max-w-2xl mx-auto">Discover our most loved
