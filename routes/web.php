@@ -54,6 +54,7 @@ Route::resource('cart', CartController::class)->only(['index', 'store', 'update'
 Route::resource('products' , ProductController::class);
 Route::resource('categories' , CategoryController::class);  
 
+Route::get('/get-shipping-quote/{postcode}/{weight}', [CheckoutController::class, 'getQuote'])->name('shipping.get.quote');
 Route::post('/calculate-shipping', [CheckoutController::class, 'calculate'])->name('shipping.calculate');
 
 

@@ -233,7 +233,7 @@
                         <i class="fas fa-shipping-fast text-xl sm:text-2xl text-blue-600"></i>
                     </div>
                     <h3 class="text-base sm:text-lg font-semibold text-gray-900 mb-1">Free Shipping</h3>
-                    <p class="text-sm text-gray-600">Free delivery on orders over $100. Fast and secure shipping
+                    <p class="text-sm text-gray-600">Free delivery on some orders. Fast and secure shipping
                         worldwide.</p>
                 </div>
 

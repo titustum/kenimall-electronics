@@ -1,5 +1,5 @@
 <x-custom-layout>
-    <div class="max-w-4xl mx-auto p-6 mt-20 md:mt-28 bg-white shadow-lg rounded-lg">
+    <div class="max-w-4xl mx-auto mb-6 p-6 mt-20 md:mt-28 bg-white shadow-lg rounded-lg">
         <h2 class="text-3xl font-extrabold text-gray-900 mb-8 text-center">Complete Your Order</h2>
 
         {{-- Session-based success/error messages --}}
@@ -16,11 +16,13 @@
         </div>
         @endif
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <form id="payment-form" method="POST" action="{{ route('checkout.store') }}"
+            class="grid grid-cols-1 md:grid-cols-2 gap-8">
             {{-- Billing & Shipping Details Column --}}
             <div>
                 <h3 class="text-2xl font-semibold text-gray-800 mb-6">Shipping Information</h3>
-                <form id="payment-form" method="POST" action="{{ route('checkout.store') }}" class="space-y-6">
+
+                <section class="space-y-6">
                     @csrf
 
                     {{-- Full Name --}}
@@ -111,7 +113,8 @@
                     {{-- Postcode --}}
                     <div>
                         <label for="postcode" class="block text-sm font-medium text-gray-700 mb-1">Postcode</label>
-                        <input type="text" name="postcode" id="postcode" value="{{ old('postcode') }}"
+                        <input type="text" onchange='updateDeliveryAddress()' name="postcode" id="postcode"
+                            value="{{ old('postcode') }}"
                             class="w-full border px-4 py-2 border-gray-300 rounded-md shadow-sm focus:border-orange-500 focus:ring-orange-500 @error('postcode') border-red-500 @enderror"
                             required autocomplete="postal-code">
                         @error('postcode')
@@ -151,23 +154,8 @@
                         <div id="card-errors" class="text-red-600 text-sm mt-2" role="alert"></div>
                     </div>
 
-                    <input type="hidden" name="payment_method_id" id="payment-method-id-input">
 
-                    <button id="card-button" type="submit"
-                        class="w-full bg-orange-600 text-white font-semibold py-3 rounded-md hover:bg-orange-700 transition duration-300 ease-in-out
-                                   flex items-center justify-center space-x-2 disabled:opacity-75 disabled:cursor-not-allowed" disabled> {{-- Start
-                        disabled, enable once Stripe is ready --}}
-                        <span id="button-text">Pay & Place Order</span>
-                        <svg id="button-spinner" class="animate-spin h-5 w-5 text-white"
-                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" style="display: none;">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
-                            </circle>
-                            <path class="opacity-75" fill="currentColor"
-                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
-                            </path>
-                        </svg>
-                    </button>
-                </form>
+                </section>
             </div>
 
             {{-- Order Summary Column --}}
@@ -203,11 +191,15 @@
                                 Shipping ({{ $shippingInfo['postage_result']['service'] }}):
                             </span>
                             <span class="font-semibold text-gray-800">
-                                AUD${{ number_format($shippingInfo['postage_result']['total_cost'], 2) }}
+                                AUD$ <span id="shipping-quote">{{
+                                    number_format($shippingInfo['postage_result']['total_cost'], 2) }}</span>
                             </span>
                         </div>
                         <div class="text-sm text-gray-600 mb-4">
                             {{ $shippingInfo['postage_result']['delivery_time'] }}
+                        </div>
+                        <div class="text-sm text-gray-600 mb-4">
+                            Delivery to: <span id="delivery-address">Waiting for address...</span>
                         </div>
                         @else
                         <div class="flex justify-between items-center mb-4 text-base sm:text-lg">
@@ -221,19 +213,48 @@
                         $shippingCost = isset($shippingInfo['postage_result']['total_cost']) ?
                         floatval($shippingInfo['postage_result']['total_cost']) : 0;
                         $grandTotal = $total + $shippingCost;
+
                         @endphp
 
                         <div
                             class="flex justify-between items-center text-base sm:text-xl md:text-2xl font-bold text-orange-600 border-t border-gray-300 pt-4">
                             <span>Order Total:</span>
-                            <span>AUD${{ number_format($grandTotal, 2) }}</span>
+                            <span>AUD$
+                                <span id="order-total">{{ number_format($grandTotal, 2) }}</span>
+                            </span>
                         </div>
+
+
+
+
+                        <input type="hidden" name="payment_method_id" id="payment-method-id-input">
+
+                        {{-- Submit Button --}}
+                        <button id="card-button" type="submit"
+                            class=" w-full bg-orange-600 text-white font-semibold py-3 rounded-md hover:bg-orange-700 transition duration-300 ease-in-out
+                                   flex items-center justify-center space-x-2 disabled:opacity-75 disabled:cursor-not-allowed" disabled> {{-- Start
+                            disabled, enable once Stripe is ready --}}
+                            <span id="button-text">Pay & Place Order</span>
+                            <svg id="button-spinner" class="animate-spin h-5 w-5 text-white"
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                style="display: none;">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                                    stroke-width="4">
+                                </circle>
+                                <path class="opacity-75" fill="currentColor"
+                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                                </path>
+                            </svg>
+                        </button>
+
+
+
                     </div>
                 </div>
             </div>
 
 
-        </div>
+        </form>
     </div>
 
     @push('scripts')
@@ -323,5 +344,35 @@
             form.submit();
         });
     </script>
+
+
+    <script>
+        function updateDeliveryAddress() {
+        const address = document.getElementById('address').value;
+        const suburb = document.getElementById('suburb').value;
+        const state = document.getElementById('state').value;
+        const postcode = document.getElementById('postcode').value;
+
+        const deliveryAddress = `${address}, ${suburb}, ${state}, ${postcode}`;
+        document.getElementById('delivery-address').textContent = deliveryAddress;
+
+
+        const weight = {{ count($cart) }};
+
+        // Fetch shipping quote
+        fetch(`{{ url('/get-shipping-quote') }}/${postcode}/${weight}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.postage_result) {
+                    // console.log(data);
+                    document.getElementById('shipping-quote').textContent = `${data.postage_result.total_cost}`;
+                    document.getElementById('order-total').textContent = `${(parseFloat(data.postage_result.total_cost) + parseFloat({{ $total }})).toFixed(2)}`;
+                } else {
+                    document.getElementById('shipping-quote').textContent = 'Error.';
+                }
+            });
+    }
+    </script>
+
     @endpush
 </x-custom-layout>
