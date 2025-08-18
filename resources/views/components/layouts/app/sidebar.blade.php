@@ -9,15 +9,15 @@
     <flux:sidebar sticky stashable class="border-r border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
         <flux:sidebar.toggle class="lg:hidden" icon="x-mark" />
 
-        <a href="{{ route('admin.dashboard') }}" class="mr-5 flex items-center space-x-2" wire:navigate>
+        <a href="{{ route('dashboard') }}" class="mr-5 flex items-center space-x-2" wire:navigate>
             <x-app-logo />
         </a>
 
         <flux:navlist variant="outline">
             <flux:navlist.group heading="Main links" class="grid">
-                <a href="{{ route('admin.dashboard') }}"
+                <a href="{{ route('dashboard') }}"
                     class="flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium
-                              {{ request()->routeIs('admin.dashboard') ? 'bg-gray-100 text-gray-900 dark:bg-neutral-700 dark:text-white' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-neutral-700 dark:hover:text-white' }}"
+                              {{ request()->routeIs('dashboard') ? 'bg-gray-100 text-gray-900 dark:bg-neutral-700 dark:text-white' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-neutral-700 dark:hover:text-white' }}"
                     wire:navigate>
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg">

@@ -103,13 +103,13 @@ class DashboardController extends Controller
             'description' => 'Welcome to the admin dashboard. Here you can manage your application settings, users, and more.',
 
             // Pass key metrics (current period values)
-            'totalSales' => $currentTotalSales,
+            'totalSales' => $currentTotalSales ?? 0,
             'salesChange' => $salesChange,
-            'totalOrders' => $currentTotalOrders,
+            'totalOrders' => $currentTotalOrders ?? 0,
             'ordersChange' => $ordersChange,
-            'totalCustomers' => $currentTotalCustomers,
+            'totalCustomers' => $currentTotalCustomers ?? 0,
             'customersChange' => $customersChange,
-            'averageOrderValue' => $currentAverageOrderValue,
+            'averageOrderValue' => $currentAverageOrderValue ?? 0,
             'aovChange' => $aovChange,
 
             // Pass management overview counts

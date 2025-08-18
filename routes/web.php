@@ -13,10 +13,6 @@ use Livewire\Volt\Volt;
 
 Route::get('/', [WelcomeController::class, 'index'])->name('home');
 
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
-
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
 
@@ -51,11 +47,12 @@ Route::resource('categories', CategoryController::class);
 Route::get('/get-shipping-quote/{postcode}/{weight}', [CheckoutController::class, 'getQuote'])->name('shipping.get.quote');
 Route::post('/calculate-shipping', [CheckoutController::class, 'calculate'])->name('shipping.calculate');
 
+Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])
+    ->name('dashboard')
+    ->middleware(['auth', 'verified']);
+
 // Admin Routes Group
 Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
-    // Dashboard route (if you have one)
-    Route::get('dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
-
     // Product Routes
     Route::resource('products', App\Http\Controllers\Admin\ProductController::class);
     Route::resource('categories', App\Http\Controllers\Admin\CategoryController::class);
