@@ -55,8 +55,8 @@
                             value="{{ old('phone', auth()->user()->phone ?? '') }}"
                             class="w-full border px-4 py-2 border-gray-300 rounded-md shadow-sm focus:border-orange-500 focus:ring-orange-500 @error('phone') border-red-500 @enderror"
                             placeholder="e.g. 04XX XXX XXX or +61 4XX XXX XXX"
-                            pattern="^(\+?61|0)4\d{2}[ ]?\d{3}[ ]?\d{3}$|^(\+?61|0)[2-3,7-8]\d{7,8}$" {{-- Basic AU
-                            phone pattern --}}
+                            pattern="^(\+?61|0)4\d{2}\s?\d{3}\s?\d{3}$|^(\+?61|0)[2378]\d{1}\s?\d{3}\s?\d{4}$" {{--
+                            Basic AU phone pattern --}}
                             title="Enter a valid Australian phone number (e.g., 04XX XXX XXX or +61 4XX XXX XXX)"
                             required autocomplete="tel">
                         @error('phone')
@@ -113,8 +113,8 @@
                     {{-- Postcode --}}
                     <div>
                         <label for="postcode" class="block text-sm font-medium text-gray-700 mb-1">Postcode</label>
-                        <input type="text" onchange='updateDeliveryAddress()' name="postcode" id="postcode"
-                            value="{{ old('postcode') }}"
+                        <input type="number" min="0200" max="9999" onchange='updateDeliveryAddress()' name="postcode"
+                            id="postcode" value="{{ old('postcode') }}"
                             class="w-full border px-4 py-2 border-gray-300 rounded-md shadow-sm focus:border-orange-500 focus:ring-orange-500 @error('postcode') border-red-500 @enderror"
                             required autocomplete="postal-code">
                         @error('postcode')

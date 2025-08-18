@@ -75,6 +75,13 @@
                             </td>
                         </tr>
                         @endforeach
+                        <tr class="border-b border-gray-200 hover:bg-gray-50">
+                            {{-- Zebra stripes --}}
+                            <td class="py-3 px-6 text-left" colspan="3">Shipping cost:</td>
+                            <td class="py-3 px-6 text-right">${{ number_format(($order->total)-($item->price *
+                                $item->quantity), 2) }}</td>
+                        </tr>
+
                         {{-- Handle case where there are no items, though unlikely for an order --}}
                         @if($order->items->isEmpty())
                         <tr>
@@ -85,7 +92,7 @@
                     </tbody>
                     <tfoot>
                         <tr class="text-gray-800 text-base font-bold bg-gray-100">
-                            <td colspan="3" class="py-3 px-6 text-right">Total</td>
+                            <td colspan="3" class="py-3 px-6 text-right">Total Paid</td>
                             <td class="py-3 px-6 text-right">AUD ${{ number_format($order->total, 2) }}</td>
                         </tr>
                     </tfoot>

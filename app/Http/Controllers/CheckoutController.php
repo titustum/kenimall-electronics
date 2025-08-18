@@ -74,7 +74,13 @@ class CheckoutController extends Controller
         }
 
         $totalAmount = collect($cart)->sum(fn ($item) => $item['price'] * $item['quantity']);
-        $totalAmountInCents = $totalAmount * 100;
+
+        // add get quote
+        $shippingInfo = $this->getQuote($request->postcode, count($cart));
+
+        $shippingCost = $shippingInfo['postage_result']['total_cost'] ?? 0;
+
+        $totalAmountInCents = $totalAmount * 100 + $shippingCost * 100; // Convert to cents
 
         // Stripe API key for AUD
         Stripe::setApiKey(config('services.stripe.secret'));
@@ -115,6 +121,7 @@ class CheckoutController extends Controller
                     'checkout_country' => $request->country, // Store AU
                     'payment_intent_id' => $paymentIntent->id,
                     'cart_for_return' => $cart,
+                    'shipping_cost' => $shippingCost,
                 ]);
 
                 return response()->json([
@@ -140,7 +147,7 @@ class CheckoutController extends Controller
                     'state' => $request->state,     // Save state
                     'postcode' => $request->postcode, // Save postcode
                     'country' => $request->country, // Save AU
-                    'total' => $totalAmount,
+                    'total' => $totalAmount + $shippingCost,
                     'status' => 'paid',
                     'payment_intent_id' => $paymentIntent->id,
                 ]);

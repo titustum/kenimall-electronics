@@ -20,20 +20,15 @@ $color_border = '#e5e7eb'; // gray-200
 
     <style type="text/css">
         /* Base styles */
+        /* Base styles */
         body {
             margin: 0;
             padding: 0;
             -webkit-text-size-adjust: 100%;
             background-color: #f2f2f2;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
-
-            color: {
-                    {
-                    $color_text_dark
-                }
-            }
-
-            ;
+            color: #374151;
+            /* $color_text_dark */
         }
 
         table {
@@ -54,13 +49,8 @@ $color_border = '#e5e7eb'; // gray-200
 
         /* Links */
         a {
-            color: {
-                    {
-                    $color_primary
-                }
-            }
-
-            ;
+            color: #F97316;
+            /* $color_primary */
             text-decoration: none;
         }
 
@@ -77,14 +67,8 @@ $color_border = '#e5e7eb'; // gray-200
         h6 {
             margin-top: 0;
             margin-bottom: 10px;
-
-            color: {
-                    {
-                    $color_text_dark
-                }
-            }
-
-            ;
+            color: #374151;
+            /* $color_text_dark */
         }
 
         h1 {
@@ -107,19 +91,16 @@ $color_border = '#e5e7eb'; // gray-200
             max-width: 600px;
             margin: 0 auto;
             background-color: #ffffff;
+            /* $color_panel_bg */
             border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+                0 2px 4px -1px rgba(0, 0, 0, 0.06);
         }
 
         .header {
-            background-color: {
-                    {
-                    $color_primary
-                }
-            }
-
-            ;
+            background-color: #F97316;
+            /* $color_primary */
             padding: 20px 0;
             text-align: center;
         }
@@ -132,78 +113,38 @@ $color_border = '#e5e7eb'; // gray-200
 
         .content {
             padding: 25px 30px;
-
-            background-color: {
-                    {
-                    $color_panel_bg
-                }
-            }
-
-            ;
+            background-color: #ffffff;
+            /* $color_panel_bg */
         }
 
         .footer {
             padding: 20px 30px;
             text-align: center;
-
-            background-color: {
-                    {
-                    $color_bg_light
-                }
-            }
-
-            ;
-
-            border-top: 1px solid {
-                    {
-                    $color_border
-                }
-            }
-
-            ;
+            background-color: #F9FAFB;
+            /* $color_bg_light */
+            border-top: 1px solid #e5e7eb;
+            /* $color_border */
         }
 
         .footer p {
             font-size: 12px;
             line-height: 1.5em;
-
-            color: {
-                    {
-                    $color_text_light
-                }
-            }
-
-            ;
+            color: #6B7280;
+            /* $color_text_light */
         }
 
         .footer a {
-            color: {
-                    {
-                    $color_text_light
-                }
-            }
-
-            ;
+            color: #6B7280;
+            /* $color_text_light */
             text-decoration: underline;
         }
 
         /* Panel for sections */
         .panel {
-            background-color: {
-                    {
-                    $color_panel_bg
-                }
-            }
-
-            ;
-
-            border: 1px solid {
-                    {
-                    $color_border
-                }
-            }
-
-            ;
+            background-color: #ffffff;
+            /* $color_panel_bg */
+            border: 1px solid #e5e7eb;
+            /* $color_border */
             border-radius: 8px;
             padding: 25px;
             margin-bottom: 25px;
@@ -214,70 +155,36 @@ $color_border = '#e5e7eb'; // gray-200
             width: 100%;
             margin-bottom: 20px;
             border-collapse: collapse;
-
-            border: 1px solid {
-                    {
-                    $color_border
-                }
-            }
-
-            ;
+            border: 1px solid #e5e7eb;
+            /* $color_border */
             border-radius: 6px;
             overflow: hidden;
         }
 
         .custom-table th {
-            background-color: {
-                    {
-                    $color_bg_light
-                }
-            }
-
-            ;
-
-            color: {
-                    {
-                    $color_text_dark
-                }
-            }
-
-            ;
+            background-color: #F9FAFB;
+            /* $color_bg_light */
+            color: #374151;
+            /* $color_text_dark */
             padding: 12px 18px;
             text-align: left;
             font-size: 14px;
             text-transform: uppercase;
-
-            border-bottom: 1px solid {
-                    {
-                    $color_border
-                }
-            }
-
-            ;
+            border-bottom: 1px solid #e5e7eb;
+            /* $color_border */
         }
 
         .custom-table td {
             padding: 12px 18px;
-
-            border-bottom: 1px solid {
-                    {
-                    $color_border
-                }
-            }
-
-            ;
+            border-bottom: 1px solid #e5e7eb;
+            /* $color_border */
             font-size: 15px;
             line-height: 1.5;
         }
 
         .custom-table tbody tr:nth-child(even) {
-            background-color: {
-                    {
-                    $color_bg_light
-                }
-            }
-
-            ;
+            background-color: #F9FAFB;
+            /* $color_bg_light */
         }
 
         .custom-table tbody tr:last-child td {
@@ -289,14 +196,8 @@ $color_border = '#e5e7eb'; // gray-200
             font-weight: bold;
             font-size: 16px;
             text-align: right;
-
-            border-top: 2px solid {
-                    {
-                    $color_border
-                }
-            }
-
-            ;
+            border-top: 2px solid #e5e7eb;
+            /* $color_border */
         }
 
         .custom-table tfoot td:first-child {
@@ -313,23 +214,11 @@ $color_border = '#e5e7eb'; // gray-200
             font-weight: 600;
             font-size: 16px;
             line-height: 1.25;
-
-            background-color: {
-                    {
-                    $color_primary
-                }
-            }
-
-            ;
+            background-color: #F97316;
+            /* $color_primary */
             color: #ffffff;
-
-            border: 1px solid {
-                    {
-                    $color_primary
-                }
-            }
-
-            ;
+            border: 1px solid #F97316;
+            /* $color_primary */
             -webkit-text-size-adjust: none;
         }
 
