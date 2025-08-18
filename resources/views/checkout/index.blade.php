@@ -28,7 +28,7 @@
                     {{-- Full Name --}}
                     <div>
                         <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-                        <input type="text" name="name" id="name" value="{{ old('name', auth()->user()->name ?? '') }}"
+                        <input type="text" name="name" id="name" value="{{ old('name') }}"
                             class="w-full border px-4 py-2 border-gray-300 rounded-md shadow-sm focus:border-orange-500 focus:ring-orange-500 @error('name') border-red-500 @enderror"
                             required autocomplete="name">
                         @error('name')
@@ -39,8 +39,7 @@
                     {{-- Email Address --}}
                     <div>
                         <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
-                        <input type="email" name="email" id="email"
-                            value="{{ old('email', auth()->user()->email ?? '') }}"
+                        <input type="email" name="email" id="email" value="{{ old('email') }}"
                             class="w-full border px-4 py-2 border-gray-300 rounded-md shadow-sm focus:border-orange-500 focus:ring-orange-500 @error('email') border-red-500 @enderror"
                             required autocomplete="email">
                         @error('email')
@@ -51,8 +50,7 @@
                     {{-- Phone Number (Australian format) --}}
                     <div>
                         <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-                        <input type="tel" name="phone" id="phone"
-                            value="{{ old('phone', auth()->user()->phone ?? '') }}"
+                        <input type="tel" name="phone" id="phone" value="{{ old('phone') }}"
                             class="w-full border px-4 py-2 border-gray-300 rounded-md shadow-sm focus:border-orange-500 focus:ring-orange-500 @error('phone') border-red-500 @enderror"
                             placeholder="e.g. 04XX XXX XXX or +61 4XX XXX XXX"
                             pattern="^(\+?61|0)4\d{2}\s?\d{3}\s?\d{3}$|^(\+?61|0)[2378]\d{1}\s?\d{3}\s?\d{4}$" {{--
