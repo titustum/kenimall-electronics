@@ -6,13 +6,13 @@ use Illuminate\Http\Request;
 
 class WishlistController extends Controller
 {
-
-    public function index() {
+    public function index()
+    {
         $wishlist = session('wishlist', []);
         $products = \App\Models\Product::whereIn('id', $wishlist)->get();
+
         return view('wishlist.index', compact('products'));
     }
-
 
     public function toggle(Request $request)
     {
@@ -25,9 +25,9 @@ class WishlistController extends Controller
             $wishlist = array_diff($wishlist, [$productId]);
             session()->put('wishlist', $wishlist);
 
-            $wishlist_count = count($wishlist); 
+            $wishlist_count = count($wishlist);
 
-            return response()->json(['success' => true, 'wishlist_count'=>$wishlist_count, 'message' => 'Removed from wishlist']);
+            return response()->json(['success' => true, 'wishlist_count' => $wishlist_count, 'message' => 'Removed from wishlist']);
         } else {
             // Add to wishlist
             $wishlist[] = $productId;
@@ -35,9 +35,7 @@ class WishlistController extends Controller
 
             $wishlist_count = count($wishlist);
 
-            return response()->json(['success' => true, 'wishlist_count'=>$wishlist_count, 'message' => 'Added to wishlist']);
+            return response()->json(['success' => true, 'wishlist_count' => $wishlist_count, 'message' => 'Added to wishlist']);
         }
     }
-
-    
 }

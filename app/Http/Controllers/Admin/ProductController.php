@@ -73,7 +73,7 @@ class ProductController extends Controller
             $originalSlug = $validatedData['slug'];
             $count = 1;
             while (Product::where('slug', $validatedData['slug'])->exists()) {
-                $validatedData['slug'] = $originalSlug . '-' . $count++;
+                $validatedData['slug'] = $originalSlug.'-'.$count++;
             }
         }
 
@@ -87,14 +87,14 @@ class ProductController extends Controller
             Product::create($validatedData);
 
             return redirect()->route('admin.products.index')
-                             ->with('success', 'Product created successfully!');
+                ->with('success', 'Product created successfully!');
         } catch (\Exception $e) {
-            Log::error('Error creating product: ' . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine());
+            Log::error('Error creating product: '.$e->getMessage().' in '.$e->getFile().' on line '.$e->getLine());
+
             return back()->withInput()->with('error', 'Failed to create product. Please try again.');
         }
     }
 
-    
     /**
      * Show the form for editing the specified product.
      */
@@ -112,7 +112,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        
+
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
@@ -126,7 +126,7 @@ class ProductController extends Controller
             'condition' => 'nullable|string|in:New,Used,Refurbished',
             'color' => 'nullable|string|max:50',
             'image_path' => 'nullable|image|mimes:jpeg,png,webp,jpg,gif,svg|max:2048', // Image is nullable on update
-            'slug' => 'nullable|string|max:255|unique:products,slug,' . $product->id, // Unique slug, ignoring current product's slug
+            'slug' => 'nullable|string|max:255|unique:products,slug,'.$product->id, // Unique slug, ignoring current product's slug
         ]);
 
         // Handle image upload
@@ -149,7 +149,7 @@ class ProductController extends Controller
             $originalSlug = $validatedData['slug'];
             $count = 1;
             while (Product::where('slug', $validatedData['slug'])->where('id', '!=', $product->id)->exists()) {
-                $validatedData['slug'] = $originalSlug . '-' . $count++;
+                $validatedData['slug'] = $originalSlug.'-'.$count++;
             }
         }
 
@@ -164,9 +164,10 @@ class ProductController extends Controller
             $product->update($validatedData);
 
             return redirect()->route('admin.products.index')
-                             ->with('success', 'Product updated successfully!');
+                ->with('success', 'Product updated successfully!');
         } catch (\Exception $e) {
-            Log::error('Error updating product: ' . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine());
+            Log::error('Error updating product: '.$e->getMessage().' in '.$e->getFile().' on line '.$e->getLine());
+
             return back()->withInput()->with('error', 'Failed to update product. Please try again.');
         }
     }
@@ -182,7 +183,7 @@ class ProductController extends Controller
 
         return view('admin.products.show', compact('product'));
     }
- 
+
     /**
      * Remove the specified resource from storage.
      */
@@ -197,9 +198,10 @@ class ProductController extends Controller
             $product->delete();
 
             return redirect()->route('admin.products.index')
-                             ->with('success', 'Product deleted successfully!');
+                ->with('success', 'Product deleted successfully!');
         } catch (\Exception $e) {
-            Log::error('Error deleting product: ' . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine());
+            Log::error('Error deleting product: '.$e->getMessage().' in '.$e->getFile().' on line '.$e->getLine());
+
             return back()->with('error', 'Failed to delete product. Please try again.');
         }
     }

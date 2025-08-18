@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -17,6 +17,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::orderBy('name')->paginate(15);
+
         return view('admin.users.index', compact('users'));
     }
 
@@ -31,7 +32,7 @@ class UserController extends Controller
     /**
      * Store a newly created user in storage.
      */
-     public function store(Request $request)
+    public function store(Request $request)
     {
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
@@ -47,13 +48,13 @@ class UserController extends Controller
             User::create($validatedData);
 
             return redirect()->route('admin.users.index')
-                            ->with('success', 'User created successfully!');
+                ->with('success', 'User created successfully!');
         } catch (\Exception $e) {
-            Log::error('Error creating user: ' . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine());
+            Log::error('Error creating user: '.$e->getMessage().' in '.$e->getFile().' on line '.$e->getLine());
+
             return back()->withInput()->with('error', 'Failed to create user. Please try again.');
         }
     }
-
 
     /**
      * Display the specified user.
@@ -89,7 +90,7 @@ class UserController extends Controller
             'role' => 'required|in:admin,customer',
         ]);
 
-        if (!empty($validatedData['password'])) {
+        if (! empty($validatedData['password'])) {
             $validatedData['password'] = Hash::make($validatedData['password']);
         } else {
             unset($validatedData['password']);
@@ -99,9 +100,10 @@ class UserController extends Controller
             $user->update($validatedData);
 
             return redirect()->route('admin.users.index')
-                             ->with('success', 'User updated successfully!');
+                ->with('success', 'User updated successfully!');
         } catch (\Exception $e) {
-            Log::error('Error updating user: ' . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine());
+            Log::error('Error updating user: '.$e->getMessage().' in '.$e->getFile().' on line '.$e->getLine());
+
             return back()->withInput()->with('error', 'Failed to update user. Please try again.');
         }
     }
@@ -115,9 +117,10 @@ class UserController extends Controller
             $user->delete();
 
             return redirect()->route('admin.users.index')
-                             ->with('success', 'User deleted successfully!');
+                ->with('success', 'User deleted successfully!');
         } catch (\Exception $e) {
-            Log::error('Error deleting user: ' . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine());
+            Log::error('Error deleting user: '.$e->getMessage().' in '.$e->getFile().' on line '.$e->getLine());
+
             return back()->with('error', 'Failed to delete user. Please try again.');
         }
     }

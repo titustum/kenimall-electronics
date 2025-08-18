@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class ProductController extends Controller
@@ -14,7 +14,6 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
- 
     public function index(Request $request)
     {
         $filterName = '';
@@ -31,14 +30,12 @@ class ProductController extends Controller
         $categories = Category::all();
         $brands = Brand::all();
 
-        if(!isset($filterName )|| empty($filterName))
-        {
+        if (! isset($filterName) || empty($filterName)) {
             $filterName = 'All Products';
         }
 
         return view('products.index', compact('products', 'categories', 'brands', 'filterName'));
-}
-
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -47,13 +44,13 @@ class ProductController extends Controller
     {
         $categories = Category::all(); // Fetch all categories
         $brands = Brand::all(); // Fetch all brands
+
         return view('products.create', compact('categories', 'brands'));
     }
 
     /**
      * Store a newly created product in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -82,10 +79,10 @@ class ProductController extends Controller
         if ($request->has('specifications')) {
             // Filter out empty values
             $specs = array_filter($request->specifications, function ($value) {
-                return !empty($value);
+                return ! empty($value);
             });
-            
-            if (!empty($specs)) {
+
+            if (! empty($specs)) {
                 $specifications = json_encode($specs);
             }
         }
@@ -94,10 +91,10 @@ class ProductController extends Controller
         if ($request->has('features')) {
             // Filter out empty values
             $feats = array_filter($request->features, function ($value) {
-                return !empty($value);
+                return ! empty($value);
             });
-            
-            if (!empty($feats)) {
+
+            if (! empty($feats)) {
                 $features = json_encode($feats);
             }
         }
@@ -106,12 +103,12 @@ class ProductController extends Controller
         $imagePath = null;
         if ($request->hasFile('image_path')) {
             $image = $request->file('image_path');
-            $filename = time() . '_' . Str::slug($request->name) . '.' . $image->getClientOriginalExtension();
+            $filename = time().'_'.Str::slug($request->name).'.'.$image->getClientOriginalExtension();
             $imagePath = $image->storeAs('products', $filename, 'public');
         }
 
         // Create the product
-        $product = new Product();
+        $product = new Product;
         $product->name = $request->name;
         $product->description = $request->description;
         $product->model = $request->model;
@@ -126,15 +123,16 @@ class ProductController extends Controller
         $product->specifications = $specifications;
         $product->features = $features;
         $product->color = $request->color;
-        $product->image_path = $imagePath; 
-        $product->slug = $request->slug; 
-        
+        $product->image_path = $imagePath;
+        $product->slug = $request->slug;
+
         $product->save();
 
         // Redirect back with success message
         return redirect()->route('products.index')
             ->with('success', 'Product created successfully!');
     }
+
     /**
      * Display the specified resource.
      */
@@ -149,7 +147,6 @@ class ProductController extends Controller
 
         return view('products.view', compact('product', 'relatedProducts'));
     }
-
 
     /**
      * Show the form for editing the specified resource.
@@ -175,7 +172,6 @@ class ProductController extends Controller
         //
     }
 
-
     private function applyCategoryFilter(Request $request, $query, $filterName)
     {
         if ($request->filled('category')) {
@@ -185,6 +181,7 @@ class ProductController extends Controller
                 $filterName = $category->name;
             }
         }
+
         return [$query, $filterName];
     }
 
@@ -197,16 +194,15 @@ class ProductController extends Controller
             $query->where(function ($q) use ($searchTerms) {
                 foreach ($searchTerms as $term) {
                     $q->orWhere('name', 'like', "%{$term}%")
-                    ->orWhere('description', 'like', "%{$term}%");
+                        ->orWhere('description', 'like', "%{$term}%");
                 }
             });
 
-            $filterName = 'Search results for: ' . implode(', ', $searchTerms);
+            $filterName = 'Search results for: '.implode(', ', $searchTerms);
         }
 
         return [$query, $filterName];
     }
-
 
     private function applyCheckboxFilters(Request $request, $query, &$filterName)
     {
@@ -215,54 +211,49 @@ class ProductController extends Controller
         if ($request->has('categories') && is_array($request->categories)) {
             $query->whereIn('category_id', $request->categories);
             $categoryNames = Category::whereIn('id', $request->categories)->pluck('name')->toArray();
-            $labels[] = 'Categories: ' . implode(', ', $categoryNames);
+            $labels[] = 'Categories: '.implode(', ', $categoryNames);
         }
 
         if ($request->has('brands') && is_array($request->brands)) {
             $query->whereIn('brand_id', $request->brands);
             $brandNames = Brand::whereIn('id', $request->brands)->pluck('name')->toArray();
-            $labels[] = 'Brands: ' . implode(', ', $brandNames);
+            $labels[] = 'Brands: '.implode(', ', $brandNames);
         }
 
-        if (!empty($labels)) {
-            $filterName .= ($filterName ? ' | ' : '') . implode(' | ', $labels);
+        if (! empty($labels)) {
+            $filterName .= ($filterName ? ' | ' : '').implode(' | ', $labels);
         }
 
         return [$query, $filterName];
     }
-
 
     private function applyPriceFilter(Request $request, $query, &$filterName)
     {
         if ($request->filled('max_price')) {
             $query->where('price', '<=', $request->max_price);
-            $filterName .= ($filterName ? ' | ' : '') . 'Max Price: $' . number_format($request->max_price);
+            $filterName .= ($filterName ? ' | ' : '').'Max Price: $'.number_format($request->max_price);
         }
 
         return [$query, $filterName];
     }
-
 
     private function applyConditionFilter(Request $request, $query, &$filterName)
     {
         if ($request->filled('condition')) {
             $query->where('condition', $request->condition);
-            $filterName .= ($filterName ? ' | ' : '') . ucfirst($request->condition) . ' Condition';
+            $filterName .= ($filterName ? ' | ' : '').ucfirst($request->condition).' Condition';
         }
 
         return [$query, $filterName];
     }
 
-
-     private function applyStockFilter(Request $request, $query, &$filterName)
+    private function applyStockFilter(Request $request, $query, &$filterName)
     {
         if ($request->boolean('in_stock')) {
             $query->where('stock', '>', 0);
-            $filterName .= ($filterName ? ' | ' : '') . 'In Stock';
+            $filterName .= ($filterName ? ' | ' : '').'In Stock';
         }
 
         return [$query, $filterName];
     }
-
-
 }

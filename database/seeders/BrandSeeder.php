@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -37,9 +36,9 @@ class BrandSeeder extends Seeder
         ];
 
         foreach ($brands as $brand) {
-            DB::table('brands')->insert([ 
+            DB::table('brands')->insert([
                 'name' => $brand['name'],
-                'image_path' => 'brands/' . $brand['image'],
+                'image_path' => 'brands/'.$brand['image'],
                 'added_by' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),

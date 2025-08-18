@@ -2,22 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\OrderConfirmationMail;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Order;
-use App\Models\OrderItem;
-use Illuminate\Support\Str;
-use Stripe\Stripe;
-use Stripe\PaymentIntent;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\OrderConfirmationMail;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
-
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
+use Stripe\PaymentIntent;
+use Stripe\Stripe;
 
 class CheckoutController extends Controller
 {
     protected $apiKey;
+
     protected $sandbox;
 
     public function __construct()
@@ -26,11 +25,10 @@ class CheckoutController extends Controller
         $this->sandbox = config('services.auspost.sandbox', true);
     }
 
-
-    public function index() 
+    public function index()
     {
         $cart = session('cart', []);
-        $total = collect($cart)->sum(fn($item) => $item['price'] * $item['quantity']);
+        $total = collect($cart)->sum(fn ($item) => $item['price'] * $item['quantity']);
 
         if (empty($cart)) {
             return redirect()->route('cart.index')->with('info', 'Your cart is empty. Please add items before checking out.');
@@ -52,7 +50,6 @@ class CheckoutController extends Controller
         return view('checkout.index', compact('cart', 'total', 'shippingInfo'));
     }
 
-
     /**
      * Process payment and create the order if payment succeeds immediately.
      */
@@ -72,11 +69,11 @@ class CheckoutController extends Controller
 
         $cart = session('cart');
 
-        if (!$cart || count($cart) === 0) {
+        if (! $cart || count($cart) === 0) {
             return redirect()->route('cart.index')->with('error', 'Cart is empty');
         }
 
-        $totalAmount = collect($cart)->sum(fn($item) => $item['price'] * $item['quantity']);
+        $totalAmount = collect($cart)->sum(fn ($item) => $item['price'] * $item['quantity']);
         $totalAmountInCents = $totalAmount * 100;
 
         // Stripe API key for AUD
@@ -129,7 +126,7 @@ class CheckoutController extends Controller
             if ($paymentIntent->status === 'succeeded') {
                 // If payment succeeds, create the order
                 do {
-                    $orderNumber = 'ORD-' . date('Ymd') . '-' . strtoupper(Str::random(6));
+                    $orderNumber = 'ORD-'.date('Ymd').'-'.strtoupper(Str::random(6));
                 } while (Order::where('order_number', $orderNumber)->exists());
 
                 $order = Order::create([
@@ -158,7 +155,7 @@ class CheckoutController extends Controller
 
                 session()->forget('cart');
                 Mail::to($order->email)->send(new OrderConfirmationMail($order));
-                Log::info('Order ' . $order->id . ' placed and email sent successfully.');
+                Log::info('Order '.$order->id.' placed and email sent successfully.');
 
                 return redirect()->route('orders.show', $order)
                     ->with('success', 'Order placed successfully! You can track your order here.');
@@ -166,10 +163,12 @@ class CheckoutController extends Controller
 
             return redirect()->route('orders.payment-failed')->with('error', 'Payment was not completed.');
         } catch (\Stripe\Exception\CardException $e) {
-            Log::error('Stripe Card Error during checkout: ' . $e->getMessage() . ' - Code: ' . $e->getStripeCode());
+            Log::error('Stripe Card Error during checkout: '.$e->getMessage().' - Code: '.$e->getStripeCode());
+
             return back()->withInput()->with('error', $e->getMessage());
         } catch (\Exception $e) {
-            Log::error('Checkout Error: ' . $e->getMessage() . ' - Trace: ' . $e->getTraceAsString());
+            Log::error('Checkout Error: '.$e->getMessage().' - Trace: '.$e->getTraceAsString());
+
             return back()->withInput()->with('error', 'An error occurred during payment. Please try again or contact support.');
         }
     }
@@ -183,7 +182,7 @@ class CheckoutController extends Controller
 
         $paymentIntentId = $request->query('payment_intent');
 
-        if (!$paymentIntentId) {
+        if (! $paymentIntentId) {
             return redirect()->route('cart.index')->with('error', 'Invalid payment return.');
         }
 
@@ -207,13 +206,14 @@ class CheckoutController extends Controller
                 $country = session('checkout_country'); // Retrieve AU
                 $cart = session('cart_for_return');
 
-                if (!$name || !$email || !$phone || !$address || !$suburb || !$state || !$postcode || !$country || !$cart || count($cart) === 0) {
-                    Log::warning('Missing session data for order creation after 3D Secure for payment intent: ' . $paymentIntentId);
+                if (! $name || ! $email || ! $phone || ! $address || ! $suburb || ! $state || ! $postcode || ! $country || ! $cart || count($cart) === 0) {
+                    Log::warning('Missing session data for order creation after 3D Secure for payment intent: '.$paymentIntentId);
+
                     return redirect()->route('orders.payment-failed')->with('error', 'Missing session data for order creation after payment confirmation. Please contact support.');
                 }
 
                 do {
-                    $orderNumber = 'ORD-' . date('Ymd') . '-' . strtoupper(Str::random(6));
+                    $orderNumber = 'ORD-'.date('Ymd').'-'.strtoupper(Str::random(6));
                 } while (Order::where('order_number', $orderNumber)->exists());
 
                 $order = Order::create([
@@ -227,7 +227,7 @@ class CheckoutController extends Controller
                     'state' => $state,     // Save state
                     'postcode' => $postcode, // Save postcode
                     'country' => $country, // Save AU
-                    'total' => collect($cart)->sum(fn($item) => $item['price'] * $item['quantity']),
+                    'total' => collect($cart)->sum(fn ($item) => $item['price'] * $item['quantity']),
                     'status' => 'paid',
                     'payment_intent_id' => $paymentIntentId,
                 ]);
@@ -243,10 +243,10 @@ class CheckoutController extends Controller
                 session()->forget([
                     'cart', 'checkout_name', 'checkout_email', 'checkout_phone', 'checkout_address',
                     'checkout_suburb', 'checkout_state', 'checkout_postcode', 'checkout_country',
-                    'payment_intent_id', 'cart_for_return'
+                    'payment_intent_id', 'cart_for_return',
                 ]);
                 Mail::to($order->email)->send(new OrderConfirmationMail($order));
-                Log::info('Order ' . $order->id . ' processed via return path and email sent successfully.');
+                Log::info('Order '.$order->id.' processed via return path and email sent successfully.');
 
                 return redirect()->route('orders.show', $order)
                     ->with('success', 'Order placed and payment completed!');
@@ -254,21 +254,22 @@ class CheckoutController extends Controller
 
             return redirect()->route('orders.payment-failed')->with('error', 'Payment was not completed. Please try again.');
         } catch (\Stripe\Exception\CardException $e) {
-            Log::error('Stripe Card Error during return path: ' . $e->getMessage() . ' - Code: ' . $e->getStripeCode());
+            Log::error('Stripe Card Error during return path: '.$e->getMessage().' - Code: '.$e->getStripeCode());
+
             return redirect()->route('orders.payment-failed')->with('error', $e->getMessage());
         } catch (\Exception $e) {
-            Log::error('Checkout Return Error: ' . $e->getMessage() . ' - Trace: ' . $e->getTraceAsString());
-            return redirect()->route('orders.payment-failed')->with('error', 'Payment error: ' . $e->getMessage());
+            Log::error('Checkout Return Error: '.$e->getMessage().' - Trace: '.$e->getTraceAsString());
+
+            return redirect()->route('orders.payment-failed')->with('error', 'Payment error: '.$e->getMessage());
         }
     }
-
 
     public function getQuote($toPostcode, $weightKg)
     {
         $fromPostcode = '3806'; // Berwick VIC
 
         $response = Http::withHeaders([
-            'auth-key' => $this->apiKey
+            'auth-key' => $this->apiKey,
         ])->get($this->baseUrl(), [
             'from_postcode' => $fromPostcode,
             'to_postcode' => $toPostcode,
@@ -291,7 +292,7 @@ class CheckoutController extends Controller
 
         return null;
     }
- 
+
     public function calculate(Request $request)
     {
         $validated = $request->validate([
@@ -305,7 +306,7 @@ class CheckoutController extends Controller
         ]);
 
         $response = Http::withHeaders([
-            'auth-key' => $this->apiKey, 
+            'auth-key' => $this->apiKey,
         ])->get($this->baseUrl(), [
             'from_postcode' => $validated['from_postcode'],
             'to_postcode' => $validated['to_postcode'],
@@ -328,15 +329,10 @@ class CheckoutController extends Controller
         }
 
         return response()->json(['success' => false], 400);
-}
-
-
-
+    }
 
     protected function baseUrl()
     {
         return 'https://digitalapi.auspost.com.au/postage/parcel/domestic/calculate.json';
     }
-
-
 }

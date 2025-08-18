@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\ShippingConfirmationMail;
 use App\Models\Order;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail; // Import Mail facade
-use App\Mail\ShippingConfirmationMail; // Import your Mailable class
+use Illuminate\Support\Facades\Log; // Import Mail facade
+use Illuminate\Support\Facades\Mail; // Import your Mailable class
 
 class OrderController extends Controller
 {
@@ -17,6 +17,7 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::orderBy('created_at', 'desc')->paginate(15);
+
         return view('admin.orders.index', compact('orders'));
     }
 
@@ -45,6 +46,7 @@ class OrderController extends Controller
     public function show(Order $order)
     {
         $order->load('user'); // Eager load the 'user' relationship
+
         return view('admin.orders.show', compact('order'));
     }
 
@@ -54,6 +56,7 @@ class OrderController extends Controller
     public function edit(Order $order)
     {
         $order->load('user'); // Eager load the 'user' relationship for customer details
+
         return view('admin.orders.edit', compact('order'));
     }
 
@@ -76,6 +79,7 @@ class OrderController extends Controller
                 // Check if status changed from 'paid' to 'shipped'
                 if ($oldStatus === 'paid' && $validatedData['status'] === 'shipped') {
                     $this->dispatchShippingConfirmation($request, $order);
+
                     return back()->with('success', 'Order status updated to Shipped and confirmation email dispatched!');
                 }
 
@@ -91,6 +95,7 @@ class OrderController extends Controller
                     'tracking_number' => $validatedData['tracking_number'],
                     'carrier' => $validatedData['carrier'],
                 ]);
+
                 return back()->with('success', 'Shipping tracking information updated successfully!');
 
             } else {
@@ -102,7 +107,8 @@ class OrderController extends Controller
             // Catch validation exceptions specifically
             return back()->withErrors($e->errors())->withInput();
         } catch (\Exception $e) {
-            Log::error('Error updating order: ' . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine());
+            Log::error('Error updating order: '.$e->getMessage().' in '.$e->getFile().' on line '.$e->getLine());
+
             return back()->withInput()->with('error', 'Failed to update order. Please try again.');
         }
     }
@@ -116,9 +122,10 @@ class OrderController extends Controller
             $order->delete();
 
             return redirect()->route('admin.orders.index')
-                             ->with('success', 'Order deleted successfully!');
+                ->with('success', 'Order deleted successfully!');
         } catch (\Exception $e) {
-            Log::error('Error deleting order: ' . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine());
+            Log::error('Error deleting order: '.$e->getMessage().' in '.$e->getFile().' on line '.$e->getLine());
+
             return back()->with('error', 'Failed to delete order. Please try again.');
         }
     }
@@ -138,7 +145,7 @@ class OrderController extends Controller
         // otherwise default placeholders.
         $trackingNumber = $order->tracking_number ?? 'AP123456789AU'; // Example Australian Post tracking number
         $carrierName = $order->carrier ?? 'Australia Post';
-        $trackingUrl = 'https://auspost.com.au/mypost/track/#/details/' . $trackingNumber;
+        $trackingUrl = 'https://auspost.com.au/mypost/track/#/details/'.$trackingNumber;
         // --- End of example data ---
 
         // Ensure the order status and tracking details are saved before sending email
@@ -150,10 +157,10 @@ class OrderController extends Controller
             Mail::to($order->email)->send(
                 new ShippingConfirmationMail($order, $trackingNumber, $carrierName, $trackingUrl)
             );
-            Log::info('Shipping confirmation email sent for order: ' . $order->order_number);
+            Log::info('Shipping confirmation email sent for order: '.$order->order_number);
             // No redirect here, as this is called from within the update method
         } catch (\Exception $e) {
-            Log::error('Failed to send shipping confirmation email for order ' . $order->order_number . ': ' . $e->getMessage());
+            Log::error('Failed to send shipping confirmation email for order '.$order->order_number.': '.$e->getMessage());
             // You might want to add a session flash message here if this method was standalone
         }
     }

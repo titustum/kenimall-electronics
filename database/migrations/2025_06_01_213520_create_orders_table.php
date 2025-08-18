@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            
+
             // Customer/User Information
             $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete(); // User who placed the order
             $table->string('name');    // Customer's full name

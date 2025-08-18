@@ -26,7 +26,6 @@ class Order extends Model
         'carrier',         // Add this
     ];
 
-
     public function items(): HasMany
     {
         return $this->hasMany(OrderItem::class);
@@ -36,10 +35,9 @@ class Order extends Model
     {
         return $this->belongsTo(User::class);
     }
- 
+
     public function getRouteKeyName()
     {
         return 'order_number';
     }
-
 }

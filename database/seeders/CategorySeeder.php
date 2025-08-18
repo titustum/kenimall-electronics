@@ -2,10 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use App\Models\User;
-use Illuminate\Support\Str;
 
 class CategorySeeder extends Seeder
 {
@@ -28,11 +27,11 @@ class CategorySeeder extends Seeder
         ];
 
         // Insert categories into the categories table
-         foreach ($categories as $category) {
+        foreach ($categories as $category) {
             DB::table('categories')->insert([
                 'name' => $category['name'],
                 'slug' => $category['slug'],
-                'image_path' => 'categories/' . $category['image'],
+                'image_path' => 'categories/'.$category['image'],
                 'added_by' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),

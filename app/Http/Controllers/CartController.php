@@ -13,16 +13,16 @@ class CartController extends Controller
     public function index()
     {
         $cart = session()->get('cart', []);
+
         return view('cart.index', compact('cart'));
     }
-
 
     // Add product to cart
     public function store(Request $request)
     {
         $request->validate([
             'product_id' => 'required|exists:products,id',
-            'quantity' => 'required|integer|min:1'
+            'quantity' => 'required|integer|min:1',
         ]);
 
         $productId = $request->product_id;
@@ -39,7 +39,7 @@ class CartController extends Controller
                 'name' => $product->name,
                 'price' => $product->sale_price ?? $product->price,
                 'quantity' => $quantity,
-                'image' => Storage::exists($product->image_path) ? Storage::url($product->image_path) : $product->image_path
+                'image' => Storage::exists($product->image_path) ? Storage::url($product->image_path) : $product->image_path,
             ];
         }
 
@@ -47,16 +47,15 @@ class CartController extends Controller
 
         // Return updated cart data
         $totalItems = collect($cart)->sum('quantity');
-        $totalPrice = collect($cart)->sum(fn($item) => $item['quantity'] * $item['price']);
+        $totalPrice = collect($cart)->sum(fn ($item) => $item['quantity'] * $item['price']);
 
         return response()->json([
             'success' => true,
             'message' => 'Added to cart!',
             'cart_count' => $totalItems,
-            'cart_total' => number_format($totalPrice, 2)
+            'cart_total' => number_format($totalPrice, 2),
         ]);
     }
-
 
     // Update cart quantity
     public function update(Request $request, $id)
@@ -71,15 +70,12 @@ class CartController extends Controller
         return redirect()->back()->with('success', 'Cart updated!');
     }
 
-
     public function clear()
     {
         session()->forget('cart');
 
         return redirect()->back()->with('success', 'Cart has been cleared.');
     }
-
-
 
     public function destroy($id)
     {
@@ -92,6 +88,4 @@ class CartController extends Controller
 
         return redirect()->back()->with('success', 'Item removed from cart!');
     }
-
-
 }

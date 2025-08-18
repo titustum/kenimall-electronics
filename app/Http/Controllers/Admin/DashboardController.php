@@ -3,14 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Order;
-use App\Models\User;
-use App\Models\Product;
-use App\Models\Category;
 use App\Models\Brand;
-use Illuminate\Support\Facades\DB;
-use Carbon\Carbon; // Import Carbon
+use App\Models\Category;
+use App\Models\Order;
+use App\Models\Product;
+use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Http\Request; // Import Carbon
 
 class DashboardController extends Controller
 {
@@ -28,34 +27,32 @@ class DashboardController extends Controller
 
         // --- Current Period Metrics ---
         $currentTotalSales = Order::where('status', 'paid')
-                                  ->whereBetween('created_at', [$currentMonthStart, $currentMonthEnd])
-                                  ->sum('total');
+            ->whereBetween('created_at', [$currentMonthStart, $currentMonthEnd])
+            ->sum('total');
 
         $currentTotalOrders = Order::whereBetween('created_at', [$currentMonthStart, $currentMonthEnd])
-                                   ->count();
+            ->count();
 
         // Assuming 'role' column differentiates customers (role=customer)
-        $currentTotalCustomers = User::where('role', "customer")
-                                     ->whereBetween('created_at', [$currentMonthStart, $currentMonthEnd])
-                                     ->count();
+        $currentTotalCustomers = User::where('role', 'customer')
+            ->whereBetween('created_at', [$currentMonthStart, $currentMonthEnd])
+            ->count();
 
         $currentAverageOrderValue = $currentTotalOrders > 0 ? $currentTotalSales / $currentTotalOrders : 0;
 
-
         // --- Last Period Metrics (Last Month) ---
         $lastPeriodTotalSales = Order::where('status', 'paid')
-                                     ->whereBetween('created_at', [$lastMonthStart, $lastMonthEnd])
-                                     ->sum('total');
+            ->whereBetween('created_at', [$lastMonthStart, $lastMonthEnd])
+            ->sum('total');
 
         $lastPeriodTotalOrders = Order::whereBetween('created_at', [$lastMonthStart, $lastMonthEnd])
-                                      ->count();
+            ->count();
 
-        $lastPeriodTotalCustomers = User::where('role', "customer")
-                                       ->whereBetween('created_at', [$lastMonthStart, $lastMonthEnd])
-                                       ->count();
+        $lastPeriodTotalCustomers = User::where('role', 'customer')
+            ->whereBetween('created_at', [$lastMonthStart, $lastMonthEnd])
+            ->count();
 
         $lastPeriodAverageOrderValue = $lastPeriodTotalOrders > 0 ? $lastPeriodTotalSales / $lastPeriodTotalOrders : 0;
-
 
         // --- Calculate Percentage Changes ---
         // Sales Change
@@ -90,18 +87,16 @@ class DashboardController extends Controller
             $aovChange = 100;
         }
 
-
         // --- Get Counts for Management Overview (These are typically total counts, not period-specific) ---
         $totalProducts = Product::count();
         $totalCategories = Category::count();
         $totalBrands = Brand::count();
         $totalAdmins = User::where('role', 'admin')->count();
 
-         $latestOrders = Order::with('user') // Eager load the user (customer) associated with the order
-                             ->orderBy('created_at', 'desc')
-                             ->limit(5) // Get the 5 most recent orders
-                             ->get();
-
+        $latestOrders = Order::with('user') // Eager load the user (customer) associated with the order
+            ->orderBy('created_at', 'desc')
+            ->limit(5) // Get the 5 most recent orders
+            ->get();
 
         return view('admin.dashboard', [
             'title' => 'Admin Dashboard',
@@ -124,7 +119,7 @@ class DashboardController extends Controller
             'totalAdmins' => $totalAdmins,
 
             // Pass latest orders
-            'latestOrders' => $latestOrders,  
+            'latestOrders' => $latestOrders,
         ]);
     }
 }

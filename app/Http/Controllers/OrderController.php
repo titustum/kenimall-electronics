@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\OrderConfirmationMail;
+use App\Mail\ShippingConfirmationMail;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Mail\ShippingConfirmationMail;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\OrderConfirmationMail; // Import your OrderConfirmationMail class
+use Illuminate\Support\Facades\Mail; // Import your OrderConfirmationMail class
 
 class OrderController extends Controller
 {
@@ -16,25 +16,22 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::where('user_id', Auth::id()) 
+        $orders = Order::where('user_id', Auth::id())
             ->orderBy('created_at', 'desc')
             ->paginate(10);
 
         return view('orders.index', compact('orders'));
     }
 
-
     public function show(Order $order)
-    { 
+    {
         return view('orders.show', compact('order'));
     }
-
 
     public function trackForm()
     {
         return view('orders.track');
     }
-
 
     public function track(Request $request)
     {
@@ -44,8 +41,8 @@ class OrderController extends Controller
         ]);
 
         $order = Order::where('order_number', $request->order_number)
-                    ->where('email', $request->email)
-                    ->first();
+            ->where('email', $request->email)
+            ->first();
 
         if ($order) {
             return redirect()->route('orders.show', $order);
@@ -54,7 +51,6 @@ class OrderController extends Controller
         return redirect()->back()->with('error', 'Order not found. Please check your details.');
     }
 
-
     public function dispatchShippingConfirmation(Request $request, Order $order)
     {
         // --- IMPORTANT: Replace with actual data from your shipping system ---
@@ -62,7 +58,7 @@ class OrderController extends Controller
         // or a response from a shipping API (e.g., Australia Post, Sendle, etc.)
         $trackingNumber = 'AP123456789AU'; // Example Australian Post tracking number
         $carrierName = 'Australia Post';
-        $trackingUrl = 'https://auspost.com.au/mypost/track/#/details/' . $trackingNumber;
+        $trackingUrl = 'https://auspost.com.au/mypost/track/#/details/'.$trackingNumber;
         // --- End of example data ---
 
         // Update the order status and save tracking details (assuming you have these columns)
@@ -79,8 +75,6 @@ class OrderController extends Controller
         );
 
         // Redirect or return a response
-        return redirect()->back()->with('success', 'Shipping confirmation email dispatched for order ' . $order->order_number . '.');
+        return redirect()->back()->with('success', 'Shipping confirmation email dispatched for order '.$order->order_number.'.');
     }
-
-
 }

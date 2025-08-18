@@ -8,20 +8,19 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
-
 
 class BrandController extends Controller
 {
-     /**
+    /**
      * Display a listing of the brands.
      */
     public function index()
     {
         $brands = Brand::orderBy('name')->paginate(15); // Adjust pagination limit as needed
+
         return view('admin.brands.index', compact('brands'));
     }
- 
+
     /**
      * Show the form for creating a new resource.
      */
@@ -58,14 +57,13 @@ class BrandController extends Controller
             Brand::create($validatedData);
 
             return redirect()->route('admin.brands.index')
-                             ->with('success', 'Brand created successfully!');
+                ->with('success', 'Brand created successfully!');
         } catch (\Exception $e) {
-            Log::error('Error creating brand: ' . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine());
+            Log::error('Error creating brand: '.$e->getMessage().' in '.$e->getFile().' on line '.$e->getLine());
+
             return back()->withInput()->with('error', 'Failed to create brand. Please try again.');
         }
     }
-
-
 
     /**
      * Show the form for editing the specified brand.
@@ -81,7 +79,7 @@ class BrandController extends Controller
     public function update(Request $request, Brand $brand)
     {
         $validatedData = $request->validate([
-            'name' => 'required|string|max:255|unique:brands,name,' . $brand->id, // Name must be unique, except for current brand
+            'name' => 'required|string|max:255|unique:brands,name,'.$brand->id, // Name must be unique, except for current brand
             'image_path' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
@@ -89,7 +87,7 @@ class BrandController extends Controller
         if ($request->hasFile('image_path')) {
             // Delete old image if it exists
             if ($brand->image_path) {
-                Storage::disk('public')->delete($brand->image_path); 
+                Storage::disk('public')->delete($brand->image_path);
             }
             $imagePath = $request->file('image_path')->store('brands', 'public');
             $validatedData['image_path'] = $imagePath;
@@ -102,9 +100,10 @@ class BrandController extends Controller
             $brand->update($validatedData);
 
             return redirect()->route('admin.brands.index')
-                             ->with('success', 'Brand updated successfully!');
+                ->with('success', 'Brand updated successfully!');
         } catch (\Exception $e) {
-            Log::error('Error updating brand: ' . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine());
+            Log::error('Error updating brand: '.$e->getMessage().' in '.$e->getFile().' on line '.$e->getLine());
+
             return back()->withInput()->with('error', 'Failed to update brand. Please try again.');
         }
     }
@@ -116,6 +115,7 @@ class BrandController extends Controller
     {
         // Eager load the 'addedBy' relationship if you want to display the user's name
         $brand->load('addedBy');
+
         return view('admin.brands.show', compact('brand'));
     }
 
@@ -133,9 +133,10 @@ class BrandController extends Controller
             $brand->delete();
 
             return redirect()->route('admin.brands.index')
-                             ->with('success', 'Brand deleted successfully!');
+                ->with('success', 'Brand deleted successfully!');
         } catch (\Exception $e) {
-            Log::error('Error deleting brand: ' . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine());
+            Log::error('Error deleting brand: '.$e->getMessage().' in '.$e->getFile().' on line '.$e->getLine());
+
             return back()->with('error', 'Failed to delete brand. Please try again.');
         }
     }

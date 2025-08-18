@@ -18,6 +18,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::orderBy('name')->paginate(15); // Fetch all categories, paginated
+
         return view('admin.categories.index', compact('categories'));
     }
 
@@ -57,7 +58,7 @@ class CategoryController extends Controller
             $originalSlug = $validatedData['slug'];
             $count = 1;
             while (Category::where('slug', $validatedData['slug'])->exists()) {
-                $validatedData['slug'] = $originalSlug . '-' . $count++;
+                $validatedData['slug'] = $originalSlug.'-'.$count++;
             }
         }
 
@@ -68,9 +69,10 @@ class CategoryController extends Controller
             Category::create($validatedData);
 
             return redirect()->route('admin.categories.index')
-                             ->with('success', 'Category created successfully!');
+                ->with('success', 'Category created successfully!');
         } catch (\Exception $e) {
-            Log::error('Error creating category: ' . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine());
+            Log::error('Error creating category: '.$e->getMessage().' in '.$e->getFile().' on line '.$e->getLine());
+
             return back()->withInput()->with('error', 'Failed to create category. Please try again.');
         }
     }
@@ -82,6 +84,7 @@ class CategoryController extends Controller
     {
         // Eager load the 'addedBy' relationship to get the user's name
         $category->load('addedBy');
+
         return view('admin.categories.show', compact('category'));
     }
 
@@ -100,7 +103,7 @@ class CategoryController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'slug' => 'nullable|string|max:255|unique:categories,slug,' . $category->id, // Unique slug, ignoring current category's slug
+            'slug' => 'nullable|string|max:255|unique:categories,slug,'.$category->id, // Unique slug, ignoring current category's slug
             'image_path' => 'nullable|image|mimes:jpeg,png,webp,jpg,gif,svg|max:2048', // Image is nullable on update
         ]);
 
@@ -124,7 +127,7 @@ class CategoryController extends Controller
             $originalSlug = $validatedData['slug'];
             $count = 1;
             while (Category::where('slug', $validatedData['slug'])->where('id', '!=', $category->id)->exists()) {
-                $validatedData['slug'] = $originalSlug . '-' . $count++;
+                $validatedData['slug'] = $originalSlug.'-'.$count++;
             }
         }
 
@@ -135,9 +138,10 @@ class CategoryController extends Controller
             $category->update($validatedData);
 
             return redirect()->route('admin.categories.index')
-                             ->with('success', 'Category updated successfully!');
+                ->with('success', 'Category updated successfully!');
         } catch (\Exception $e) {
-            Log::error('Error updating category: ' . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine());
+            Log::error('Error updating category: '.$e->getMessage().' in '.$e->getFile().' on line '.$e->getLine());
+
             return back()->withInput()->with('error', 'Failed to update category. Please try again.');
         }
     }
@@ -156,9 +160,10 @@ class CategoryController extends Controller
             $category->delete();
 
             return redirect()->route('admin.categories.index')
-                             ->with('success', 'Category deleted successfully!');
+                ->with('success', 'Category deleted successfully!');
         } catch (\Exception $e) {
-            Log::error('Error deleting category: ' . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine());
+            Log::error('Error deleting category: '.$e->getMessage().' in '.$e->getFile().' on line '.$e->getLine());
+
             return back()->with('error', 'Failed to delete category. Please try again.');
         }
     }

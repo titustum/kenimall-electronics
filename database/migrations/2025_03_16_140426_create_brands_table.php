@@ -12,11 +12,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('brands', function (Blueprint $table) { 
+        Schema::create('brands', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class, 'added_by')->cascade('delete')->default(1);  // User ID who added the image 
+            $table->foreignIdFor(User::class, 'added_by')->cascade('delete')->default(1);  // User ID who added the image
             $table->string('name')->unique();  // Name of the brand (e.g., Samsung, Apple)
-            $table->string('image_path')->nullable();  
+            $table->string('image_path')->nullable();
             $table->timestamps();
         });
     }

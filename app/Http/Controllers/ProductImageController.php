@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Product;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class ProductImageController extends Controller
@@ -44,7 +44,6 @@ class ProductImageController extends Controller
 
         return redirect()->route('admin.products.show', $product)->with('success', 'Images uploaded successfully.');
     }
-
 
     /**
      * Display the specified resource.

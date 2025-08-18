@@ -2,21 +2,23 @@
 
 namespace App\Mail;
 
+use App\Models\Order;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
-use Illuminate\Queue\SerializesModels;
-use App\Models\Order; // Make sure to import your Order model
+use Illuminate\Queue\SerializesModels; // Make sure to import your Order model
 
-class ShippingConfirmationMail extends Mailable 
+class ShippingConfirmationMail extends Mailable
 {
     // use Queueable, SerializesModels;
 
     public $order;
+
     public $trackingNumber;
+
     public $carrierName;
+
     public $trackingUrl;
 
     /**
@@ -36,7 +38,7 @@ class ShippingConfirmationMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Your Order #' . $this->order->order_number . ' Has Been Shipped!',
+            subject: 'Your Order #'.$this->order->order_number.' Has Been Shipped!',
         );
     }
 

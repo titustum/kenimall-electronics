@@ -2,14 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Product extends Model
 {
-    use HasFactory; 
+    use HasFactory;
 
     protected $fillable = [
         'name',
@@ -27,7 +26,7 @@ class Product extends Model
         'color',
         'image_path',
         'slug',
-        'added_by'
+        'added_by',
     ];
 
     protected $casts = [
@@ -69,7 +68,6 @@ class Product extends Model
     {
         return 'slug';
     }
-
 
     // // Mutator for the slug
     // public function setSlugAttribute($value)

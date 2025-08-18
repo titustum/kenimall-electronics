@@ -19,8 +19,8 @@ return new class extends Migration
             $table->decimal('price', 10, 2); // Total price for the quantity
             $table->timestamps();
             $table->index(['user_id', 'product_id']);
-        }); 
-            
+        });
+
     }
 
     /**

@@ -14,10 +14,10 @@ return new class extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class, 'added_by')->cascade('delete'); 
+            $table->foreignIdFor(User::class, 'added_by')->cascade('delete');
             $table->string('slug')->unique();  // Slug for SEO-friendly URLs
             $table->string('name');
-            $table->string('image_path'); 
+            $table->string('image_path');
             $table->timestamps();
         });
     }

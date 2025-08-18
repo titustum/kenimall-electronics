@@ -40,12 +40,10 @@ return [
         'key' => env('STRIPE_PUBLISHABLE_KEY'),
     ],
 
-
     'auspost' => [
         'api_key' => env('AUSPOST_API_KEY'),
         'account_number' => env('AUSPOST_ACCOUNT_NUMBER'),
         'sandbox' => env('AUSPOST_SANDBOX', true),
     ],
-
 
 ];

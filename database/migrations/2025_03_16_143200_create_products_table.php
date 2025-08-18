@@ -21,7 +21,7 @@ return new class extends Migration
             $table->decimal('sale_price', 10, 2)->nullable();  // Sale price if any discount is applied
             $table->integer('stock')->default(0);  // Number of items in stock
             $table->boolean('is_featured')->default(false);  // Whether the product is featured
-            $table->foreignIdFor(User::class, "added_by")->onDelete('cascade')->default(1); //user added - default 1
+            $table->foreignIdFor(User::class, 'added_by')->onDelete('cascade')->default(1); // user added - default 1
             $table->foreignId('category_id')->constrained()->onDelete('cascade');  // Category ID (TV, Audio, etc.)
             $table->foreignId('brand_id')->constrained()->onDelete('cascade');  // Brand ID (e.g., Samsung, Sony)
             $table->string('condition')->nullable();  // Product condition (New, Refurbished, etc.)
@@ -33,7 +33,6 @@ return new class extends Migration
             $table->timestamps();
         });
     }
-
 
     /**
      * Reverse the migrations.
