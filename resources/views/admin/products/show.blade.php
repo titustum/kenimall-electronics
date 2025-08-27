@@ -154,24 +154,56 @@
 
                     @if ($product->image_path || $product->images)
                     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+
                         {{-- Main Product Image --}}
                         @if ($product->image_path)
-                        <img src="{{ Storage::url($product->image_path) }}" alt="{{ $product->name }} Image"
-                            class="w-full h-auto rounded-md shadow-md border border-gray-200 dark:border-neutral-700">
+                        <div class="relative group">
+                            <img src="{{ Storage::url($product->image_path) }}" alt="{{ $product->name }} Image"
+                                class="h-40 object-contain w-full rounded-md shadow-md border border-gray-200 dark:border-neutral-700">
+
+                            {{-- Delete Button --}}
+                            <form action="{{ route('admin.products.image.delete') }}" method="POST"
+                                class="absolute top-1 right-1 hidden group-hover:block">
+                                @csrf
+                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                <input type="hidden" name="image_type" value="main">
+                                <button type="submit"
+                                    class="bg-red-600 px-2 text-white rounded-full p-1 text-xs hover:bg-red-700 transition">
+                                    ✕
+                                </button>
+                            </form>
+                        </div>
                         @endif
 
                         {{-- Additional Images --}}
                         @if ($product->images)
-                        @foreach (json_decode($product->images, true) as $image)
-                        <img src="{{ Storage::url($image['image_path']) }}" alt="{{ $product->name }} Additional Image"
-                            class="w-full h-auto rounded-md shadow-md border border-gray-200 dark:border-neutral-700">
+                        @foreach (json_decode($product->images, true) as $index => $image)
+                        <div class="relative group">
+                            <img src="{{ Storage::url($image['image_path']) }}"
+                                alt="{{ $product->name }} Additional Image"
+                                class="h-40 object-contain w-full rounded-md shadow-md border border-gray-200 dark:border-neutral-700">
+
+                            {{-- Delete Button --}}
+                            <form action="{{ route('admin.products.image.delete') }}" method="POST"
+                                class="absolute top-1 right-1 hidden group-hover:block">
+                                @csrf
+                                <input type="hidden" name="image_id" value="{{ $image['id'] }}">
+                                <input type="hidden" name="image_type" value="additional">
+                                <button type="submit"
+                                    class="bg-red-600 px-2 text-white rounded-full p-1 text-xs hover:bg-red-700 transition">
+                                    ✕
+                                </button>
+                            </form>
+                        </div>
                         @endforeach
                         @endif
+
                     </div>
                     @else
                     <p class="text-gray-600 dark:text-gray-400">No images uploaded for this product.</p>
                     @endif
                 </div>
+
 
                 {{-- Additional Images Link --}}
                 <div class="md:col-span-2">

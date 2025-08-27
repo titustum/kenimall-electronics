@@ -21,7 +21,7 @@
                         <tr>
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400">
-                                ID
+                                Image
                             </th>
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400">
@@ -45,7 +45,9 @@
                         @foreach ($products as $product)
                         <tr>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
-                                {{ $product->id }}
+                                <img src="{{ Storage::url($product->image_path) }}" alt="{{ $product->name }}"
+                                    class="h-12 w-12 object-cover rounded-md">
+                            </td>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
                                 {{ $product->name }}

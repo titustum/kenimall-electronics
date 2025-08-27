@@ -59,7 +59,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::resource('brands', App\Http\Controllers\Admin\BrandController::class);
     Route::resource('users', App\Http\Controllers\Admin\UserController::class);
     Route::resource('orders', App\Http\Controllers\Admin\OrderController::class);
-
+    Route::post('products/image/delete', [App\Http\Controllers\Admin\ProductController::class, 'deleteProductImage'])
+        ->name('products.image.delete');
 });
+
+
 
 require __DIR__.'/auth.php';

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -205,4 +206,29 @@ class ProductController extends Controller
             return back()->with('error', 'Failed to delete product. Please try again.');
         }
     }
+
+
+    public function deleteProductImage(Request $request)
+    {
+        $type = $request->input('image_type'); // 'main' or 'additional'
+        
+        if ($type === 'main') {
+            // Delete main image
+            $product = Product::findOrFail($request->input('product_id'));
+            Storage::delete($product->image_path);
+            $product->image_path = null;
+            $product->save();
+            return redirect()->back()->with('success', 'Image deleted successfully.');
+            
+        } elseif ($type === 'additional') {
+            // Delete additional image
+            $image = ProductImage::findOrFail($request->input('image_id'));
+            Storage::delete($image->image_path);
+            $image->delete(); 
+            return redirect()->back()->with('success', 'Image deleted successfully.');
+        } else {
+            return redirect()->back()->with('error', 'Invalid image type specified.');
+        }
+    }
+
 }
