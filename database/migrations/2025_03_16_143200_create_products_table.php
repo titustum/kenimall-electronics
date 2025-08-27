@@ -30,6 +30,14 @@ return new class extends Migration
             $table->string('color')->nullable();  // Color of the product
             $table->string('image_path')->nullable();  // Path to the main product image
             $table->string('slug')->unique();  // Slug for SEO-friendly URLs
+
+
+            ///dimensions
+            $table->decimal('weight', 8, 2)->nullable(); // kg
+            $table->decimal('length', 8, 2)->nullable(); // cm
+            $table->decimal('width', 8, 2)->nullable();  // cm
+            $table->decimal('height', 8, 2)->nullable(); // cm
+
             $table->timestamps();
         });
     }

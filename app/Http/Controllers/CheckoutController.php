@@ -75,6 +75,20 @@ class CheckoutController extends Controller
 
         $totalAmount = collect($cart)->sum(fn ($item) => $item['price'] * $item['quantity']);
 
+
+        // $cart = session('cart');
+
+        // $productIds = collect($cart)->pluck('product_id');
+        // $products = \App\Models\Product::whereIn('id', $productIds)->get()->keyBy('id');
+
+        // // Calculate total weight
+        // $totalWeight = collect($cart)->sum(function ($item) use ($products) {
+        //     $product = $products[$item['product_id']] ?? null;
+        //     return $product ? ($product->weight * $item['quantity']) : 0;
+        // });
+
+
+
         // add get quote
         $shippingInfo = $this->getQuote($request->postcode, count($cart));
 

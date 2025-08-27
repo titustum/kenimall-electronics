@@ -21,11 +21,7 @@
                         <tr>
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400">
-                                ID
-                            </th>
-                            <th scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400">
-                                Name
+                                Brand Name
                             </th>
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400">
@@ -34,13 +30,19 @@
                         </tr>
                     </thead>
                     <tbody class="bg-white dark:bg-neutral-800 divide-y divide-gray-200 dark:divide-neutral-700">
+
+                        @php
+                        $counter = 0;
+                        @endphp
+
                         @foreach ($brands as $brand)
+
+                        @php
+                        $counter++;
+                        @endphp
                         <tr>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
-                                {{ $brand->id }}
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
-                                {{ $brand->name }}
+                            <td class="px-6 py-4 font-semibold whitespace-nowrap text-sm text-gray-900 dark:text-white">
+                                {{ $counter }}. {{ $brand->name }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                 <a href="{{ route('admin.brands.show', $brand) }}"
