@@ -209,7 +209,7 @@
         .create(document.querySelector('#description'), {
             toolbar: [
                 'heading', '|',
-                'bold', 'italic', 'underline', 'link', 'bulletedList', 'numberedList', '|',
+                'bold', 'italic', 'link', 'bulletedList', 'numberedList', '|',
                 'blockQuote', 'insertTable', 'undo', 'redo'
             ],
             removePlugins: [

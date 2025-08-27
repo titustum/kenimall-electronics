@@ -210,7 +210,7 @@
                     {{-- Description --}}
                     <div>
                         <h3 class="text-base font-semibold text-gray-900 mb-1">Description</h3>
-                        <p class="text-gray-700 leading-relaxed text-sm sm:text-base">{{ $product->description }}</p>
+                        <p class="text-gray-700 leading-relaxed text-sm sm:text-base">{!! $product->description !!}</p>
                     </div>
 
                     {{-- Key Features --}}

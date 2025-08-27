@@ -121,7 +121,7 @@
                 {{-- Product Description (Full Width) --}}
                 <div class="md:col-span-2">
                     <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Description</p>
-                    <p class="mt-1 text-gray-700 dark:text-gray-300 leading-relaxed">{{ $product->description }}</p>
+                    <p class="mt-1 text-gray-700 dark:text-gray-300 leading-relaxed">{!! $product->description !!}</p>
                 </div>
 
                 {{-- Specifications (if applicable) --}}

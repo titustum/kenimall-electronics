@@ -235,4 +235,31 @@
         </div>
 
     </div>
+
+
+    <script src="https://cdn.ckeditor.com/ckeditor5/41.2.1/classic/ckeditor.js"></script>
+
+    <script>
+        ClassicEditor
+        .create(document.querySelector('#description'), {
+            toolbar: [
+                'heading', '|',
+                'bold', 'italic', 'link', 'bulletedList', 'numberedList', '|',
+                'blockQuote', 'insertTable', 'undo', 'redo'
+            ],
+            removePlugins: [
+                'Image', 
+                'ImageUpload', 
+                'EasyImage', 
+                'CKBox', 
+                'CKFinder',              // ✅ remove CKFinder too
+                'CKFinderUploadAdapter'  // ✅ already removed
+            ],
+        })
+        .catch(error => {
+            console.error(error);
+        });
+    </script>
+
+
 </x-layouts.app>
